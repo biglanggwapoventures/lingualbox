@@ -8,5 +8,6 @@
     <body>
          @yield('content')
         <script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('js/common.js') }}"></script>
     </body>
 </html>

@@ -18,11 +18,14 @@ class CreateUsersTable extends Migration
             $table->string('lastname');
             $table->date('birthdate');
             $table->enum('gender', ['MALE', 'FEMALE']);
+            $table->string('mobile_number');
+            $table->string('skype_account');
             $table->enum('marital_status', ['SINGLE', 'MARRIED', 'DIVORCED', 'SEPARATED', 'WIDOWED']);
             $table->string('street_address');
             $table->string('city');
             $table->string('province');
             $table->string('country');
+            $table->string('email_address')->unique();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

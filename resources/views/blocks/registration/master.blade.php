@@ -15,25 +15,27 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Link</a></li>
+        @if(Auth::user())
+          <li><a href="{{ route('logout') }}">Logout</a></li>
+        @endif
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
 <ul class="breadcrumb">
   <li class="@yield('partOneComplete') @yield('partOneCurrent')">
-    <a href="javascript:void(0);">
-      <i class="fa fa-user"></i> Personal Contact
+    <a href="{{ route('register.first') }}">
+      <i class="fa fa-user"></i> Personal Info
     </a>
   </li>
    <li class="@yield('partTwoComplete') @yield('partTwoCurrent')">
-    <a class="@yield('partOneComplete')">
-      <i class="fa fa-book"></i> Educational/Experience
+    <a href="{{ route('register.second') }}">
+      <i class="fa fa-book"></i> Experience
     </a>
   </li>
    <li class="@yield('partThreeComplete') @yield('partThreeCurrent')">
     <a href="javascript:void(0);">
-      <i class="fa fa-photo"></i> Photo Upload
+      <i class="fa fa-photo"></i> Requirements
     </a>
   </li>
 </ul>
