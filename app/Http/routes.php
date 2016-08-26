@@ -29,9 +29,14 @@ Route::group(['prefix' => 'registration'], function(){
     Route::group(['middleware' => 'auth'], function(){
         Route::get('second-step', 'RegistrationController@partTwo')->name('register.second');
         Route::get('third-step', 'RegistrationController@partThree')->name('register.third');
+        
+        Route::post('second-step', 'RegistrationController@savePartTwo')->name('register.second.save');
+
     });
 
     Route::post('first-step', 'RegistrationController@savePartOne')->name('register.first.save');
-    Route::post('second-step', 'RegistrationController@savePartTwo')->name('register.second.save');
+    
+
+    
 
 });

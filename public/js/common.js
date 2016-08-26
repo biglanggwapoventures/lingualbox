@@ -64,11 +64,11 @@ $(document).ready(function() {
 
         clone.find('input').attr('name', function() {
             return $(this).data('name').replace('idx', ctr);
-        }).val('');
-
+        });
+        clone.find('input:not(.constant)').val('');
+        clone.find('input.optional').remove();
 
         clone.appendTo(table.find('tbody'));
-
         table.data('idx', ctr);
     })
 
@@ -76,6 +76,9 @@ $(document).ready(function() {
         var entries = $(this).closest('table').find('tbody tr');
         if (entries.length > 1) {
             $(this).closest('tr').remove();
+        } else {
+            $(this).closest('tr').find('input:not(.constant)').val('');
+            $(this).closest('tr').find('input.optional').remove();
         }
     });
 })

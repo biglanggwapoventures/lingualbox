@@ -37,4 +37,9 @@ class User extends Authenticatable
         return $birthdate->format($parts[$part]);
     }
 
+    function experiences()
+    {
+        return $this->hasMany('App\UserExperience');
+    }
+
 }
