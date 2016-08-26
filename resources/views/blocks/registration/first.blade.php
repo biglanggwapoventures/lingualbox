@@ -20,13 +20,13 @@
                         
                         <div class="row">
                             <div class="col-sm-6 birthmonth">
-                                {!! Form::selectMonth('birthmonth', $user->birthmonth, ['class' => 'form-control']) !!}
+                                {!! Form::selectMonth('birthmonth', $user->getBirth('month'), ['class' => 'form-control']) !!}
                             </div>
                             <div class="col-sm-3 birthday">
-                                {!! Form::selectRange('birthday', 1, 31, $user->birthday, ['class' => 'form-control']) !!}
+                                {!! Form::selectRange('birthday', 1, 31, $user->getBirth('day'), ['class' => 'form-control']) !!}
                             </div>
                             <div class="col-sm-3 birthyear">
-                                 {!! Form::selectRange('birthyear', 1990, date('Y'), $user->birthyear, ['class' => 'form-control']) !!}
+                                 {!! Form::selectRange('birthyear', 1990, date('Y'), $user->getBirth('year'), ['class' => 'form-control']) !!}
                             </div>
                              
                         </div>
@@ -77,10 +77,10 @@
             <hr>
             <div class="row">
                 <div class="col-sm-6">
-                    {{ Form::bsText('password', null, 'Password', []) }}
+                    {{ Form::bsPassword('password', 'Password') }}
                 </div>
                 <div class="col-sm-6">
-                    {{ Form::bsText('password_confirmation', null, 'Password confirmation', []) }}
+                    {{ Form::bsPassword('password_confirmation', 'Password confirmation') }}
                 </div>
             </div>
             <button type="submit" class="btn btn-success pull-right">Save</button>

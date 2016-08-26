@@ -18,21 +18,21 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                    <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li class="dropdown-header">Nav header</li>
-                        <li><a href="#">Separated link</a></li>
-                        <li><a href="#">One more separated link</a></li>
-                    </ul>
-                    </li>
+                    @if(Auth::check())
+                       <li class="dropdown">
+                        <a id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor:pointer">
+                            Hello, {{ Auth::user()->firstname }}!
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dLabel">
+                            <li><a>Go to profile</a></li>
+                            <li class="divider"></li>
+                            <li><a href="{{ route('auth.logout') }}">Logout</a></li>
+                        </ul>
+                        </li> 
+                    @else
+                        <li><a data-target="#login" data-toggle="modal" style="cursor:pointer">Login</a></li>
+                    @endif
                 </ul>
                 </div>
             </div>
@@ -151,4 +151,26 @@
         </footer>
 
     </div><!-- /.container -->
+    <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                {!! Form::open(array('url' => route('auth.login'), 'method' => 'post', 'class' => 'common', 'data-next' => route('home'))) !!}
+                    <div class="modal-header">
+                        <h4 class="modal-title">
+                            Login to LingualBox!
+                        </h4>
+                    </div>
+                
+                    <div class="modal-body">
+                        {{ Form::bsText('email_address', null, 'Email address', ['placeholder' => 'Please enter your email address']) }}
+                        {{ Form::bsPassword('password', 'Password', ['placeholder' => 'Please enter your password']) }}
+                    </div>
+                    <div class="modal-footer clearfix">
+                        <button type="submit" class="btn btn-success">Login</button>
+                        <a role="button" class="btn btn-default pull-right" data-dismiss="modal">Cancel</a>
+                    </div>
+                 {!! Form::close() !!}
+            </div>
+        </div>
+    </div>
 @endsection

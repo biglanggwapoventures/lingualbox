@@ -15,33 +15,18 @@ class RegistrationController extends Controller
 {
     function partOne()
     {
-        if(Auth::user()){
-            $user =  Auth::user();
-            $birthdate = date_create_immutable($user->birthdate);
-            $user->birthyear = $birthdate->format('Y');
-            $user->birthmonth = $birthdate->format('n');
-            $user->birthday = $birthdate->format('j');
-        }else{
-            $user = new User;
-            $user->birthyear = '';
-            $user->birthmonth = '';
-            $user->birthday = '';
-        }
-
+        $user = Auth::check() ? Auth::user() :  new User;
         return view('blocks.registration.first', compact('user'));
     }
 
     function partTwo()
     {
-        if(!Auth::user()){
-            return redirect()->route('register.first');
-        }
         return view('blocks.registration.second');
     }
 
     function savePartOne(Request $request)
     {
-        $user = Auth::user() ?: new User;
+        $isGuest = !Auth::check();
 
         $rules = [
             'firstname' => 'required',
@@ -58,7 +43,7 @@ class RegistrationController extends Controller
             'country' => 'required', 
         ];
 
-        if(!$user->id){
+        if($isGuest){
             $rules['password'] = 'required|min:4|confirmed';
         }
 
@@ -75,11 +60,11 @@ class RegistrationController extends Controller
             $input['birthdate'] = date_create_immutable_from_format('Y-n-j', $request->input('birthdate'))->format('Y-m-d');
             $input['password'] = bcrypt($request->input('password'));
 
-            if($user->id){
-                User::where('id', $user->id)->update($input);
-            }else{
+            if($isGuest){
                 $user = User::create($input);
                 Auth::loginUsingId($user->id);
+            }else{
+                User::where('id', $user->id)->update($input);
             }
             
             return response()->json([

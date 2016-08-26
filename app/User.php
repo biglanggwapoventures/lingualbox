@@ -23,4 +23,18 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    function getBirth($part){
+
+        $parts = ['month' => 'm', 'year' => 'Y', 'day' => 'd'];
+
+        if(!in_array($part, array_keys($parts)) || !$this->birthdate){
+            return NULL;
+        }
+
+        $birthdate  = date_create_immutable($this->birthdate);
+
+        return $birthdate->format($parts[$part]);
+    }
+
 }
