@@ -42,7 +42,8 @@ class RegistrationController extends Controller
 
     function partThree()
     {
-        $preference = Auth::user()->preference()->first();
+        $userPreference = Auth::user()->preference();
+        $preference = $userPreference->exists() ? $userPreference->first() : new Preference;
         return view('blocks.registration.third', compact('preference'));
     }
 
