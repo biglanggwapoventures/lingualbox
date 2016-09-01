@@ -12,7 +12,18 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
-    mix.sass('app.scss')
-        .scripts(['jquery/dist/jquery.min.js', 'bootstrap/dist/js/bootstrap.min.js'], 'public/js/app.js', 'node_modules')
+    mix
+        .sass('app.scss')
+        .styles([
+            'bootstrap-fileinput/css/fileinput.css'
+        ], 'public/css/fileinput.css', 'bower_components')
+        .scripts([
+            'jquery/dist/jquery.min.js',
+            'bootstrap/dist/js/bootstrap.min.js'
+        ], 'public/js/app.js', 'node_modules')
+        .scripts([
+            'bootstrap-fileinput/js/fileinput.js',
+        ], 'public/js/fileinput.js', 'bower_components')
         .scripts('common.js')
+        .copy('bower_components/bootstrap-fileinput/img', 'public/img')
 });

@@ -1,7 +1,12 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-.registration.navbar {
+.registration.navbar,
+.profile.navbar {
     border-radius: 0px;
     margin-bottom: 0px;
+}
+
+.profile.navbar {
+    margin-bottom: 50px;
 }
 
 .breadcrumb {

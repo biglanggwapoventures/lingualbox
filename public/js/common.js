@@ -26,6 +26,37 @@ $(document).ready(function() {
                     }
                 }
             })
+    });
+
+    $('#third-registration').submit(function(e) {
+
+        e.preventDefault();
+
+        var $this = $(this),
+            formData = new FormData($this[0]);
+
+        $.ajax({
+            url: $this.attr('action'),
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            enctype: 'multipart/form-data',
+            processData: false,
+            success: function(response) {
+                if (response.result) {
+                    window.location.href = $this.data('next');
+                } else {
+                    for (var x in response.errors) {
+                        var input = $this.find('[name=' + x + ']');
+                        input.closest('.form-group').addClass('has-error');
+                        input.after($('<span />', {
+                            'class': 'help-block',
+                            text: response.errors[x][0]
+                        }));
+                    }
+                }
+            }
+        });
 
     });
 

@@ -21,11 +21,11 @@
                     @if(Auth::check())
                        <li class="dropdown">
                         <a id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor:pointer">
-                            Hello, {{ Auth::user()->firstname }}!
+                            Hello, {{ Auth::user()->firstname }}
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="dLabel">
-                            <li><a>Go to profile</a></li>
+                            <li><a href="{{ route('profile') }}">Profile</a></li>
                             <li class="divider"></li>
                             <li><a href="{{ route('auth.logout') }}">Logout</a></li>
                         </ul>

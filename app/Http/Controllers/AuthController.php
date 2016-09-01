@@ -36,7 +36,7 @@ class AuthController extends Controller
 
             return response()->json([
                 'result' => FALSE,
-                'errors' => ['password' => ['You have entered an incorrect password']]
+            'errors' => ['password' => ['You have entered an incorrect password']]
             ]);
             
         }

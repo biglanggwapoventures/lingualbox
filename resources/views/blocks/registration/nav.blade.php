@@ -1,4 +1,3 @@
-@extends('layouts.master')
 <nav class="navbar navbar-default registration">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -23,26 +22,19 @@
   </div><!-- /.container-fluid -->
 </nav>
 <ul class="breadcrumb">
-  <li class="@yield('partOneComplete') @yield('partOneCurrent')">
+  <li>
     <a href="{{ route('register.first') }}">
       <i class="fa fa-user"></i> Personal Info
     </a>
   </li>
-   <li class="@yield('partTwoComplete') @yield('partTwoCurrent')">
+   <li>
     <a href="{{ route('register.second') }}">
       <i class="fa fa-book"></i> Experience
     </a>
   </li>
-   <li class="@yield('partThreeComplete') @yield('partThreeCurrent')">
-    <a href="javascript:void(0);">
+   <li>
+     <a href="{{ route('register.third') }}">
       <i class="fa fa-photo"></i> Requirements
     </a>
   </li>
 </ul>
-<div class="container-fluid">
-  <div class="col-sm-8 col-sm-offset-2">
-    <div class="well">
-           @yield('form')
-    </div>
-  </div>
-</div>

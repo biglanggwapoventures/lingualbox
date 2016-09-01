@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->string('country');
             $table->string('email_address')->unique();
             $table->string('password');
+            $table->enum('account_type', ['TEACHER', 'HR', 'ADMIN']);
             $table->rememberToken();
             $table->timestamps();
         });

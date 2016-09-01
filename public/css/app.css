@@ -5730,9 +5730,13 @@ button.close {
   .hidden-print {
     display: none !important; } }
 
-.registration.navbar {
+.registration.navbar,
+.profile.navbar {
   border-radius: 0px;
   margin-bottom: 0px; }
+
+.profile.navbar {
+  margin-bottom: 50px; }
 
 .breadcrumb {
   padding: 0;

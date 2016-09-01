@@ -1,0 +1,20 @@
+{
+  "name": "lingualboxphp",
+  "description": "",
+  "main": "",
+  "authors": [
+    "biglanggwapoventures <biglanggwapoventures@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/biglanggwapoventures/lingualbox",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-fileinput": "^4.3.4"
+  }
+}

@@ -15,8 +15,8 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-
 Route::post('/login', 'AuthController@signIn')->name('auth.login');
+
 Route::get('/logout', function(){
     Auth::logout();
     return redirect()->route('home');
@@ -29,14 +29,12 @@ Route::group(['prefix' => 'registration'], function(){
     Route::group(['middleware' => 'auth'], function(){
         Route::get('second-step', 'RegistrationController@partTwo')->name('register.second');
         Route::get('third-step', 'RegistrationController@partThree')->name('register.third');
-        
         Route::post('second-step', 'RegistrationController@savePartTwo')->name('register.second.save');
-
+        Route::post('third-step', 'RegistrationController@savePartThree')->name('register.third.save');
     });
 
     Route::post('first-step', 'RegistrationController@savePartOne')->name('register.first.save');
-    
-
-    
-
 });
+
+Route::get('/profile', 'ProfileController@showProfile')->middleware('auth')->name('profile');
+
