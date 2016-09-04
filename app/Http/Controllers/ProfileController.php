@@ -18,7 +18,12 @@ class ProfileController extends Controller
         $profileProgress = $user->getProfileProgress();
         
         $preference = $user->preference();
-        $displayPhoto = $preference->exists() ? $preference->first()->display_photo_filename : asset('images/display-photo-placeholder.png');
+
+        $displayPhoto = asset('images/display-photo-placeholder.png');
+
+        if($preference->exists()){
+            $displayPhoto = asset("uploads/{$user->id}/display/{$preference->first()->display_photo_filename}");
+        }
 
         return view('profile', compact(['user', 'profileProgress', 'displayPhoto']));
     }

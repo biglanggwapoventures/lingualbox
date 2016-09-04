@@ -75,4 +75,19 @@ class User extends Authenticatable
         return 50;
     }
 
+    function isAdmin()
+    {
+        return $this->account_type === self::ACCOUNT_TYPE_ADMIN;
+    }
+
+    function isTeacher()
+    {
+        return $this->account_type === self::ACCOUNT_TYPE_TEACHER;
+    }
+
+    function isHR()
+    {
+        return $this->account_type === self::ACCOUNT_TYPE_HR;
+    }
+
 }

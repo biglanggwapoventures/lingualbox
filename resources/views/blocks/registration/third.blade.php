@@ -22,7 +22,7 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             {{ Form::label('demo_day', 'Day of week' )}}
-                            {{ Form::select('demo_day', ['' => '', 'M' => 'Monday', 'TUE' => 'Tuesday', 'WED' => 'Wednesday', 'THU' => 'Thursday', 'FRI' => 'Friday', 'SAT' => 'Saturday', 'SUN' => 'Sunday'], $preference->demo_day, ['class' => 'form-control']) }}
+                            {{ Form::select('demo_day', ['' => '', 'MON' => 'Monday', 'TUE' => 'Tuesday', 'WED' => 'Wednesday', 'THU' => 'Thursday', 'FRI' => 'Friday', 'SAT' => 'Saturday', 'SUN' => 'Sunday'], $preference->demo_day, ['class' => 'form-control']) }}
                         </div>
                     </div>
                     <div class="col-sm-6">
