@@ -36,5 +36,22 @@ Route::group(['prefix' => 'registration'], function(){
     Route::post('first-step', 'RegistrationController@savePartOne')->name('register.first.save');
 });
 
+Route::group(['prefix' => 'exams', 'middleware' => 'admin-only'], function(){
+    Route::group(['prefix' => 'reading'], function(){
+        Route::group(['prefix' => 'edit'], function(){
+
+            Route::get('storyboard', 'ReadingExamController@editStoryboard')->name('reading.storyboard.edit');
+            Route::post('storyboard', 'ReadingExamController@saveStoryboard')->name('reading.storyboard.save');
+
+            Route::get('questions', 'ReadingExamController@addQuestion')->name('reading.questions.create');
+            Route::post('questions', 'ReadingExamController@storeQuestion')->name('reading.questions.store');
+            
+            Route::get('questions/{id}', 'ReadingExamController@editQuestion')->name('reading.questions.edit');
+            Route::post('questions/{id}', 'ReadingExamController@updateQuestion')->name('reading.questions.update');
+
+        });
+    });
+});
+
 Route::get('/profile', 'ProfileController@showProfile')->middleware('auth')->name('profile');
 

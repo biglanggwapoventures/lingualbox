@@ -17,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Form::component('bsText', 'components.form.text', ['name', 'value' => null, 'label', 'attributes' => []]);
         Form::component('bsPassword', 'components.form.password', ['name', 'label', 'attributes' => []]);
+        
     }
 
     /**

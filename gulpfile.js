@@ -26,4 +26,7 @@ elixir(function(mix) {
         ], 'public/js/fileinput.js', 'bower_components')
         .scripts('common.js')
         .copy('bower_components/bootstrap-fileinput/img', 'public/img')
+
+    .copy('node_modules/font-awesome/fonts', 'public/fonts')
+        .copy('node_modules/font-awesome/css', 'public/css')
 });

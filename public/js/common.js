@@ -69,11 +69,22 @@ $(document).ready(function() {
 
         $.post($this.attr('action'), $this.serialize())
             .done(function(response) {
-                if (response.result) {
+                if (response.result && $this.data('next')) {
                     window.location.href = $this.data('next');
                 } else {
+                    var input = '';
                     for (var x in response.errors) {
-                        var input = $this.find('[name=' + x + ']');
+                        if (x.indexOf('.') !== -1) {
+                            var pieces = x.split('.');
+                            if (pieces.length === 2) {
+                                input = $this.find('[name="' + pieces[0] + '[]"]:eq(' + pieces[1] + ')');
+                            } else {
+                                input = $(pieces[0] + '[' + pieces[1] + ']' + pieces[2])
+                            }
+
+                        } else {
+                            input = $this.find('[name=' + x + ']');
+                        }
                         input.closest('.form-group').addClass('has-error');
                         input.after($('<span />', {
                             'class': 'help-block',
@@ -99,6 +110,7 @@ $(document).ready(function() {
         clone.find('input:not(.constant)').val('');
         clone.find('input.optional').remove();
 
+
         clone.appendTo(table.find('tbody'));
         table.data('idx', ctr);
     })
@@ -112,4 +124,22 @@ $(document).ready(function() {
             $(this).closest('tr').find('input.optional').remove();
         }
     });
+
+    $('.mod-question').click(function(e) {
+        e.preventDefault();
+        var mode = $(this).data('mode');
+        var clone = $($('.form-group.' + mode).clone()[0]);
+        clone.find('label').text('')
+        clone.find('input').val('')
+        clone.find('.remove').removeClass('invisible');
+        clone.find('.help-block').remove();
+        clone.removeClass('has-error');
+        $(this).closest('.form-group').before(clone);
+    })
+
+    $('.common').on('click', '.remove', function(e) {
+        e.preventDefault();
+        $(this).closest('.form-group').remove();
+    })
+
 })
