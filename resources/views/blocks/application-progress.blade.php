@@ -42,7 +42,7 @@
                                     <td><span class="label label-success"><i class="glyphicon glyphicon-check"></i> Done</span></td>
                                     <td><a class="btn btn-info btn-xs" href="{{ route('register.third') }}">Review</a></td>
                                 @else
-                                    @if($profileProgress < 50)
+                                    @if($profileProgress < 40)
                                         <td colspan="2" class="text-warning text-center">Please finish &quot;Work Experiences&quot;</td> 
                                     @else
                                         <td colspan="2"><a class="btn btn-info btn-xs btn-block" href="{{ route('register.third') }}">Take</a></td>

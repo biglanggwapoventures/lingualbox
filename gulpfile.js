@@ -29,4 +29,8 @@ elixir(function(mix) {
 
     .copy('node_modules/font-awesome/fonts', 'public/fonts')
         .copy('node_modules/font-awesome/css', 'public/css')
+        .copy('node_modules/toastr/package/build/toastr.min.css', 'public/css')
+        .copy('node_modules/toastr/package/build/toastr.min.js', 'public/js')
+        .copy('node_modules/toastr/package/build/toastr.js.map', 'public/js')
+        .copy('node_modules/jquery-countdown/dist/jquery.countdown.min.js', 'public/js/timer.js')
 });

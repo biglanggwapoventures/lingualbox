@@ -65,12 +65,24 @@ $(document).ready(function() {
         e.preventDefault();
         var $this = $(this);
 
+        $this.find('[type=submit]').addClass('disabled');
+
         $this.find('.has-error').removeClass('has-error').find('.help-block').remove();
 
         $.post($this.attr('action'), $this.serialize())
             .done(function(response) {
-                if (response.result && $this.data('next')) {
-                    window.location.href = $this.data('next');
+                if (response.result) {
+                    if (response.hasOwnProperty('next_url')) {
+                        window.location.href = response.next_url;
+                        return;
+                    }
+                    var nextPage = $this.data('next');
+                    if (nextPage) {
+                        window.location.href = nextPage;
+                    } else {
+                        toastr.success('Done!')
+                    }
+
                 } else {
                     var input = '';
                     for (var x in response.errors) {
@@ -79,19 +91,25 @@ $(document).ready(function() {
                             if (pieces.length === 2) {
                                 input = $this.find('[name="' + pieces[0] + '[]"]:eq(' + pieces[1] + ')');
                             } else {
-                                input = $(pieces[0] + '[' + pieces[1] + ']' + pieces[2])
+                                input = $('[name="' + pieces[0] + '[' + pieces[1] + ']' + pieces[2] + '"')
                             }
 
                         } else {
                             input = $this.find('[name=' + x + ']');
                         }
-                        input.closest('.form-group').addClass('has-error');
+                        var formGroup = input.closest('.form-group');
+                        if (formGroup) {
+                            formGroup.addClass('has-error');
+                        }
                         input.after($('<span />', {
                             'class': 'help-block',
                             text: response.errors[x][0]
                         }));
                     }
                 }
+            })
+            .always(function() {
+                $this.find('[type=submit]').removeClass('disabled');
             })
 
     });

@@ -1,0 +1,9 @@
+a.menu-icon {
+    color: inherit;
+    cursor: pointer;
+}
+
+a.menu-icon:hover {
+    color: inherit;
+    text-decoration: none;
+}

@@ -1,0 +1,8 @@
+ul.list-group a {
+    color: inherit;
+    cursor: pointer;
+}
+
+ul.list-group a:hover {
+    text-decoration: none;
+}

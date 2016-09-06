@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateReadingStoryboardsTable extends Migration
+class CreateWrittenExamsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,11 @@ class CreateReadingStoryboardsTable extends Migration
      */
     public function up()
     {
-        Schema::create('reading_storyboards', function (Blueprint $table) {
-            
+        Schema::create('written_exams', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title', 50);
-            $table->integer('limit')->unsigned();
-            $table->integer('passing_score')->unsigned();
             $table->text('body');
+            $table->integer('limit')->unsigned();
             $table->timestamps();
-            
         });
     }
 
@@ -31,6 +27,6 @@ class CreateReadingStoryboardsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('reading_storyboards');
+        Schema::drop('written_exams');
     }
 }

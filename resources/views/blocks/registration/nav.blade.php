@@ -37,4 +37,14 @@
       <i class="fa fa-photo"></i> Requirements
     </a>
   </li>
+  <li>
+     <a href="{{ route('reading.exam') }}">
+      <i class="fa fa-book"></i> Reading Exam
+    </a>
+  </li>
+  <li>
+     <a>
+      <i class="fa fa-pencil"></i> Written Exam
+    </a>
+  </li>
 </ul>

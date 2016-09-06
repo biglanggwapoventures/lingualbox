@@ -9,7 +9,7 @@
 
             <fieldset>
                     <legend class="text-center" style="border-bottom:0;margin-bottom:30px">Let's add your work experience<br><small>Please input your work experience as a teacher.</small></legend>
-                    {!! Form::open(array('url' => route('register.second.save'), 'method' => 'post', 'id' => 'registration-second', 'class' => 'clearfix common', 'data-next' => route('register.third'))) !!}
+                    {!! Form::open(array('url' => route('register.second.save'), 'method' => 'post', 'class' => 'clearfix common', 'data-next' => route('register.third'))) !!}
                         <table class="table" data-idx="{{ count($eslExp) ? count($eslExp) - 1  : 0 }}">
                             <thead>
                                 <tr class="success">

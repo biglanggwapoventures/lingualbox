@@ -29,6 +29,14 @@ Route::group(['prefix' => 'registration'], function(){
     Route::group(['middleware' => 'auth'], function(){
         Route::get('second-step', 'RegistrationController@partTwo')->name('register.second');
         Route::get('third-step', 'RegistrationController@partThree')->name('register.third');
+
+        Route::group(['middleware' => 'check-past-reading-exam'], function(){
+            Route::get('pre-reading-exam', 'RegistrationController@readingExamConfirmation')->name('pre.reading.exam');
+            Route::get('reading-exam', 'RegistrationController@startReadingExam')->name('reading.exam');
+            Route::post('reading-exam', 'RegistrationController@saveReadingExamResults')->name('reading.exam.save');
+        });
+        
+
         Route::post('second-step', 'RegistrationController@savePartTwo')->name('register.second.save');
         Route::post('third-step', 'RegistrationController@savePartThree')->name('register.third.save');
     });
@@ -36,19 +44,24 @@ Route::group(['prefix' => 'registration'], function(){
     Route::post('first-step', 'RegistrationController@savePartOne')->name('register.first.save');
 });
 
-Route::group(['prefix' => 'exams', 'middleware' => 'admin-only'], function(){
+Route::group(['prefix' => 'exams', 'middleware' => ['auth', 'admin-only']], function(){
     Route::group(['prefix' => 'reading'], function(){
-        Route::group(['prefix' => 'edit'], function(){
-
+        Route::group(['prefix' => 'manage'], function(){
             Route::get('storyboard', 'ReadingExamController@editStoryboard')->name('reading.storyboard.edit');
             Route::post('storyboard', 'ReadingExamController@saveStoryboard')->name('reading.storyboard.save');
-
             Route::get('questions', 'ReadingExamController@addQuestion')->name('reading.questions.create');
             Route::post('questions', 'ReadingExamController@storeQuestion')->name('reading.questions.store');
-            
             Route::get('questions/{id}', 'ReadingExamController@editQuestion')->name('reading.questions.edit');
             Route::post('questions/{id}', 'ReadingExamController@updateQuestion')->name('reading.questions.update');
+        });
+    });
 
+    Route::group(['prefix' => 'written'], function(){
+        Route::group(['prefix' => 'manage'], function(){
+            Route::get('questions', 'WrittenExamController@createQuestion')->name('written.questions.create');
+            Route::post('questions', 'WrittenExamController@storeQuestion')->name('written.questions.store');
+            Route::get('questions/{id}', 'WrittenExamController@editQuestion')->name('written.questions.edit');
+            Route::post('questions/{id}', 'WrittenExamController@updateQuestion')->name('written.questions.update');
         });
     });
 });

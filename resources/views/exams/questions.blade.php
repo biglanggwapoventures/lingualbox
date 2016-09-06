@@ -41,7 +41,7 @@
    
     <!-- WRONG -->
     @foreach ($question->wrong_answers AS $key => $answer)
-         <div class="form-group correct">
+         <div class="form-group wrong">
             <div class="col-sm-3">
                 {!! Form::label('', $key === 0 ? 'Wrong answer(s)' : '', ['class' =>'control-label']) !!}
             </div>

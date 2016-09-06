@@ -14,11 +14,27 @@ use App\UserExperience AS Experience;
 use App\UserPreference AS Preference;
 use DB;
 
+use App\ReadingExamResult AS ReadingResult;
+use App\ReadingStoryboard AS Story;
+use App\ReadingQuestion AS ReadingQuestion;
+use Carbon\Carbon;
+
 class RegistrationController extends Controller
 {
+
+
+    function __construct()
+    {
+        if(Auth::check()){
+            $this->user = Auth::user();
+        }else{
+            $this->user = new User;
+        }
+    }
+
     function partOne(Request $request)
     {
-        $user = Auth::check() ? Auth::user() :  new User;
+        $user = $this->user;
         return view('blocks.registration.first', compact('user'));
     }
 
@@ -27,7 +43,7 @@ class RegistrationController extends Controller
         $eslExp = [];
         $ccExp = [];
 
-        $experiences = Auth::user()->experiences()->get();
+        $experiences = $this->user->experiences()->get();
 
         foreach($experiences AS $row){
             if($row->experience_type === 'ESL'){
@@ -42,7 +58,11 @@ class RegistrationController extends Controller
 
     function partThree()
     {
-        $userPreference = Auth::user()->preference();
+        if($this->user->getProfileProgress() < 40){
+            return redirect()->route('register.second');
+        }
+
+        $userPreference = $this->user->preference();
         $preference = $userPreference->exists() ? $userPreference->first() : new Preference;
         return view('blocks.registration.third', compact('preference'));
     }
@@ -69,7 +89,7 @@ class RegistrationController extends Controller
         if($isGuest){
             $rules['password'] = 'required|min:4|confirmed';
         }else{
-            $rules['email_adress'] .= ",{$user->id}";
+            $rules['email_address'] .= (','.Auth::user()->id);
         }
 
         $validator = Validator::make($request->all(), $rules);
@@ -83,7 +103,11 @@ class RegistrationController extends Controller
 
         $input = $request->only(['firstname', 'lastname', 'gender', 'marital_status', 'mobile_number', 'email_address', 'skype_account', 'street_address', 'city', 'province', 'country']);
         $input['birthdate'] = date_create_immutable_from_format('Y-n-j', $request->input('birthdate'))->format('Y-m-d');
-        $input['password'] = bcrypt($request->input('password'));
+
+        if($request->input('password')){
+             $input['password'] = bcrypt($request->input('password'));
+        }
+       
         $input['account_type'] = User::ACCOUNT_TYPE_TEACHER;
 
         if($isGuest){
@@ -223,5 +247,64 @@ class RegistrationController extends Controller
 
         }
 
+    }
+
+    function readingExamConfirmation()
+    {
+        if($this->user->getProfileProgress() < 50){
+            return redirect()->route('register.third');
+        }
+
+        return view('blocks.registration.reading-exam-confirmation'); 
+    }
+
+    function startReadingExam()
+    {
+
+        $userId = Auth::user()->id;
+
+        $story = Story::orderBy('created_at', 'DESC')->first()->formatted();
+        $questions = ReadingQuestion::orderBy('id', 'ASC')->get();
+
+        foreach($questions AS &$q){
+            $q->choices = array_merge($q->wrong_answers, $q->correct_answers);
+            shuffle($q->choices);
+        }
+
+        $past = ReadingResult::where('user_id', $userId)->orderBy('datetime_started', 'DESC')->first();
+        $now = Carbon::now('Asia/Manila');
+        $pastExamDate = Carbon::createFromFormat('Y-m-d H:i:s', $past->datetime_started, 'Asia/Manila');
+        $remaining = $now->diffInMinutes($pastExamDate);
+        if($remaining < $story->limit){
+
+            $story->limit -= $remaining;
+
+        }else{
+            $result = ReadingResult::create([
+                'datetime_started' => NULL,
+                'user_id' => $userId,
+                'reading_storyboard_id' => $story->id
+            ]);
+        }
+
+        
+
+        return view('blocks.registration.reading-exam', compact(['story', 'questions']));
+    }
+
+
+    function saveReadingExamResults(Request $request)
+    {
+        $now = date_create_immutable(NULL);
+        
+        $exam = ReadingResult::where(['user_id' => Auth::user()->id, 'datetime_started'])
+            ->whereNull('datetime_ended')
+            ->orderBy('datetime_started', 'DESC');
+
+        if($exam->exists()){
+            
+        }
+
+        $items = $request->input('items');
     }
 }
