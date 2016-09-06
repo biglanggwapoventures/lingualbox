@@ -55,3 +55,6 @@ Route::group(['prefix' => 'exams', 'middleware' => 'admin-only'], function(){
 
 Route::get('/profile', 'ProfileController@showProfile')->middleware('auth')->name('profile');
 
+Route::get('/about-us', 'AboutUsController@index')->name('about-us');
+Route::get('/help', 'HelpController@index')->name('help');
+
