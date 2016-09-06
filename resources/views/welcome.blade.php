@@ -18,7 +18,11 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#">LingualBox</a>
+              <a class="navbar-brand" href="#">
+                
+                   <img alt="Brand" src="{{ asset('img/logo.png') }}">
+
+              </a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav navbar-right">
