@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('province');
             $table->string('country');
             $table->string('email_address')->unique();
-            $table->timestamp('confirmed_at')->default(0);
+            $table->timestamp('confirmed_at')->default('0000-00-00 00:00:00');
             $table->string('confirmation_code')->nullable();
             $table->string('password');
             $table->enum('account_type', ['TEACHER', 'HR', 'ADMIN']);
