@@ -18,7 +18,7 @@ class CreateReadingExamResultsTable extends Migration
             $table->integer('reading_storyboard_id')->unsigned();;
             $table->text('answers');
             $table->integer('score')->unsigned()->default(0);
-            $table->timestamp('datetime_started')->default(0);
+            $table->timestamp('datetime_started')->default('0000-00-00 00:00:00');
             $table->timestamp('datetime_ended')->nullable();
 
             $table->foreign('user_id')

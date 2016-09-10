@@ -19,7 +19,7 @@ class CreateWrittenExamResultsTable extends Migration
             $table->text('answer');
             $table->integer('checked_by')->unsigned()->nullable();
             $table->enum('result', ['FAILED', 'PASSED'])->nullable();
-            $table->timestamp('datetime_started')->default(0);
+            $table->timestamp('datetime_started')->default('0000-00-00 00:00:00');
             $table->timestamp('datetime_ended')->default(0);
 
             $table->foreign('user_id')
