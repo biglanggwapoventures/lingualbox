@@ -35,7 +35,7 @@ class ReadingExamController extends Controller
            ]);
         }
 
-        Story::create($request->only(['title', 'body', 'limit']));
+        Story::create($request->only(['title', 'body', 'limit', 'passing_score']));
 
         return response()->json([
             'result' => TRUE,
