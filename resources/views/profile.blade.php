@@ -17,23 +17,17 @@
                     <div class="row">
                         <div class="col-sm-10 col-sm-offset-1">
                             <div class="panel-body text-center">
-                                <img src="{{ $displayPhoto }}" alt="" class="img-responsive img-circle">
+                                <img src="{{ Auth::user()->displayPhoto() }}" alt="" class="img-responsive img-circle">
                             </div>
                         </div>
                     </div>
-                    <p class="text-center lead" style="border-top:1px solid #eee">{{ $user->fullname() }}</p>
+                    <p class="text-center lead" style="border-top:1px solid #eee">{{ Auth::user()->fullname() }}</p>
                 </div>
             </div>
             
         </div>
         <div class="col-sm-9">
-            @if($user->isTeacher())
-                @if($profileProgress < 100)
-                    @include('blocks.application-progress', compact('profileProgress'))
-                @endif
-            @elseif($user->isAdmin())
-                @include('blocks.admin-dashboard')
-            @endif
+            @yield('profile-content')
         </div>
     </div>
 

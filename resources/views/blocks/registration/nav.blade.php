@@ -28,22 +28,22 @@
     </a>
   </li>
    <li>
-    <a href="{{ route('register.second') }}">
+    <a href="{{ Auth::check() && Auth::user()->canFillExperience() ? route('register.second') : '#' }} ">
       <i class="fa fa-book"></i> Experience
     </a>
   </li>
    <li>
-     <a href="{{ route('register.third') }}">
+     <a href="{{ Auth::check() && Auth::user()->canFillPreference() ? route('register.third') : '#' }} ">
       <i class="fa fa-photo"></i> Requirements
     </a>
   </li>
   <li>
-     <a href="{{ route('reading.exam') }}">
+     <a href="{{ Auth::check() && Auth::user()->canTakeReadingExam() ? route('pre.reading.exam') : '#' }} ">
       <i class="fa fa-book"></i> Reading Exam
     </a>
   </li>
   <li>
-     <a>
+     <a href="{{ Auth::check() && Auth::user()->canTakeWrittenExam() ? route('pre.written.exam') : '#' }} ">
       <i class="fa fa-pencil"></i> Written Exam
     </a>
   </li>

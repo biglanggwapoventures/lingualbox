@@ -17,6 +17,11 @@ class ComposerServiceProvider extends ServiceProvider
             'exams.manage',
             'App\Http\ViewComposers\ReadingQuestionsComposer'
         );
+
+        view()->composer(
+            'profile',
+            'App\Http\ViewComposers\ProfileComposer'
+        );
     }
 
     /**

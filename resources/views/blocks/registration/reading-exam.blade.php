@@ -6,7 +6,7 @@
 </style>
 <div class="container-fluid">
     <div class="col-sm-12">
-        {!! Form::open(['url' => route('reading.exam.save'), 'method' => 'POST', 'class' => 'common']) !!}
+        {!! Form::open(['url' => route('reading.exam.save'), 'method' => 'POST', 'id' => 'save']) !!}
             <div class="row">
                 <div class="col-sm-6">
                     <div class="panel panel-default">
@@ -17,11 +17,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                                <p class="lead text-center text-info"  id="countdown" data-limit="{{ $story->limit }}"></p>
-                        </div>
-                    </div>
+                    <div class="alert alert-success text-center" id="countdown" data-limit="{{ $story->limit }}" style="font-size:150%"> </div>
                     <div class="row">
                         <div class="col-sm-8 col-sm-offset-2">
                             @foreach($questions AS $i => $q)
@@ -32,7 +28,8 @@
                                     <div class="mc-answer"> 
                                         @foreach($q->choices AS $ii => $c)
                                         <div class="mc-answer__item">
-                                            <input id="{{ "{$i}{$ii}" }}" value="{{$c}}" type="checkbox" name="item[{{ $q->id }}][answers][]" class="mc-answer__input"/>
+                                            <input id="{{ "{$i}{$ii}" }}" value="{{$c}}" type="{{ $q->num_correct === 1 ? 'radio' : 'checkbox' 
+                                            }}" name="item[{{ $q->id }}][answers][]" class="mc-answer__input"/>
                                             <label for="{{ "{$i}{$ii}" }}" class="mc-answer__label">{{ $c }}</label>
                                             <div class="mc-answer__check-outer"> </div>
                                             <div class="mc-answer__check-inner"> </div>

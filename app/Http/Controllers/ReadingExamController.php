@@ -25,6 +25,7 @@ class ReadingExamController extends Controller
             'title' => 'required',
             'body' => 'required',
             'limit' => 'required|numeric|min:1',
+            'passing_score' => 'required|numeric'
         ]);
 
         if ($validator->fails()) {
@@ -37,7 +38,7 @@ class ReadingExamController extends Controller
         Story::create($request->only(['title', 'body', 'limit']));
 
         return response()->json([
-            'result' => TRUE
+            'result' => TRUE,
         ]);
     }
 
@@ -77,10 +78,11 @@ class ReadingExamController extends Controller
            ]);
         }
 
-        Question::create($request->only(['body', 'correct_answers', 'wrong_answers']));
+        $question = Question::create($request->only(['body', 'correct_answers', 'wrong_answers']));
 
         return response()->json([
-            'result' => TRUE
+            'result' => TRUE,
+             'next_url' => route('reading.questions.update', ['id' => $question->id]),
         ]);
     }
 

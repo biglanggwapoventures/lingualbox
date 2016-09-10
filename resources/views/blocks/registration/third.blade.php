@@ -7,7 +7,7 @@
         <div class="well">
             <fieldset>
                 <legend class="text-center" style="border-bottom:0;margin-bottom:30px">Please input and upload needed requirements</legend>
-                {!! Form::open(['url' => route('register.third.save'), 'method' => 'post', 'id' => 'third-registration',  'files' => TRUE]) !!}
+                {!! Form::open(['url' => route('register.third.save'), 'method' => 'post', 'id' => 'third-registration',  'files' => TRUE, 'data-next'=>route('pre.reading.exam')]) !!}
                 <div class="row">
                     <div class="col-sm-5">
                         <div class="form-group">
@@ -33,11 +33,6 @@
                 </div>
                 <hr>
                 <p class="text-center lead">Upload files</p>
-                <div class="alert alert-info">
-                     <p>
-                       <b><i class="glyphicon glyphicon-info-sign"></i></b> Use <a href="http://www.usen.com/speedtest02/adsl/speedtest.html" target="_blank">USEN</a>  for testing your internet speed
-                    </p>
-                </div>
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
@@ -49,6 +44,11 @@
                         <div class="form-group">
                             {{ Form::label('internet_speed_screenshot', 'Screeshot of your internet speed')}}
                             {{ Form::file('internet_speed_screenshot', ['accept'=>'image/*']) }}
+                        </div>
+                         <div class="alert alert-info">
+                            <p>
+                            <b><i class="glyphicon glyphicon-info-sign"></i></b> Use <a href="http://www.usen.com/speedtest02/adsl/speedtest.html" target="_blank">USEN</a>  for testing your internet speed
+                            </p>
                         </div>
                     </div>
                     <div class="col-sm-4">

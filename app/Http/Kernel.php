@@ -51,6 +51,8 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'admin-only' => \App\Http\Middleware\AdminOnlyMiddleware::class,
+        'hr-only' => \App\Http\Middleware\HROnlyMiddleware::class,
         'check-past-reading-exam' => \App\Http\Middleware\CheckPastReadingExams::class,
+        'check-past-written-exam' => \App\Http\Middleware\CheckPastWrittenExams::class,
     ];
 }

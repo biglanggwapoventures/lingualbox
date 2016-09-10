@@ -9,18 +9,17 @@
                     <fieldset>
                         <p class="lead text-center">
                             <strong>INSTRUCTIONS</strong><br>
-                            Please choose the correct answer for the corresponding number. This exam has time limit. Please finish the exam before the time ends.
+                                Read the question carefully and answer what is being asked.
                             <br>
-                        
                             
                         </p>
                         <p class="lead text-center">
-                            You are about to take the reading exam. Click on the button below to proceed.
+                           You are about to take the written exam. Click on the button below to proceed.
                         </p>
                         <div class="row">
                             <div class="col-sm-4 col-sm-offset-4">
-                                {!! Form::open(['url' => route('reading.exam'), 'method' => 'POST']) !!}
-                                    <a class="btn btn-primary btn-block btn-lg" href="{{ route('reading.exam') }}">Take the exam!</a>
+                                {!! Form::open(['url' => route('written.exam'), 'method' => 'POST']) !!}
+                                    <a class="btn btn-primary btn-block btn-lg" href="{{ route('written.exam') }}">Take the exam!</a>
                                 {!! Form::close() !!}
                             </div>
                         </div>

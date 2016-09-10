@@ -1,38 +1,39 @@
 @extends('layouts.master')
 
-@push('css')
-<link rel="stylesheet" href="{{ asset('css/exams.css') }}">
-@endpush
+@section('title', 'Manage Reading Exam')
 
-@section('title', 'Update Reading Exam')
 @section('content')
 
-<div class="container" style="padding-top:20px">
+@push('css')
+<link rel="stylesheet" href="{{ asset('css/manage-exam-questions.css') }}" />
+@endpush
+
+@include('blocks.profile-navbar')
+<div class="container">
     <div class="row">
         <div class="col-sm-3">
-            <ul class="nav nav-pills nav-stacked">
-                <li role="presentation" class="{{  Route::currentRouteNamed('reading.storyboard.edit') ? 'active' : ''}}">
-                    <a href="{{ route('reading.storyboard.edit') }}"><i class="fa fa-book"></i> Storyboard</a>
-                </li>
-                @foreach($questions AS $key => $row)
-                    <li role="presentation" class="{{  Route::currentRouteNamed('reading.questions.edit') && Route::input('id') == $row['id'] ? 'active' : ''}}">
-                        <a href="{{ route('reading.questions.edit', ['id' => $row['id']]) }}"><i class="fa fa-circle-o"></i> Question {{ $key + 1}}</a>
+            <a href="{{ route('reading.questions.create') }}" class="btn btn-info btn-block"><i class="fa fa-plus fa-fw"></i> Create new question</a>
+            <div class="panel panel-default" style="margin-top:20px;">
+                <!-- List group -->
+                <ul class="list-group">
+                    <li class="list-group-item {{  Route::currentRouteNamed('reading.storyboard.edit') ? 'active' : ''}}">
+                        <a href="{{ route('reading.storyboard.edit') }}"><i class="fa fa-book fa-fw"></i> Storyboard</a>
                     </li>
-                @endforeach
-                <li role="presentation" class="{{  Route::currentRouteNamed('reading.questions.create') ? 'active' : ''}}">
-                    <a href="{{ route('reading.questions.create') }}"><i class="fa fa-plus"></i> Add new question</a>
-                </li>
-            </ul>
+                    @if(!empty($questions))
+                        @foreach($questions AS $key => $row)
+                            <li class="list-group-item  {{  Route::currentRouteNamed('reading.questions.edit') && Route::input('id') == $row['id'] ? 'active' : ''}}">
+                                <a href="{{ route('reading.questions.edit', ['id' => $row['id']]) }}"><i class="fa fa-pencil fa-fw"></i> Question # {{ $key+1 }}</a>
+                            </li>
+                        @endforeach
+                    @endif
+                </ul>
+            </div>
+            <a href="{{ route('profile') }}" class="btn btn-link btn-block"><i class="fa fa-chevron-left"></i> Go back to profile</a>
+            
         </div>
         <div class="col-sm-9">
-            <div class="well well-sm">
-            
-                @yield('form')
-                
-                
-            </div>
+           @yield('form')
         </div>
     </div>
 </div>
-
 @endsection

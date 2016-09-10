@@ -17,7 +17,11 @@ use DB;
 use App\ReadingExamResult AS ReadingResult;
 use App\ReadingStoryboard AS Story;
 use App\ReadingQuestion AS ReadingQuestion;
+use App\WrittenExam;
+use App\WrittenExamResult;
 use Carbon\Carbon;
+
+use Mail;
 
 class RegistrationController extends Controller
 {
@@ -88,6 +92,7 @@ class RegistrationController extends Controller
 
         if($isGuest){
             $rules['password'] = 'required|min:4|confirmed';
+
         }else{
             $rules['email_address'] .= (','.Auth::user()->id);
         }
@@ -111,8 +116,11 @@ class RegistrationController extends Controller
         $input['account_type'] = User::ACCOUNT_TYPE_TEACHER;
 
         if($isGuest){
+
             $user = User::create($input);
-            Auth::loginUsingId($user->id);
+            Auth::loginUsingId($user->id);         
+            $user->sendVerificationLink();  
+
         }else{
             User::where('id', Auth::user()->id)->update($input);
         }
@@ -121,6 +129,24 @@ class RegistrationController extends Controller
             'result' => TRUE,
         ]);
         
+    }
+
+    function verifyEmail($code)
+    {
+        $user = User::where(['confirmation_code' => $code])->firstOrFail();
+        $user->confirmed_at = NULL;
+        $user->save();
+
+        Auth::loginUsingId($user->id);
+
+        session()->flash('email_verification_ok', TRUE);
+        return redirect()->route('profile');
+    }
+
+    function resendVerification()
+    {
+        $this->user->sendVerificationLink();
+        return redirect()->route('profile');
     }
 
     function savePartTwo(Request $request)
@@ -190,14 +216,26 @@ class RegistrationController extends Controller
         $user = Auth::user();
         // return response()->json($request->all());
 
-        $validator = Validator::make($request->all(), [
+        $rules = [
             'work_schedule' => 'required|in:MORNING,AFTERNOON,EVENING,MIDNIGHT',
             'demo_day' => 'required|in:MON,TUE,WED,THU,FRI,SAT,SUN',
             'demo_time' => 'required|max:20',
-            'certifications' => 'image|max:2048',
-            'display_photo' => 'required|image|max:2048',
-            'internet_speed_screenshot' => 'required|image|max:2048'
-        ]);
+            // 'certifications' => 'image|max:2048',
+            // 'display_photo' => 'required|image|max:2048',
+            // 'internet_speed_screenshot' => 'required|image|max:2048'
+        ];
+
+        $hasPreference = $this->user->preference()->exists();
+
+        if(!$hasPreference || !$this->user->preference->display_photo_filename){
+             $rules['display_photo'] = 'required|image|max:2048';
+        }
+
+         if(!$hasPreference || !$this->user->preference->internet_speed_screenshot_filename){
+             $rules['internet_speed_screenshot'] = 'required|image|max:2048';
+        }
+
+        $validator = Validator::make($request->all(), $rules);
 
         if ($validator->fails()) {
             return response()->json([
@@ -251,43 +289,43 @@ class RegistrationController extends Controller
 
     function readingExamConfirmation()
     {
-        if($this->user->getProfileProgress() < 50){
-            return redirect()->route('register.third');
+        if(!$this->user->canTakeReadingExam()){
+            abort(404);   
         }
 
-        return view('blocks.registration.reading-exam-confirmation'); 
+        if($this->user->hasOngoingReadingExam()){
+            return redirect()->route('reading.exam');
+        }else{
+            return view('blocks.registration.reading-exam-confirmation'); 
+        }
     }
 
     function startReadingExam()
     {
 
-        $userId = Auth::user()->id;
-
         $story = Story::orderBy('created_at', 'DESC')->first()->formatted();
-        $questions = ReadingQuestion::orderBy('id', 'ASC')->get();
+        $questions = ReadingQuestion::all();
 
         foreach($questions AS &$q){
             $q->choices = array_merge($q->wrong_answers, $q->correct_answers);
+            $q->num_correct = count($q->correct_answers);
             shuffle($q->choices);
         }
 
-        $past = ReadingResult::where('user_id', $userId)->orderBy('datetime_started', 'DESC')->first();
-        $now = Carbon::now('Asia/Manila');
-        $pastExamDate = Carbon::createFromFormat('Y-m-d H:i:s', $past->datetime_started, 'Asia/Manila');
-        $remaining = $now->diffInMinutes($pastExamDate);
-        if($remaining < $story->limit){
+       
+        if($this->user->hasOngoingReadingExam()){
 
-            $story->limit -= $remaining;
+            $story->limit  = $this->user->getRemainingReadingExamTime();
 
         }else{
+
+            $story->limit *= 60;
             $result = ReadingResult::create([
                 'datetime_started' => NULL,
-                'user_id' => $userId,
+                'user_id' => $this->user->id,
                 'reading_storyboard_id' => $story->id
             ]);
         }
-
-        
 
         return view('blocks.registration.reading-exam', compact(['story', 'questions']));
     }
@@ -295,16 +333,65 @@ class RegistrationController extends Controller
 
     function saveReadingExamResults(Request $request)
     {
-        $now = date_create_immutable(NULL);
-        
-        $exam = ReadingResult::where(['user_id' => Auth::user()->id, 'datetime_started'])
-            ->whereNull('datetime_ended')
-            ->orderBy('datetime_started', 'DESC');
+         $exam = $this->user->latestReadingExamResult();
+         $items = $request->input('item') ?: [];
+         $answers = [];
+         foreach($items AS $questionId => $choices){
+             $answers[$questionId] = $choices['answers'];
+         }
+         $exam->answers = $answers;
+         $exam->save();
+         if($request->input('finish')){
+             $exam->calculateScore()->save();
+             return response()->json(['result' => TRUE, 'next_url' => route('profile')]);
+         }
+    }
 
-        if($exam->exists()){
-            
+
+    function writtenExamConfirmation()
+    {
+        if($this->user->hasOngoingWrittenExam()){
+            return redirect()->route('written.exam');
+        }else{
+            return view('blocks.registration.written-exam-confirmation'); 
+        }
+    }
+
+    function startWrittenExam()
+    {
+       
+        if($this->user->hasOngoingWrittenExam()){
+
+            $exam = $this->user->latestWrittenExamResult();
+            $essay = $exam->essay;
+            $essay->limit = $this->user->getRemainingWrittenExamTime();
+
+        }else{
+
+            $essay = WrittenExam::inRandomOrder()->first();
+            $exam = new WrittenExamResult([
+                'written_exam_id' => $essay->id,
+                'datetime_started' => NULL
+            ]);
+            $this->user->writtenExamResult()->save($exam);
+
         }
 
-        $items = $request->input('items');
+        return view('blocks.registration.written-exam', compact(['essay']));
     }
+
+
+    function saveWrittenExamResults(Request $request)
+    {
+         $exam = $this->user->latestWrittenExamResult();
+         $exam->answer = $request->input('answer');
+         $exam->datetime_ended = NULL;
+         $exam->save();
+         return response()->json(['result' => TRUE, 'next_url' => route('profile')]);
+    }
+
+    
+
+
+
 }

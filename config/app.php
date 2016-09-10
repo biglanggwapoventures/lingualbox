@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Manila',
 
     /*
     |--------------------------------------------------------------------------
@@ -157,7 +157,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\ComposerServiceProvider::class,
 
-        Collective\Html\HtmlServiceProvider::class
+        Collective\Html\HtmlServiceProvider::class,
 
     ],
 

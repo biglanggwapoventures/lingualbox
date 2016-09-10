@@ -1,16 +1,4 @@
 <?php
-
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
-
 Route::get('/', function () {
     return view('home');
 })->name('home');
@@ -35,14 +23,23 @@ Route::group(['prefix' => 'registration'], function(){
             Route::get('reading-exam', 'RegistrationController@startReadingExam')->name('reading.exam');
             Route::post('reading-exam', 'RegistrationController@saveReadingExamResults')->name('reading.exam.save');
         });
+
+        Route::group(['middleware' => 'check-past-written-exam'], function(){
+            Route::get('pre-written-exam', 'RegistrationController@writtenExamConfirmation')->name('pre.written.exam');
+            Route::get('written-exam', 'RegistrationController@startWrittenExam')->name('written.exam');
+            Route::post('written-exam', 'RegistrationController@saveWrittenExamResults')->name('written.exam.save');
+        });
         
 
         Route::post('second-step', 'RegistrationController@savePartTwo')->name('register.second.save');
         Route::post('third-step', 'RegistrationController@savePartThree')->name('register.third.save');
+        Route::get('resend-verification', 'RegistrationController@resendVerification')->name('email.verification.resend');
     });
 
     Route::post('first-step', 'RegistrationController@savePartOne')->name('register.first.save');
 });
+
+Route::get('/verify-account/{code}', 'RegistrationController@verifyEmail')->name('email.verify');
 
 Route::group(['prefix' => 'exams', 'middleware' => ['auth', 'admin-only']], function(){
     Route::group(['prefix' => 'reading'], function(){
@@ -64,6 +61,11 @@ Route::group(['prefix' => 'exams', 'middleware' => ['auth', 'admin-only']], func
             Route::post('questions/{id}', 'WrittenExamController@updateQuestion')->name('written.questions.update');
         });
     });
+});
+
+Route::group(['prefix' => 'hr', 'middleware' => ['hr-only']], function(){
+    Route::get('check-written-exams', 'ProfileController@checkWrittenExams')->name('written.exam.check');
+    Route::get('review-written-exams/{id}', 'ProfileController@reviewWrittenExam')->name('written.exam.review');
 });
 
 Route::get('/profile', 'ProfileController@showProfile')->middleware('auth')->name('profile');

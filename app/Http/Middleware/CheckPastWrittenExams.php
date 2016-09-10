@@ -3,14 +3,10 @@
 namespace App\Http\Middleware;
 
 use Closure;
-
 use Auth;
 
-use App\ReadingExamResult AS ReadingResult;
-use App\ReadingStoryboard AS Story;
-use Carbon\Carbon;
 
-class CheckPastReadingExams
+class CheckPastWrittenExams
 {
     /**
      * Handle an incoming request.
@@ -25,10 +21,8 @@ class CheckPastReadingExams
 
             $user = Auth::user();
 
-            if(!$user->isAccountVerified()){
-                session()->flash('email_verification_notice', 'You need to verify you email address before you are able to take the reading exam.');
-            }else if($user->canTakeReadingExam()){
-                 return $next($request);
+            if($user->canTakeWrittenExam()){
+                return $next($request);
             }
 
             return redirect()->route('profile');
@@ -36,6 +30,5 @@ class CheckPastReadingExams
         }
 
         return redirect()->route('home');
-        
     }
 }
