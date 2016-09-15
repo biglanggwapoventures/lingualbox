@@ -11,6 +11,10 @@ use Auth;
 use DB;
 
 use App\WrittenExamResult;
+
+use Validator;
+
+
 class ProfileController extends Controller
 {
     function showProfile()
@@ -79,13 +83,13 @@ class ProfileController extends Controller
             ->join('users AS u', 'u.id', '=', 'w.user_id')
             ->join('user_preferences AS up', 'up.user_id', '=', 'u.id')
             ->where([
-                ['up.work_schedule', '=', $session]
+                ['up.work_schedule', '=', $session],
             ])
             ->whereNull('w.result')
             ->groupBy('w.user_id')
             ->get();
 
-        return view('blocks.check-written-exams', compact('items'));
+        return view('blocks.check-written-exams', compact('items', 'session'));
     }
 
     function reviewWrittenExam($id)
@@ -93,4 +97,38 @@ class ProfileController extends Controller
         $exam = WrittenExamResult::findOrFail($id);
          return view('blocks.view-written-exam-answer', compact('exam'));
     }
+
+    function checkWrittenExam($id, Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'mark' => 'required|in:PASSED,FAILED',
+            'content' => 'required_if:mark,PASSED'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'result' => FALSE,
+                'errors' => $validator->errors()
+            ]);
+        }
+
+        $input =  $request->only(['mark', 'content']);
+        
+        $exam = WrittenExamResult::findOrFail($id);
+        $exam->result = $input['mark'];
+        $exam->checked_by = Auth::user()->id;
+        if($input['mark'] === 'PASSED'){
+            $exam->user->prepareForDemoClass($input['content']);
+        }
+        $exam->save();
+
+        return response()->json([
+            'result' => TRUE,
+            'redirect_url' => route('written.exam.list')
+        ]);
+        
+    }
+
+    
 }

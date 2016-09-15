@@ -80,4 +80,11 @@ class WrittenExamController extends Controller
             'question' => $question
         ]);
     }
+
+    
+
+    function checkExam($id, Request $request)
+    {
+        
+    }
 }

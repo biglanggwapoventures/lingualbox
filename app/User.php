@@ -8,6 +8,7 @@ use App\UserExperience AS Experience;
 use App\UserPreference AS Preference;
 use App\ReadingExamResult AS ReadingResult;
 use App\ReadingStoryboard AS Story;
+use App\UserDemoClass AS DemoClass;
 use Carbon\Carbon;
 use Auth;
 use Mail;
@@ -42,6 +43,12 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+
+    function scopeTeacher($query)
+    {
+        return $query->where('account_type', self::ACCOUNT_TYPE_TEACHER);
+    }
+
     function getBirth($part){
 
         $parts = ['month' => 'm', 'year' => 'Y', 'day' => 'd'];
@@ -65,9 +72,149 @@ class User extends Authenticatable
         return $this->hasOne('App\UserPreference');
     }
 
+    
+
     function readingExamResult()
     {
         return $this->hasMany('App\ReadingExamResult');
+    }
+
+    function latestReadingExam()
+    {
+        return $this->hasOne('App\ReadingExamResult')->orderBy('datetime_started', 'DESC');
+    }
+
+    function latestWrittenExam()
+    {
+        return $this->hasOne('App\WrittenExamResult')->orderBy('datetime_started', 'DESC');
+    }
+
+    function demoClass()
+    {
+        return $this->hasOne('App\UserDemoClass')->select(['id', 'user_id', 'instructions', 'instructions_sent_at', 'status'])->orderBy('id', 'DESC');
+    }
+
+    function orientation()
+    {
+        return $this->hasOne('App\UserOrientation')->select(['id', 'user_id', 'status'])->orderBy('id', 'DESC');
+    }
+
+    function requirement()
+    {
+        return $this->hasOne('App\UserRequirement')->select(['id', 'user_id', 'status'])->orderBy('id', 'DESC');
+    }
+    
+
+    function phaseStatus($phase = 'OVERALL')
+    {
+        $summary = [
+            'READING' => '-',
+            'WRITTEN' => '-',
+            'DEMO' => '-',
+            'ORIENTATION' => '-',
+            'REQUIREMENTS' => '-',
+            'OVERALL' => 'INC'
+        ];
+
+        $keys = array_keys($summary);
+
+        if($this->latestReadingExam()->exists()){
+            if($this->latestReadingExam->didPassed()){
+                $summary['READING'] = 'PASSED';
+            }else{
+                $summary['READING'] = 'FAILED';
+                if((array_search($phase, $keys) > array_search('READING', $keys))){
+                    if($phase === 'OVERALL'){
+                        return 'FAILED';
+                    }
+                    return '-';
+                }
+            }
+            if($phase === 'READING'){
+                return $summary['READING'];
+            }
+        }else{
+            if((array_search($phase, $keys) > array_search('READING', $keys))){
+                return '-';
+            }
+            return '-';
+        }
+
+        if($this->latestWrittenExam()->exists()){
+            if($this->latestWrittenExam->didPassed()){
+                $summary['WRITTEN'] = 'PASSED';
+            }else{
+                $summary['WRITTEN'] = 'FAILED';
+                if((array_search($phase, $keys) > array_search('WRITTEN', $keys))){
+                    if($phase === 'OVERALL'){
+                        return 'FAILED';
+                    }
+                    return '-';
+                }
+            }
+            if($phase === 'WRITTEN'){
+                return $summary['WRITTEN'];
+            }
+        }else{
+            if((array_search($phase, $keys) > array_search('WRITTEN', $keys))){
+                return '-';
+            }
+            return '-';
+        }
+
+        if($this->demoClass()->exists()){
+            $summary['DEMO'] = $this->demoClass->status;
+            if($summary['DEMO'] === 'FAILED'){
+                if((array_search($phase, $keys) > array_search('DEMO', $keys))){
+                    if($phase === 'OVERALL'){
+                        return 'FAILED';
+                    }
+                    return '-';
+                }
+            }
+            if($phase === 'DEMO'){
+                return $summary['DEMO'];
+            }
+        }else{
+            return 'PENDING';
+        }
+
+        if($this->orientation()->exists()){
+            $summary['ORIENTATION'] = $this->orientation->status;
+            if($summary['ORIENTATION'] === 'FAILED'){
+                if((array_search($phase, $keys) > array_search('ORIENTATION', $keys))){
+                    if($phase === 'OVERALL'){
+                        return 'FAILED';
+                    }
+                    return '-';
+                }
+            }
+            if($phase === 'ORIENTATION'){
+                return $summary['ORIENTATION'];
+            }
+        }else{
+             return 'PENDING';
+        }
+
+        if($this->requirement()->exists()){
+            $summary['REQUIREMENTS'] = $this->requirement->status;
+            if($summary['REQUIREMENTS'] === 'FAILED'){
+                if((array_search($phase, $keys) > array_search('REQUIREMENTS', $keys))){
+                    if($phase === 'OVERALL'){
+                        return 'FAILED';
+                    }
+                    return '-';
+                }
+            }
+            if($phase === 'REQUIREMENTS'){
+                return $summary['REQUIREMENTS'];
+            }
+        }else{
+             return 'PENDING';
+        }
+
+        return $summary[$phase];
+
     }
 
     function writtenExamResult()
@@ -285,6 +432,22 @@ class User extends Authenticatable
             $m->from('support@lingualbox.com', 'LingualBox');
             $m->to($this->email_address, $this->firstname)->subject('Verify your LingualBox account');
         });
+    }
+
+    function prepareForDemoClass($instructions, $status = 'PENDING')
+    {
+        $this->demoClass()->save(new DemoClass([
+            'instructions' => $instructions,
+            'instructions_sent_at' => NULL,
+            'status' => $status
+        ]));
+
+        Mail::send('blocks.email-templates.demo-class-details', ['user' => $this->firstname, 'content' => $instructions], function ($m){
+            $m->from('support@lingualbox.com', 'LingualBox');
+            $m->to($this->email_address, $this->firstname)->subject('Congratulations on passing your written exam!');
+        });
+
+        return TRUE;
     }
 
     function displayPhoto()

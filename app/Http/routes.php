@@ -63,13 +63,23 @@ Route::group(['prefix' => 'exams', 'middleware' => ['auth', 'admin-only']], func
     });
 });
 
-Route::group(['prefix' => 'hr', 'middleware' => ['hr-only']], function(){
-    Route::get('check-written-exams', 'ProfileController@checkWrittenExams')->name('written.exam.check');
-    Route::get('review-written-exams/{id}', 'ProfileController@reviewWrittenExam')->name('written.exam.review');
+Route::group(['prefix' => 'written-exam', 'middleware' => ['hr-only']], function(){
+    Route::get('list', 'ProfileController@checkWrittenExams')->name('written.exam.list');
+    Route::get('view/{id}', 'ProfileController@reviewWrittenExam')->name('written.exam.view');
+    Route::post('check/{id}', 'ProfileController@checkWrittenExam')->name('written.exam.check');
+});
+
+Route::group(['prefix' => 'applicants', 'middleware' => ['hr-only']], function(){
+    Route::get('summary', 'ApplicantsController@summary')->name('applicants.summary');
+    Route::patch('update/{id}', 'ApplicantsController@update')->name('applicants.update');
 });
 
 Route::get('/profile', 'ProfileController@showProfile')->middleware('auth')->name('profile');
 
 Route::get('/about-us', 'AboutUsController@index')->name('about-us');
 Route::get('/help', 'HelpController@index')->name('help');
+
+Route::get('/demo', function(){
+    return view('blocks.email-templates.demo-class-details');
+});
 

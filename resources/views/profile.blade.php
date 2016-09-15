@@ -33,3 +33,7 @@
 
 </div>
 @endsection
+
+@push('js')
+@stack('profile-js')
+@endpush

@@ -37,7 +37,7 @@ class WrittenExamResult extends Model
 
     function user()
     {
-        return $this->belongsTo('App\User', 'user_id', 'id')->select(['id', 'firstname', 'lastname', 'gender']);
+        return $this->belongsTo('App\User', 'user_id', 'id')->select(['id', 'firstname', 'lastname', 'gender', 'email_address']);
     }
 
     function userPreference()
@@ -58,5 +58,10 @@ class WrittenExamResult extends Model
     function formattedAnswer()
     {
         return preg_replace('/\r\n|\r|\n/', '<br />', $this->answer);
+    }
+
+    function formattedDemoInstructions()
+    {
+        return preg_replace('/\r\n|\r|\n/', '<br />', $this->demo_instructions);
     }
 }
