@@ -113,7 +113,7 @@ class User extends Authenticatable
             'DEMO' => '-',
             'ORIENTATION' => '-',
             'REQUIREMENTS' => '-',
-            'OVERALL' => 'INC'
+            'OVERALL' => 'HIRED'
         ];
 
         $keys = array_keys($summary);
@@ -134,9 +134,6 @@ class User extends Authenticatable
                 return $summary['READING'];
             }
         }else{
-            if((array_search($phase, $keys) > array_search('READING', $keys))){
-                return '-';
-            }
             return '-';
         }
 
@@ -156,9 +153,6 @@ class User extends Authenticatable
                 return $summary['WRITTEN'];
             }
         }else{
-            if((array_search($phase, $keys) > array_search('WRITTEN', $keys))){
-                return '-';
-            }
             return '-';
         }
 
@@ -171,12 +165,16 @@ class User extends Authenticatable
                     }
                     return '-';
                 }
+            }else if($summary['DEMO'] === 'PENDING'){
+                 $summary['OVERALL'] = 'INC';
             }
             if($phase === 'DEMO'){
                 return $summary['DEMO'];
             }
         }else{
-            return 'PENDING';
+            if($phase !== 'OVERALL'){
+                return 'PENDING';
+            }
         }
 
         if($this->orientation()->exists()){
@@ -188,12 +186,16 @@ class User extends Authenticatable
                     }
                     return '-';
                 }
+            }else if($summary['ORIENTATION'] === 'PENDING'){
+                 $summary['OVERALL'] = 'INC';
             }
             if($phase === 'ORIENTATION'){
                 return $summary['ORIENTATION'];
             }
         }else{
-             return 'PENDING';
+            if($phase !== 'OVERALL'){
+                return 'PENDING';
+            }
         }
 
         if($this->requirement()->exists()){
@@ -205,12 +207,17 @@ class User extends Authenticatable
                     }
                     return '-';
                 }
+            }else if($summary['REQUIREMENTS'] === 'PENDING'){
+                 $summary['OVERALL'] = 'INC';
             }
             if($phase === 'REQUIREMENTS'){
                 return $summary['REQUIREMENTS'];
             }
         }else{
-             return 'PENDING';
+            if($phase !== 'OVERALL'){
+                return 'PENDING';
+            }
+           
         }
 
         return $summary[$phase];
