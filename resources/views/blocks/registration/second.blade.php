@@ -8,7 +8,7 @@
         <div class="well">
 
             <fieldset>
-                    <legend class="text-center" style="border-bottom:0;margin-bottom:30px">Let's add your work experience<br><small>Please input your work experience as a teacher.</small></legend>
+                    <legend class="text-center" style="border-bottom:0;margin-bottom:30px">Let's add your work experiences<br><small>Please input your work experience as a teacher.</small></legend>
                     {!! Form::open(array('url' => route('register.second.save'), 'method' => 'post', 'class' => 'clearfix common', 'data-next' => route('register.third'))) !!}
                         <table class="table" data-idx="{{ count($eslExp) ? count($eslExp) - 1  : 0 }}">
                             <thead>
@@ -24,9 +24,9 @@
                             <tbody>
                                 @if(empty($eslExp))
                                 <tr>
-                                    <td> {!! Form::text("exp[0][name]", null, ['class' => 'form-control', 'data-name' => 'exp[idx][name]']) !!}</td>
-                                    <td> {!! Form::text("exp[0][position]", null, ['class' => 'form-control', 'data-name' => 'exp[idx][position]']) !!}</td>
-                                    <td> {!! Form::text("exp[0][location]", null, ['class' => 'form-control', 'data-name' => 'exp[idx][location]']) !!}</td>
+                                    <td> {!! Form::text("exp[0][name]", null, ['class' => 'form-control', 'data-name' => 'exp[idx][name]', 'placeholder' => 'e.g. English Academy']) !!}</td>
+                                    <td> {!! Form::text("exp[0][position]", null, ['class' => 'form-control', 'data-name' => 'exp[idx][position]', 'placeholder' => 'e.g. Online Teacher']) !!}</td>
+                                    <td> {!! Form::text("exp[0][location]", null, ['class' => 'form-control', 'data-name' => 'exp[idx][location]', 'placeholder' => 'e.g. Cebu City']) !!}</td>
                                     <td> {!! Form::text("exp[0][years]", null, ['class' => 'form-control', 'data-name' => 'exp[idx][years]']) !!}</td>
                                     <td> 
                                         {!! Form::text("exp[0][months]", null, ['class' => 'form-control', 'data-name' => 'exp[idx][months]']) !!}
@@ -70,9 +70,9 @@
                             <tbody>
                                 @if(empty($ccExp))
                                 <tr>
-                                    <td> {!! Form::text("exp[200][name]", null, ['class' => 'form-control', 'data-name' => 'exp[idx][name]']) !!}</td>
-                                    <td> {!! Form::text("exp[200][position]", null, ['class' => 'form-control', 'data-name' => 'exp[idx][position]']) !!}</td>
-                                    <td> {!! Form::text("exp[200][location]", null, ['class' => 'form-control', 'data-name' => 'exp[idx][location]']) !!}</td>
+                                    <td> {!! Form::text("exp[200][name]", null, ['class' => 'form-control', 'data-name' => 'exp[idx][name]', 'placeholder' => 'e.g. Convergys']) !!}</td>
+                                    <td> {!! Form::text("exp[200][position]", null, ['class' => 'form-control', 'data-name' => 'exp[idx][position]', 'placeholder' => 'e.g. Outbound Agent']) !!}</td>
+                                    <td> {!! Form::text("exp[200][location]", null, ['class' => 'form-control', 'data-name' => 'exp[idx][location]', 'placeholder' => 'e.g. Cebu City']) !!}</td>
                                     <td> {!! Form::text("exp[200][years]", null, ['class' => 'form-control', 'data-name' => 'exp[idx][years]']) !!}</td>
                                     <td> 
                                         {!! Form::text("exp[200][months]", null, ['class' => 'form-control', 'data-name' => 'exp[idx][months]']) !!}

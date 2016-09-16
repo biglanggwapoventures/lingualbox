@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <hr>
-                <p class="text-center lead">What is your preferred day and time for a demonstration?</p>
+                <p class="text-center lead">What is your preferred day and time for your demo class this week?</p>
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
@@ -27,7 +27,7 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            {{ Form::bsText('demo_time', $preference->demo_time, 'Time', []) }}
+                            {{ Form::bsText('demo_time', $preference->demo_time, 'Time', ['placeholder' => 'e.g. 9am-10am']) }}
                         </div>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                         </div>
                          <div class="alert alert-info">
                             <p>
-                            <b><i class="glyphicon glyphicon-info-sign"></i></b> Use <a href="http://www.usen.com/speedtest02/adsl/speedtest.html" target="_blank">USEN</a>  for testing your internet speed
+                            <b><i class="glyphicon glyphicon-info-sign"></i></b> Use <a href="http://www.usen.com/speedtest02/adsl/speedtest.html" target="_blank">USEN</a>  for testing your internet speed. Please click <a href="http://www.usen.com/speedtest02/adsl/speedtest.html" target="_blank">here</a>.
                             </p>
                         </div>
                     </div>

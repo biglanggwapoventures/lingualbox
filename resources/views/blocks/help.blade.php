@@ -4,6 +4,11 @@
 @section('content')
     @include('blocks.navbar')
 
-     <!- CODE GOES HERE ->
+     <!-- CODE GOES HERE -->
+
+     <div>
+     	<h1>Hi</h1>
+     </div>
+
 
 @endsection
