@@ -119,10 +119,8 @@ class User extends Authenticatable
         $keys = array_keys($summary);
 
         if($this->latestReadingExam()->exists()){
-            if($this->latestReadingExam->didPassed()){
-                $summary['READING'] = 'PASSED';
-            }else{
-                $summary['READING'] = 'FAILED';
+            $summary['READING'] = $this->latestReadingExam->didPassed() ? 'PASSED' : 'FAILED';
+            if($summary['READING'] === 'FAILED'){
                 if((array_search($phase, $keys) > array_search('READING', $keys))){
                     if($phase === 'OVERALL'){
                         return 'FAILED';
@@ -138,10 +136,8 @@ class User extends Authenticatable
         }
 
         if($this->latestWrittenExam()->exists()){
-            if($this->latestWrittenExam->didPassed()){
-                $summary['WRITTEN'] = 'PASSED';
-            }else{
-                $summary['WRITTEN'] = 'FAILED';
+            $summary['WRITTEN'] = $this->latestWrittenExam->didPassed() ? 'PASSED' : 'FAILED';
+            if($summary['WRITTEN'] == 'FAILED'){
                 if((array_search($phase, $keys) > array_search('WRITTEN', $keys))){
                     if($phase === 'OVERALL'){
                         return 'FAILED';

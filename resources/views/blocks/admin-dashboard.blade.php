@@ -33,25 +33,13 @@
                 </a>
             </div>
             <div class="col-sm-3 col-xs-6">
-                <a class="menu-icon">
+                <a class="menu-icon" href="{{ route('applicants.summary') }}">
                     <div class="panel panel-default">
                         <div class="panel-body text-center">
                             <i class="fa fa-user fa-5x  fa-fw"></i>
                         </div>
                         <div class="panel-footer text-center"> 
-                            Manage Applicants
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-sm-3 col-xs-6">
-                <a class="menu-icon">
-                    <div class="panel panel-default">
-                        <div class="panel-body text-center">
-                            <i class="fa fa-users fa-5x  fa-fw"></i>
-                        </div>
-                        <div class="panel-footer text-center"> 
-                            Manage HRs
+                            Applicants Summary
                         </div>
                     </div>
                 </a>

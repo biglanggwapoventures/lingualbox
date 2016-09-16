@@ -28,7 +28,7 @@
                             <i class="fa fa-users fa-5x  fa-fw"></i>
                         </div>
                         <div class="panel-footer text-center"> 
-                            Applicants Update Report
+                            Applicants Summary
                         </div>
                     </div>
                 </a>
