@@ -5752,9 +5752,7 @@ button.close {
   float: left; }
 
 .breadcrumb li.active a {
-  background: brown;
-  /* fallback color */
-  background: #ffc107; }
+  background: green; }
 
 .breadcrumb li.completed a {
   background: brown;
@@ -5762,7 +5760,7 @@ button.close {
   background: #3bc989; }
 
 .breadcrumb li.active a:after {
-  border-left: 30px solid #ffc107; }
+  border-left: 30px solid green; }
 
 .breadcrumb li.completed a:after {
   border-left: 30px solid #3bc989; }
@@ -5810,10 +5808,10 @@ button.close {
   padding-left: 15px; }
 
 .breadcrumb li a:hover {
-  background: #ffc107; }
+  background: green; }
 
 .breadcrumb li a:hover:after {
-  border-left-color: #ffc107 !important; }
+  border-left-color: green !important; }
 
 .well {
   border-radius: 0px; }
@@ -5874,11 +5872,11 @@ body {
   max-height: 100%; }
 
 .fontHome {
-  font-family: "Futura-PT",sans-serif;
+  font-family: "Futura-PT", sans-serif;
   color: white; }
 
 .fontHeading {
-  font-family: "Futura-PT",sans-serif;
+  font-family: "Futura-PT", sans-serif;
   color: white !important;
   font-size: 60px; }
 
@@ -5915,6 +5913,15 @@ body {
 /* Requirements
 ------------------------- */
 .requirement {
+  height: 450px; }
+
+.requirementHeading {
+  padding-top: 50px; }
+
+.glyphicon-cutlery {
+  color: #87B6A7; }
+
+.requirement {
   height: 520px;
   background-color: #f5f5f5; }
 
@@ -5929,7 +5936,7 @@ body {
   padding-top: 60px; }
 
 .heading1 {
-  font-family: "Futura-PT",sans-serif;
+  font-family: "Futura-PT", sans-serif;
   font-size: 25px;
   color: #5b656d; }
 
@@ -5958,7 +5965,7 @@ _________________________________________________ */
 
 .lowerDirectionHeading {
   color: #5b656d;
-  font-family: "Futura-PT",sans-serif;
+  font-family: "Futura-PT", sans-serif;
   font-weight: 500;
   -webkit-font-smoothing: antialiased;
   font-size: 20px;
@@ -5976,7 +5983,7 @@ _________________________________________________ */
 
 .applyNowSubHeading {
   color: #5b656d;
-  font-family: "Futura-PT",sans-serif;
+  font-family: "Futura-PT", sans-serif;
   font-weight: 500;
   -webkit-font-smoothing: antialiased;
   font-size: 20px; }
@@ -6016,5 +6023,8 @@ _________________________________________________ */
 
 .homeImage {
   background: url("../public/images/homeImage.jpg"); }
+
+.form-control.lp {
+  padding: 2px 4px; }
 
 /*# sourceMappingURL=app.css.map */

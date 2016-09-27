@@ -1,5 +1,5 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-.navbar{
+.navbar {
     margin-bottom: 0
 }
 
@@ -26,9 +26,7 @@
 }
 
 .breadcrumb li.active a {
-    background: brown;
-    /* fallback color */
-    background: #ffc107;
+    background: green;
 }
 
 .breadcrumb li.completed a {
@@ -38,7 +36,7 @@
 }
 
 .breadcrumb li.active a:after {
-    border-left: 30px solid #ffc107;
+    border-left: 30px solid green;
 }
 
 .breadcrumb li.completed a:after {
@@ -92,11 +90,11 @@
 }
 
 .breadcrumb li a:hover {
-    background: #ffc107;
+    background: green;
 }
 
 .breadcrumb li a:hover:after {
-    border-left-color: #ffc107 !important;
+    border-left-color: green !important;
 }
 
 .well {
@@ -146,7 +144,7 @@ body {
 
 /* Flip around the padding for proper display in narrow viewports */
 
-.navbar-wrapper> .container {
+.navbar-wrapper>.container {
     padding-right: 0;
     padding-left: 0;
 }
@@ -173,37 +171,34 @@ body {
     background-size: contain;
     background-position: center;
     min-height: 500px;
-    -webkit-background-size:cover;
-    -moz-background-size:cover;
-    -o-background-size:cover;
-    margin-bottom:0;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    margin-bottom: 0;
     max-width: 100%;
     max-height: 100%;
 }
 
-
-.fontHome{
-    font-family: "Futura-PT",sans-serif;
+.fontHome {
+    font-family: "Futura-PT", sans-serif;
     color: white;
 }
 
-.fontHeading{
-    font-family: "Futura-PT",sans-serif;
+.fontHeading {
+    font-family: "Futura-PT", sans-serif;
     color: white!important;
     font-size: 60px;
 }
 
-.button-app{
+.button-app {
     background-color: #57bb89;
     color: white;
     font-size: 20px;
 }
 
-.introHeading{
+.introHeading {
     padding-top: 120px;
 }
-
-
 
 
 /* MARKETING CONTENT
@@ -212,13 +207,13 @@ body {
 
 /* Center align the text within the three columns below the carousel */
 
-.marketing{
+.marketing {
     background-color: #87B6A7;
     height: 370px;
     padding-top: 50px;
 }
 
-.column1{
+.column1 {
     position: center;
 }
 
@@ -239,66 +234,79 @@ body {
 
 /* Requirements
 ------------------------- */
-.requirement{
+
+.requirement {
+    height: 450px;
+}
+
+.requirementHeading {
+    padding-top: 50px;
+}
+
+.glyphicon-cutlery {
+    color: #87B6A7;
+}
+
+.requirement {
     height: 520px;
     background-color: #f5f5f5;
-
 }
- .requirementHeading{
+
+.requirementHeading {
     padding-top: 30px;
     color: #5b656d;
- }
+}
 
-.heading{
+.heading {
     vertical-align: center;
 }
 
-.requirementsRow{
+.requirementsRow {
     padding-top: 60px;
 }
 
-.heading1{
-    font-family: "Futura-PT",sans-serif;
+.heading1 {
+    font-family: "Futura-PT", sans-serif;
     font-size: 25px;
     color: #5b656d;
 }
 
-.glyphicon-tags{
+.glyphicon-tags {
     color: #9370DB;
 }
 
-.glyphicon-calendar{
+.glyphicon-calendar {
     color: #FF0000;
 }
 
-.glyphicon-random{
+.glyphicon-random {
     color: #FFD700;
 }
 
-.glyphicon-briefcase{
+.glyphicon-briefcase {
     color: #3CB371;
 }
- 
-
 
 
 /* Thin out the marketing headings */
 
+
 /* Direction part
 _________________________________________________ */
-.direction{
+
+.direction {
     height: 450px;
 }
 
-.directionHeading{
+.directionHeading {
     padding-top: 25px;
     color: #5b656d;
     padding-bottom: 20px;
 }
 
-.lowerDirectionHeading{
+.lowerDirectionHeading {
     color: #5b656d;
-    font-family: "Futura-PT",sans-serif;
+    font-family: "Futura-PT", sans-serif;
     font-weight: 500;
     -webkit-font-smoothing: antialiased;
     font-size: 20px;
@@ -308,19 +316,20 @@ _________________________________________________ */
 
 /* ApplyNow part
 _________________________________________________ */
-.applyNow{
+
+.applyNow {
     height: 220px;
     background-color: #f5f5f5;
 }
 
-.applyNowHeading{
+.applyNowHeading {
     padding-top: 25px;
     color: #5b656d;
 }
 
-.applyNowSubHeading{
+.applyNowSubHeading {
     color: #5b656d;
-    font-family: "Futura-PT",sans-serif;
+    font-family: "Futura-PT", sans-serif;
     font-weight: 500;
     -webkit-font-smoothing: antialiased;
     font-size: 20px;
@@ -329,11 +338,11 @@ _________________________________________________ */
 
 /* Footer
 -------------------------------------------------- */
-.footer{
+
+.footer {
     height: 100px;
     background-color: #2e2d2d;
 }
-
 
 
 /* RESPONSIVE CSS
@@ -375,4 +384,8 @@ _________________________________________________ */
 
 .homeImage {
     background: url('../public/images/homeImage.jpg');
+}
+
+.form-control.lp {
+    padding: 2px 4px;
 }

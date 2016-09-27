@@ -15,22 +15,20 @@
              <a href="{{ route('written.questions.create') }}" class="btn btn-info btn-block"><i class="fa fa-plus fa-fw"></i> Create new question</a>
             <div class="panel panel-default" style="margin-top:20px;">
                 <!-- List group -->
-                <ul class="list-group">
+                <div class="list-group">
                     @if(!empty($questions))
                         @foreach($questions AS $i => $q)
-                            <li class="list-group-item {{ Route::input('id') == $q['id'] ? 'active' : '' }}">
-                                <a href=" {{ route('written.questions.update', ['id' => $q['id']]) }} "><i class="fa fa-pencil fa-fw"></i> Question # {{ $i+1 }}</a>
-                            </li>
+                            <a class="list-group-item {{ Route::input('id') == $q['id'] ? 'active' : '' }}" href=" {{ route('written.questions.update', ['id' => $q['id']]) }} "><i class="fa fa-pencil fa-fw"></i> Question # {{ $i+1 }}</a>
                         @endforeach
                     @endif
-                </ul>
+                </div>
             </div>
              <a href="{{ route('profile') }}" class="btn btn-link btn-block"><i class="fa fa-chevron-left"></i> Go back to profile</a>
             
         </div>
         <div class="col-sm-9">
             {!! Form::open(['method' => 'post', 'url' => $action, 'class' => 'common']) !!}
-                 <div class="panel panel-default">
+                 <div class="panel panel-default clearfix">
                     <div class="panel-body">
                         <div class="page-header text-center" style="margin-top:0">
                             <h2>{{ $title }}</h2>
@@ -46,6 +44,9 @@
                         </div>
                         <hr>
                         <button class="btn btn-success" type="submit">Submit</button>
+                        @if(isset($question->id))
+                            <a data-pk="{{ $question->id }}" data-url="{{ route('written.questions.delete', ['id' => $question->id]) }}" class="btn btn-danger pull-right">Delete</a>
+                        @endif
                     </div>
                     
                  </div>

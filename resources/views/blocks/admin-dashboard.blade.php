@@ -44,7 +44,34 @@
                     </div>
                 </a>
             </div>
+            <div class="col-sm-3 col-xs-6">
+                <a class="menu-icon" href="{{ route('hired.summary') }}">
+                    <div class="panel panel-default">
+                        <div class="panel-body text-center">
+                            <i class="fa fa-user fa-5x  fa-fw"></i>
+                        </div>
+                        <div class="panel-footer text-center"> 
+                            Hired Summary
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
+         <div class="row">
+            <div class="col-sm-3 col-xs-6">
+                <a class="menu-icon" href="{{ route('report.show') }}">
+                    <div class="panel panel-default">
+                        <div class="panel-body text-center">
+                            <i class="fa fa-pie-chart fa-5x  fa-fw"></i>
+                        </div>
+                        <div class="panel-footer text-center"> 
+                            Report
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
     </div>
 </div>
 

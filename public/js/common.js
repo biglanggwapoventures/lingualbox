@@ -35,6 +35,9 @@ $(document).ready(function() {
         var $this = $(this),
             formData = new FormData($this[0]);
 
+        $this.find('.has-error').removeClass('has-error').find('.help-block').remove();
+        $this.find('[type=submit]').addClass('disabled');
+
         $.ajax({
             url: $this.attr('action'),
             type: 'POST',
@@ -55,6 +58,9 @@ $(document).ready(function() {
                         }));
                     }
                 }
+            },
+            complete: function() {
+                $this.find('[type=submit]').removeClass('disabled');
             }
         });
 
@@ -67,7 +73,8 @@ $(document).ready(function() {
 
         $this.find('[type=submit]').addClass('disabled');
 
-        $this.find('.has-error').removeClass('has-error').find('.help-block').remove();
+        $this.find('.has-error').removeClass('has-error')
+        $this.find('.help-block').remove();
 
         $.post($this.attr('action'), $this.serialize())
             .done(function(response) {
@@ -91,19 +98,20 @@ $(document).ready(function() {
                             if (pieces.length === 2) {
                                 input = $this.find('[name="' + pieces[0] + '[]"]:eq(' + pieces[1] + ')');
                             } else {
-                                input = $('[name="' + pieces[0] + '[' + pieces[1] + ']' + pieces[2] + '"')
+                                input = $('[name="' + pieces[0] + '[' + pieces[1] + '][' + pieces[2] + ']"')
                             }
 
                         } else {
                             input = $this.find('[name=' + x + ']');
                         }
+                        console.log(input);
                         var formGroup = input.closest('.form-group');
-                        if (formGroup) {
+                        if (formGroup.length) {
                             formGroup.addClass('has-error');
                         }
                         input.after($('<span />', {
                             'class': 'help-block',
-                            text: response.errors[x][0]
+                            html: response.errors[x][0]
                         }));
                     }
                 }
@@ -118,7 +126,8 @@ $(document).ready(function() {
         var table = $(this).closest('table'),
             rows = table.find('tbody tr'),
             clone = $(rows[0]).clone(),
-            ctr = table.data('idx');
+            ctr = table.data('idx'),
+            callBack = $(this).data('callback');
 
         ctr++;
 
@@ -127,10 +136,15 @@ $(document).ready(function() {
         });
         clone.find('input:not(.constant)').val('');
         clone.find('input.optional').remove();
+        clone.find('.datepicker').datetimepicker({
+            format: 'MM/DD/YYYY'
+        })
 
 
         clone.appendTo(table.find('tbody'));
         table.data('idx', ctr);
+
+
     })
 
     $('table').on('click', '.remove-line', function() {

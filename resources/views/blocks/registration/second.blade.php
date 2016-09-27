@@ -1,10 +1,11 @@
 @extends('layouts.master')
-
-
 @section('content')
 @include('blocks.registration.nav')
+@push('css')
+<link rel="stylesheet" href="{{ asset('css/bstimepicker.min.css') }}">
+@endpush
 <div class="container-fluid">
-    <div class="col-sm-8 col-sm-offset-2">
+    <div class="col-sm-12">
         <div class="well">
 
             <fieldset>
@@ -16,20 +17,20 @@
                                     <th>ESL Company</th>
                                     <th>Position</th>
                                     <th>Location</th>
-                                    <th style="width:12%">Years</th>
-                                    <th style="width:12%">Months</th>
+                                    <th style="width:12%">Start</th>
+                                    <th style="width:12%">End</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @if(empty($eslExp))
                                 <tr>
-                                    <td> {!! Form::text("exp[0][name]", null, ['class' => 'form-control', 'data-name' => 'exp[idx][name]', 'placeholder' => 'e.g. English Academy']) !!}</td>
-                                    <td> {!! Form::text("exp[0][position]", null, ['class' => 'form-control', 'data-name' => 'exp[idx][position]', 'placeholder' => 'e.g. Online Teacher']) !!}</td>
-                                    <td> {!! Form::text("exp[0][location]", null, ['class' => 'form-control', 'data-name' => 'exp[idx][location]', 'placeholder' => 'e.g. Cebu City']) !!}</td>
-                                    <td> {!! Form::text("exp[0][years]", null, ['class' => 'form-control', 'data-name' => 'exp[idx][years]']) !!}</td>
+                                    <td> {!! Form::text("exp[0][name]", null, ['class' => 'form-control lp', 'data-name' => 'exp[idx][name]']) !!}</td>
+                                    <td> {!! Form::text("exp[0][position]", null, ['class' => 'form-control lp', 'data-name' => 'exp[idx][position]']) !!}</td>
+                                    <td> {!! Form::text("exp[0][location]", null, ['class' => 'form-control lp', 'data-name' => 'exp[idx][location]']) !!}</td>
+                                    <td> {!! Form::text("exp[0][start]", null, ['class' => 'form-control lp datepicker', 'data-name' => 'exp[idx][start]']) !!}</td>
                                     <td> 
-                                        {!! Form::text("exp[0][months]", null, ['class' => 'form-control', 'data-name' => 'exp[idx][months]']) !!}
+                                        {!! Form::text("exp[0][end]", null, ['class' => 'form-control lp datepicker', 'data-name' => 'exp[idx][end]']) !!}
                                         {!! Form::hidden("exp[0][experience_type]", 'ESL', ['class' => 'constant', 'data-name' => 'exp[idx][experience_type]']) !!}
                                     </td>
                                     <td  style="vertical-align:middle"><a class="text-danger remove-line"><i class="glyphicon glyphicon-remove"></i></a></td>
@@ -37,12 +38,12 @@
                                 @endif
                                 @foreach ($eslExp as $key => $exp)
                                 <tr>
-                                    <td> {!! Form::text("exp[{$key}][name]", $exp->name, ['class' => 'form-control', 'data-name' => 'exp[idx][name]']) !!}</td>
-                                    <td> {!! Form::text("exp[{$key}][position]", $exp->position, ['class' => 'form-control', 'data-name' => 'exp[idx][position]']) !!}</td>
-                                    <td> {!! Form::text("exp[{$key}][location]", $exp->location, ['class' => 'form-control', 'data-name' => 'exp[idx][location]']) !!}</td>
-                                    <td> {!! Form::text("exp[{$key}][years]", $exp->years, ['class' => 'form-control', 'data-name' => 'exp[idx][years]']) !!}</td>
+                                    <td> {!! Form::text("exp[{$key}][name]", $exp->name, ['class' => 'form-control lp', 'data-name' => 'exp[idx][name]']) !!}</td>
+                                    <td> {!! Form::text("exp[{$key}][position]", $exp->position, ['class' => 'form-control lp', 'data-name' => 'exp[idx][position]']) !!}</td>
+                                    <td> {!! Form::text("exp[{$key}][location]", $exp->location, ['class' => 'form-control lp', 'data-name' => 'exp[idx][location]']) !!}</td>
+                                    <td> {!! Form::text("exp[{$key}][start]", $exp->start, ['class' => 'form-control lp datepicker', 'data-name' => 'exp[idx][start]']) !!}</td>
                                     <td> 
-                                        {!! Form::text("exp[{$key}][months]", $exp->months, ['class' => 'form-control', 'data-name' => 'exp[idx][months]']) !!}
+                                        {!! Form::text("exp[{$key}][end]", $exp->end, ['class' => 'form-control lp datepicker', 'data-name' => 'exp[idx][end]']) !!}
                                         {!! Form::hidden("exp[{$key}][experience_type]", 'ESL', ['class' => 'constant', 'data-name' => 'exp[idx][experience_type]']) !!}
                                         {!! Form::hidden("exp[{$key}][id]", $exp->id, ['class' => 'optional', 'data-name' => 'exp[idx][id]']) !!}
                                     </td>
@@ -52,7 +53,7 @@
                             </tbody> 
                             <tfoot>
                                 <tr>
-                                    <td colspan="5" style="border:0"><a class="btn btn-default new-line">Add more experience</a></td>
+                                    <td colspan="5" style="border:0"><a class="btn btn-default new-line" data-callback="initDatepicker">Add more experience</a></td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -62,20 +63,20 @@
                                     <th>Call Center Company</th>
                                     <th>Position</th>
                                     <th>Location</th>
-                                    <th style="width:12%">Years</th>
-                                    <th style="width:12%">Months</th>
+                                    <th style="width:12%">Start</th>
+                                    <th style="width:12%">End</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @if(empty($ccExp))
                                 <tr>
-                                    <td> {!! Form::text("exp[200][name]", null, ['class' => 'form-control', 'data-name' => 'exp[idx][name]', 'placeholder' => 'e.g. Convergys']) !!}</td>
-                                    <td> {!! Form::text("exp[200][position]", null, ['class' => 'form-control', 'data-name' => 'exp[idx][position]', 'placeholder' => 'e.g. Outbound Agent']) !!}</td>
-                                    <td> {!! Form::text("exp[200][location]", null, ['class' => 'form-control', 'data-name' => 'exp[idx][location]', 'placeholder' => 'e.g. Cebu City']) !!}</td>
-                                    <td> {!! Form::text("exp[200][years]", null, ['class' => 'form-control', 'data-name' => 'exp[idx][years]']) !!}</td>
+                                    <td> {!! Form::text("exp[200][name]", null, ['class' => 'form-control lp', 'data-name' => 'exp[idx][name]']) !!}</td>
+                                    <td> {!! Form::text("exp[200][position]", null, ['class' => 'form-control lp', 'data-name' => 'exp[idx][position]']) !!}</td>
+                                    <td> {!! Form::text("exp[200][location]", null, ['class' => 'form-control lp', 'data-name' => 'exp[idx][location]']) !!}</td>
+                                    <td> {!! Form::text("exp[200][start]", null, ['class' => 'form-control lp datepicker', 'data-name' => 'exp[idx][start]']) !!}</td>
                                     <td> 
-                                        {!! Form::text("exp[200][months]", null, ['class' => 'form-control', 'data-name' => 'exp[idx][months]']) !!}
+                                        {!! Form::text("exp[200][end]", null, ['class' => 'form-control lp datepicker', 'data-name' => 'exp[idx][end]']) !!}
                                         {!! Form::hidden("exp[200][experience_type]", 'CC', ['class' => 'constant', 'data-name' => 'exp[idx][experience_type]']) !!}
                                     </td>
                                     <td  style="vertical-align:middle"><a class="text-danger remove-line"><i class="glyphicon glyphicon-remove"></i></a></td>
@@ -83,24 +84,24 @@
                                 @endif
                                 @foreach ($ccExp as $key => $exp)
                                 <tr>
-                                    <td> {!! Form::text("exp[". (200 + $key) ."][name]", $exp->name, ['class' => 'form-control', 'data-name' => 'exp[idx][name]']) !!}</td>
-                                    <td> {!! Form::text("exp[". (200 + $key) ."][position]", $exp->position, ['class' => 'form-control', 'data-name' => 'exp[idx][position]']) !!}</td>
-                                    <td> {!! Form::text("exp[". (200 + $key) ."][location]", $exp->location, ['class' => 'form-control', 'data-name' => 'exp[idx][location]']) !!}</td>
-                                    <td> {!! Form::text("exp[". (200 + $key) ."][years]", $exp->years, ['class' => 'form-control', 'data-name' => 'exp[idx][years]']) !!}</td>
+                                    <td> {!! Form::text("exp[". (200 + $key) ."][name]", $exp->name, ['class' => 'form-control lp', 'data-name' => 'exp[idx][name]']) !!}</td>
+                                    <td> {!! Form::text("exp[". (200 + $key) ."][position]", $exp->position, ['class' => 'form-control lp', 'data-name' => 'exp[idx][position]']) !!}</td>
+                                    <td> {!! Form::text("exp[". (200 + $key) ."][location]", $exp->location, ['class' => 'form-control lp', 'data-name' => 'exp[idx][location]']) !!}</td>
+                                    <td> {!! Form::text("exp[". (200 + $key) ."][start]", $exp->start, ['class' => 'form-control lp datepicker', 'data-name' => 'exp[idx][start]']) !!}</td>
                                     <td> 
-                                        {!! Form::text("exp[". (200 + $key) ."][months]", $exp->months, ['class' => 'form-control', 'data-name' => 'exp[idx][months]']) !!}
+                                        {!! Form::text("exp[". (200 + $key) ."][end]", $exp->end, ['class' => 'form-control lp datepicker', 'data-name' => 'exp[idx][end]']) !!}
                                         {!! Form::hidden("exp[". (200 + $key) ."][experience_type]", 'CC', ['class' => 'constant', 'data-name' => 'exp[idx][experience_type]']) !!}
                                         @if(isset($exp->id) && $exp->id)
                                             {!! Form::hidden("exp[". (200 + $key) ."][id]", $exp->id, ['class' => 'optional', 'data-name' => 'exp[idx][id]']) !!}
                                         @endif
                                     </td>
-                                    <td  style="vertical-align:middle"><a class="text-danger remove-line"><i class="glyphicon glyphicon-remove"></i></a></td>
+                                    <td  style="vertical-align:middle"><a class="text-danger remove-line" ><i class="glyphicon glyphicon-remove"></i></a></td>
                                 </tr>
                                 @endforeach
                             </tbody> 
                             <tfoot>
                                 <tr>
-                                    <td colspan="5" style="border:0"><a class="btn btn-default new-line">Add more experience</a></td>
+                                    <td colspan="5" style="border:0"><a class="btn btn-default new-line " data-callback="initDatepicker">Add more experience</a></td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -111,3 +112,21 @@
     </div>
 </div>
 @endsection
+
+@push('js')
+<script type="text/javascript" src="{{ asset('js/moment.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/bstimepicker.min.js') }}"></script>
+<script>
+    function initDatepicker($el){
+        console.log('lol');
+        $el.closest('tbody').find('tr:last .datepicker').datetimepicker({
+            format: 'MM/DD/YYYY',
+        });
+    }
+    $(document).ready(function(){
+        $('.datepicker').datetimepicker({
+            format: 'MM/DD/YYYY',
+        });
+    })
+</script>
+@endpush

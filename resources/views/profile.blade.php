@@ -34,14 +34,25 @@
                     <a href="{{ route('reading.storyboard.edit') }}" class="list-group-item">
                         <i class="fa fa-book fa-fw"></i> Manage Reading Exam
                     </a>
-                    @endif
-
-                    <a href="{{ route('written.exam.list') }}" class="list-group-item {{ in_array(Route::currentRouteName(), ['written.exam.list', 'written.exam.view']) ? 'active' : '' }}">
-                        <i class="fa fa-check fa-fw"></i> Check Written Exams
-                    </a>
                     <a href="{{ route('applicants.summary') }}" class="list-group-item {{ Route::currentRouteNamed('applicants.summary') ? 'active' : '' }}">
                         <i class="fa fa-users fa-fw"></i> Applicants Summary
                     </a>
+                    <a href="{{ route('hired.summary') }}" class="list-group-item {{ Route::currentRouteNamed('hired.summary') ? 'active' : '' }}">
+                        <i class="fa fa-users fa-fw"></i> Hired Summary
+                    </a>
+                    <a href="{{ route('report.show') }}" class="list-group-item {{ Route::currentRouteNamed('report.show') ? 'active' : '' }}">
+                        <i class="fa fa-pie-chart fa-fw"></i> Report
+                    </a>
+                    @elseif(Auth::user()->isHR())
+                        <a href="{{ route('written.exam.list') }}" class="list-group-item {{ in_array(Route::currentRouteName(), ['written.exam.list', 'written.exam.view']) ? 'active' : '' }}">
+                            <i class="fa fa-check fa-fw"></i> Check Written Exams
+                        </a>
+                        <a href="{{ route('applicants.summary') }}" class="list-group-item {{ Route::currentRouteNamed('applicants.summary') ? 'active' : '' }}">
+                            <i class="fa fa-users fa-fw"></i> Applicants Summary
+                        </a>
+                    @endif
+
+                    
                 </div>
             </div>
         </div>

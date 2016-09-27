@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 use ReadingStoryboard AS Story;
 
+use App\HireStatus As Hire;
+
 class ReadingExamResult extends Model
 {
     protected $fillable = ['datetime_started', 'user_id', 'reading_storyboard_id'];
@@ -73,6 +75,11 @@ class ReadingExamResult extends Model
 
          $this->score = $totalPoints;
          $this->datetime_ended = date_create_immutable(null)->format('Y-m-d H:i:s');
+
+         if(!$this->didPassed()){
+            $this->user->setAsFailed();
+         }  
+
          return $this;
     }
 

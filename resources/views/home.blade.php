@@ -131,26 +131,4 @@
         </footer>
 
     </div><!-- /.container -->
-    <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-        <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content">
-                {!! Form::open(array('url' => route('auth.login'), 'method' => 'post', 'class' => 'common', 'data-next' => route('home'))) !!}
-                    <div class="modal-header">
-                        <h4 class="modal-title">
-                            Login to LingualBox!
-                        </h4>
-                    </div>
-                
-                    <div class="modal-body">
-                        {{ Form::bsText('email_address', null, 'Email address', ['placeholder' => 'Please enter your email address']) }}
-                        {{ Form::bsPassword('password', 'Password', ['placeholder' => 'Please enter your password']) }}
-                    </div>
-                    <div class="modal-footer clearfix">
-                        <button type="submit" class="btn btn-success">Login</button>
-                        <a role="button" class="btn btn-default pull-right" data-dismiss="modal">Cancel</a>
-                    </div>
-                 {!! Form::close() !!}
-            </div>
-        </div>
-    </div>
 @endsection

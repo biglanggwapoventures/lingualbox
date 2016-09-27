@@ -11,6 +11,7 @@ use App\User;
 use App\UserDemoClass AS DemoClass;
 use App\UserOrientation AS Orientation;
 use App\UserRequirement AS Requirement;
+use App\HireStatus;
 
 
 
@@ -18,7 +19,7 @@ class ApplicantsController extends Controller
 {
     function summary()
     {
-        $applicants = User::teacher()->with(['latestReadingExam', 'latestWrittenExam', 'demoClass', 'orientation', 'requirement'])->get();
+        $applicants = User::teacher()->get();
         return view('blocks.applicants.summary', compact('applicants'));
     }
 
@@ -37,7 +38,9 @@ class ApplicantsController extends Controller
         }
 
         $user = User::findOrFail($id);
+
         $status = $request->input('status');
+
         if($request->input('phase') === 'DEMO'){
 
             if($user->demoClass()->exists()){
@@ -68,6 +71,32 @@ class ApplicantsController extends Controller
                 $user->requirement()->save(new Requirement([
                     'status' =>  $status
                 ]));
+            }
+
+        }
+
+        $status = $user->phaseStatus();
+
+        $hireStatus = $status['OVERALL'] === 'HIRED' ? 'ACTIVE' : $status['OVERALL'];
+        
+
+        if(in_array($hireStatus, ['ACTIVE', 'FAILED'])){
+
+            // $now = date('Y-m-d H:i:s');
+            $hiredAt = $hireStatus === 'ACTIVE' ? NULL : 0;
+            $failedAt = $hireStatus === 'FAILED' ? NULL : 0;
+
+            $data = [
+                'status' => $hireStatus,
+                'hired_at' => $hiredAt,
+                'failed_at' => $failedAt
+            ];
+
+            if($user->hireStatus()->exists()){
+                $user->hireStatus->fill($data);
+                $user->hireStatus->save();
+            }else{
+                $user->hireStatus()->save(new HireStatus($data));
             }
         }
 
