@@ -1,0 +1,28 @@
+.titleHelp{
+	font-family: "Futura-PT",sans-serif;
+	font-size: 35px;
+	color: #5b656d;
+	font-weight: 350;
+}
+
+.headerHelp {
+	font-family: "Futura-PT",sans-serif;
+	font-size: 30px;
+	color: #5b656d;
+	font-weight: 300;
+	margin-top: 40px;
+}
+
+.questionHelp{
+	font-family: "Futura-PT",sans-serif;
+	font-size: 16px;
+	color: #5b656d;
+	font-weight: 200;
+}
+
+.answerHelp{
+	font-family: "Futura-PT",sans-serif;
+	font-size: 13px;
+	color: #5b656d;
+	font-weight: 200;
+}

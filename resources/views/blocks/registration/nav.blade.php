@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="{{route('home')}}">LingualBox</a>
+      <a class="navbar-brand" href="{{route('home')}}"><img alt="Brand" src="{{ asset('img/logo2.png') }}" style="height:22px;width:auto"></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->

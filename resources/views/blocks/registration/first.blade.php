@@ -30,7 +30,7 @@
                                     {!! Form::selectRange('birthday', 1, 31, $user->getBirth('day'), ['class' => 'form-control']) !!}
                                 </div>
                                 <div class="col-sm-3 birthyear">
-                                    {!! Form::selectRange('birthyear', 1990, date('Y'), $user->getBirth('year'), ['class' => 'form-control']) !!}
+                                    {!! Form::selectRange('birthyear', 1998, 1955, $user->getBirth('year'), ['class' => 'form-control']) !!}
                                 </div>
                                 
                             </div>
