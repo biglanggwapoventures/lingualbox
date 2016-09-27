@@ -30,7 +30,7 @@
                                     {!! Form::selectRange('birthday', 1, 31, $user->getBirth('day'), ['class' => 'form-control']) !!}
                                 </div>
                                 <div class="col-sm-3 birthyear">
-                                    {!! Form::selectRange('birthyear', 1990, date('Y'), $user->getBirth('year'), ['class' => 'form-control']) !!}
+                                    {!! Form::selectRange('birthyear', 1998, 1955, $user->getBirth('year'), ['class' => 'form-control']) !!}
                                 </div>
                                 
                             </div>
@@ -66,16 +66,16 @@
                     </div>
                 </div>
                 <hr>
-                {{ Form::bsText('street_address', $user->street_address, 'Street address', []) }}
+                {{ Form::bsText('street_address', $user->street_address, 'Home address', ['placeholder' => 'e.g. #01 Apple St. Brgy Talamban']) }}
                 <div class="row">
                     <div class="col-sm-4">
-                        {{ Form::bsText('city', $user->city, 'City', []) }}
+                        {{ Form::bsText('city', $user->city, 'City', ['placeholder' => 'e.g. Cebu City']) }}
                     </div>
                     <div class="col-sm-4">
-                        {{ Form::bsText('province', $user->province, 'Province', []) }}
+                        {{ Form::bsText('province', $user->province, 'Province', ['placeholder' => 'e.g. Cebu']) }}
                     </div>
                     <div class="col-sm-4">
-                        {{ Form::bsText('country', $user->country, 'Country', []) }}
+                        {{ Form::bsText('country', $user->country, 'Country', ['placeholder' => 'e.g. Philippines']) }}
                     </div>
                 </div>
                 <hr>

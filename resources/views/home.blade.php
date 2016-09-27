@@ -9,9 +9,11 @@
             <div class="row">
                 <div class="container">
                 <!-- Indicators -->
-                    <h1 class="fontHeading">Teaching English Online</h1>
-                    <p class="fontHome">Become a Professional English Teacher Online</p>
-                    <p class="fontHome"><a class="btn btn-lg button-app" href="{{ route('register.first') }}" role="button">Apply Now!</a></p>
+                    <div class="introHeading">
+                        <h1 class="fontHeading">Teaching English Online</h1>
+                        <p class="fontHome">Become a Professional English Teacher Online</p>
+                        <p class="fontHome"><a class="btn btn-lg button-app" href="{{ route('register.first') }}" role="button">Apply Now!</a></p>
+                    </div>
                 </div>       
             </div>       
         </div><!-- /.carousel -->
@@ -38,7 +40,7 @@
             </div><!-- /.col-lg-4 -->
 
             <div class="col-lg-4 column1">
-                <img class=" center-block house" src="{{ asset('img/friends.png') }}" alt="Have a flexible time" width="140" height="125">
+                <img class=" center-block house" src="{{ asset('img/friends.png') }}" alt="Have a flexible time" width="155" height="125">
                 <h2 class="fontHome">International Community</h2>
                 <p class="fontHome">Teach international students from every corner of the world. Share your culture. Make connection!</p>
             </div><!-- /.col-lg-4 -->
@@ -52,51 +54,72 @@
             <h2 class="text-center requirementHeading">Our requirements</h2>
 
             <div class="col-lg-4">
-                <div class="row">
-                    <i class="glyphicon glyphicon-cutlery"></i>
-                    <span>A Bachelor Degree Holder</span>
+                <div class="row requirementsRow">
+                    <i class="glyphicon glyphicon-tags icons"></i>
+                    <span class="heading1">A Bachelor Degree Holder</span>
+                    <p>Preferably with a Bachelor degree from a reputable <br/> college or university.</p>
                 </div>
-                <div class="row">
-
-                    
+                <div class="row requirementsRow">
+                    <i class="glyphicon glyphicon-calendar icons"></i>
+                    <span class="heading1">At least 6 months of experience </span>
+                    <p>Must have at least 6 months of experience as a teacher. <br/> Call center experience is an advantage.</p>
                 </div>
             </div>
 
-            <div class="col-lg-4">
-                
+            <div class="col-lg-4 teacherStanding">
+                <img alt="Brand" src="{{ asset('img/teacherStanding.png') }}" width="300" height="390">
             </div>
 
             <div class="col-lg-4">
-                
+                <div class="row requirementsRow">
+                    <i class="glyphicon glyphicon-random icons"></i>
+                    <span class="heading1">Minimum of 0.7 mbps</span>
+                    <p>A good and stable internet connection for your class <br/>at least.</p>
+                </div>
+                <div class="row requirementsRow">
+                    <i class="glyphicon glyphicon-briefcase"></i>
+                    <span class="heading1">Professional and Friendly</span>
+                    <p>Know your responsibilities and make your class fun! <br/> Share your interest, culture, and etc.</p>
+                </div>
             </div>
             
         </div>
 
-        <hr class="featurette-divider">
+       
+       <!-- Direction -->
 
-        <div class="row featurette">
-            <div class="col-md-7 col-md-push-5">
-            <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
-            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
+        <div class="row direction">
+            <h2 class="text-center directionHeading">How it works</h2>
+
+            <div class="col-lg-3">
+                <img class=" center-block house" src="{{ asset('img/fill-in.png') }}" alt="Have a flexible time" width="200" height="200">
             </div>
-            <div class="col-md-5 col-md-pull-7">
-            <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+
+            <div class="col-lg-3">
+                <img class=" center-block house" src="{{ asset('img/assess2.png') }}" alt="Have a flexible time" width="200" height="200">
             </div>
+
+            <div class="col-lg-3">
+                <img class=" center-block house" src="{{ asset('img/orient.png') }}" alt="Have a flexible time" width="200" height="200">
+            </div>
+
+            <div class="col-lg-3">
+                <img class=" center-block house" src="{{ asset('img/start.png') }}" alt="Have a flexible time" width="200" height="200">
+            </div>
+
+            <h2 class="text-center lowerDirectionHeading">Just follow these simple steps and be a part of our Team!</h2>
+            <p class="text-center"><a href="#">Read More</a></p>
         </div>
 
-        <hr class="featurette-divider">
+        <!-- Additional Apply now -->
 
-        <div class="row featurette">
-            <div class="col-md-7">
-            <h2 class="featurette-heading">And lastly, this one. <span class="text-muted">Checkmate.</span></h2>
-            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-            </div>
-            <div class="col-md-5">
-            <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-            </div>
+        <div class="row applyNow">
+            <h2 class="text-center applyNowHeading">Be a part of our Team!</h2>
+            <h2 class="text-center applyNowSubHeading">Have a very rewarding job that you will enjoy. </h2>
+            <p class="fontHome text-center"><a class="btn btn-lg button-app" href="{{ route('register.first') }}" role="button">Apply Now!</a></p>
+
         </div>
 
-        <hr class="featurette-divider">
 
         <!-- /END THE FEATURETTES -->
 

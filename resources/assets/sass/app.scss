@@ -187,11 +187,17 @@ body {
 .fontHeading {
     font-family: "Futura-PT", sans-serif;
     color: white!important;
+    font-size: 60px;
 }
 
 .button-app {
     background-color: #57bb89;
     color: white;
+    font-size: 20px;
+}
+
+.introHeading {
+    padding-top: 120px;
 }
 
 
@@ -203,8 +209,8 @@ body {
 
 .marketing {
     background-color: #87B6A7;
-    height: 350px;
-    padding-top: 60px;
+    height: 370px;
+    padding-top: 50px;
 }
 
 .column1 {
@@ -241,8 +247,102 @@ body {
     color: #87B6A7;
 }
 
+.requirement {
+    height: 520px;
+    background-color: #f5f5f5;
+}
+
+.requirementHeading {
+    padding-top: 30px;
+    color: #5b656d;
+}
+
+.heading {
+    vertical-align: center;
+}
+
+.requirementsRow {
+    padding-top: 60px;
+}
+
+.heading1 {
+    font-family: "Futura-PT", sans-serif;
+    font-size: 25px;
+    color: #5b656d;
+}
+
+.glyphicon-tags {
+    color: #9370DB;
+}
+
+.glyphicon-calendar {
+    color: #FF0000;
+}
+
+.glyphicon-random {
+    color: #FFD700;
+}
+
+.glyphicon-briefcase {
+    color: #3CB371;
+}
+
 
 /* Thin out the marketing headings */
+
+
+/* Direction part
+_________________________________________________ */
+
+.direction {
+    height: 450px;
+}
+
+.directionHeading {
+    padding-top: 25px;
+    color: #5b656d;
+    padding-bottom: 20px;
+}
+
+.lowerDirectionHeading {
+    color: #5b656d;
+    font-family: "Futura-PT", sans-serif;
+    font-weight: 500;
+    -webkit-font-smoothing: antialiased;
+    font-size: 20px;
+    padding-top: 250px;
+}
+
+
+/* ApplyNow part
+_________________________________________________ */
+
+.applyNow {
+    height: 220px;
+    background-color: #f5f5f5;
+}
+
+.applyNowHeading {
+    padding-top: 25px;
+    color: #5b656d;
+}
+
+.applyNowSubHeading {
+    color: #5b656d;
+    font-family: "Futura-PT", sans-serif;
+    font-weight: 500;
+    -webkit-font-smoothing: antialiased;
+    font-size: 20px;
+}
+
+
+/* Footer
+-------------------------------------------------- */
+
+.footer {
+    height: 100px;
+    background-color: #2e2d2d;
+}
 
 
 /* RESPONSIVE CSS

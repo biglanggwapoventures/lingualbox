@@ -13,7 +13,7 @@
             <div id="navbar" class="navbar-collapse collapse">
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a >Apply now!</a></li>
+                    <li><a href="{{ route('register.first') }}">Apply now!</a></li>
                     <li class="{{  Route::currentRouteNamed('about-us') ? 'active' : ''}}">
                         <a href="{{ route('about-us') }}">About us</a>
                     </li>

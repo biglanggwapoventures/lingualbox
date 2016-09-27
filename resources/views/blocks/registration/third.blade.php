@@ -41,7 +41,7 @@
                     </div>
                 </div>
                 <hr>
-                <p class="text-center lead">What is your preferred day and time for a demonstration?</p>
+                <p class="text-center lead">What is your preferred day and time for your demo class this week?</p>
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="row">
@@ -57,11 +57,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                {{ Form::bsTextarea('remarks', $preference->remarks, 'Remarks', ['rows' => 3]) }}
-                            </div>
-                        </div>
+                         {{ Form::bsTextarea('remarks', $preference->remarks, 'Remarks', ['rows' => 3]) }}
                     </div>
                 </div>
                 <hr>
