@@ -3,7 +3,6 @@
 @section('profile-content')
 
 
-
 <div class="panel panel-default">
     
      <div class="panel-body">
@@ -27,16 +26,19 @@
                     <tbody>
                         @foreach($applicants AS $row)
                             <tr data-update-url="{{ route('applicants.update', ['id' => $row->id]) }}">
-                                <td>{{ $row->fullname() }}</td>
-                                <td>{{ $row->phaseStatus('READING') }}</td>
-                                <td>{{ $row->phaseStatus('WRITTEN') }}</td>
+                                @php
+                                    $status = $row->phaseStatus();
+                                @endphp
+                                 <td> <a href="{{ route('profile.view', ['id' => $row->id]) }}">{{ $row->fullname() }}</a></td>
+                                <td>{{ $status['READING'] }}</td>
+                                <td>{{ $status['WRITTEN'] }}</td>
                                 <td>
-                                    @if($row->phaseStatus('DEMO') !== '-')
+                                    @if($status['DEMO'] !== '-')
                                         {!! 
                                             Form::select(
                                                 '', 
                                                 ['PENDING' => 'PENDING', 'PASSED' => 'PASSED', 'FAILED' => 'FAILED'], 
-                                                $row->phaseStatus('DEMO'),
+                                                $status['DEMO'],
                                                 ['class' => 'form-control input-sm', 'data-update' => 'DEMO']
                                             ) 
                                         !!}
@@ -45,12 +47,12 @@
                                     @endif
                                 </td>
                                 <td>
-                                    @if($row->phaseStatus('ORIENTATION') !== '-')
+                                    @if($status['ORIENTATION'] !== '-')
                                         {!! 
                                             Form::select(
                                                 '', 
                                                 ['PENDING' => 'PENDING', 'PASSED' => 'PASSED', 'FAILED' => 'FAILED'], 
-                                                $row->phaseStatus('ORIENTATION'),
+                                                $status['ORIENTATION'],
                                                 ['class' => 'form-control input-sm', 'data-update' => 'ORIENTATION']
                                             ) 
                                         !!}
@@ -59,12 +61,12 @@
                                     @endif
                                 </td>
                                 <td>
-                                    @if($row->phaseStatus('REQUIREMENTS') !== '-')
+                                    @if($status['REQUIREMENTS'] !== '-')
                                         {!! 
                                             Form::select(
                                                 '', 
                                                 ['PENDING' => 'PENDING', 'PASSED' => 'PASSED', 'FAILED' => 'FAILED'], 
-                                                $row->phaseStatus('REQUIREMENTS'),
+                                                $status['REQUIREMENTS'],
                                                 ['class' => 'form-control input-sm', 'data-update' => 'REQUIREMENTS']
                                             ) 
                                         !!}
@@ -72,7 +74,7 @@
                                         -
                                     @endif
                                 </td>
-                                <td>{{ $row->phaseStatus('OVERALL') }}</td>
+                                <td>{{ $status['OVERALL'] }}</td>
                             </tr>
                         @endforeach
                     </tbody>

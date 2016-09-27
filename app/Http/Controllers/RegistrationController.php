@@ -81,7 +81,7 @@ class RegistrationController extends Controller
             'gender' => 'required|in:MALE,FEMALE',
             'birthdate' => 'required|date_format:Y-n-j',
             'marital_status' => 'required|in:SINGLE,SEPARATED,MARRIED,DIVORCED,SEPARATED',
-            'mobile_number' => 'required',
+            'mobile_number' => 'required|numeric|digits:10',
             'email_address' => "required|email|unique:users,email_address",
             'skype_account' => 'required',
             'street_address' => 'required',
@@ -158,13 +158,19 @@ class RegistrationController extends Controller
             'exp.*.name' => 'required_if:exp.*.experience_type,ESL',
             'exp.*.position' => 'required_if:exp.*.experience_type,ESL',
             'exp.*.location' => 'required_if:exp.*.experience_type,ESL',
-            'exp.*.years' => 'numeric|required_if:exp.*.experience_type,ESL',
-            'exp.*.months' => 'numeric|required_if:exp.*.experience_type,ESL',
+            'exp.*.start' => 'required_if:exp.*.experience_type,ESL|date_format:m/d/Y',
+            'exp.*.end' => 'required_if:exp.*.experience_type,ESL|date_format:m/d/Y',
             'exp.*.experience_type' => 'required_with:exp.*.position,exp.*.location,exp.*.years,exp.*.name|in:ESL,CC',
             'exp.*.id' => 'exists:user_experiences,id,user_id,'.Auth::user()->id
         ];
 
-        $validator = Validator::make($request->all(), $rules);
+        $validator = Validator::make($request->all(), $rules, [
+            'exp.*.name.required_if' => 'Please fill this up.',
+            'exp.*.position.required_if' => 'Please fill this up.',
+            'exp.*.location.required_if' => 'Please fill this up.',
+            'exp.*.start.required_if' => 'Please fill this up.',
+            'exp.*.end.required_if' => 'Please fill this up.',
+        ]);
 
         if ($validator->fails()) {
             return response()->json([
@@ -180,7 +186,7 @@ class RegistrationController extends Controller
 
         foreach($input AS $row){
             if(isset($row['name']) && trim($row['name'])){
-                $temp = array_only($row, ['name', 'location', 'position', 'years', 'months', 'experience_type']);
+                $temp = array_only($row, ['name', 'location', 'position', 'start', 'end', 'experience_type']);
                 if(isset($row['id'])){
                     $updated[$row['id']] = $temp;
                 }else{
@@ -220,70 +226,65 @@ class RegistrationController extends Controller
             'work_schedule' => 'required|in:MORNING,AFTERNOON,EVENING,MIDNIGHT',
             'demo_day' => 'required|in:MON,TUE,WED,THU,FRI,SAT,SUN',
             'demo_time' => 'required|max:20',
-            // 'certifications' => 'image|max:2048',
-            // 'display_photo' => 'required|image|max:2048',
-            // 'internet_speed_screenshot' => 'required|image|max:2048'
+            'major' => 'required|in:OTHERS,BSCAE,BASC,BALL',
+            'other_major' => 'required_if:major,OTHERS',
+            'tesol_certificate' => 'image|max:2048',
+            'tefl_certificate' => 'image|max:2048',
         ];
 
         $hasPreference = $this->user->preference()->exists();
 
-        if(!$hasPreference || !$this->user->preference->display_photo_filename){
-             $rules['display_photo'] = 'required|image|max:2048';
+        if(!$hasPreference){
+            $rules += [
+                'display_photo' => 'required|image|max:2048',
+                'internet_speed_screenshot' => 'required|image|max:2048'
+            ];
         }
 
-         if(!$hasPreference || !$this->user->preference->internet_speed_screenshot_filename){
-             $rules['internet_speed_screenshot'] = 'required|image|max:2048';
-        }
-
-        $validator = Validator::make($request->all(), $rules);
+        $validator = Validator::make($request->all(), $rules, ['other_major.required_if' => 'Please fill up this field.']);
 
         if ($validator->fails()) {
             return response()->json([
                 'result' => FALSE,
                 'errors' => $validator->errors()
             ]);
-        }else{
-
-            $data = $request->only(['work_schedule', 'demo_day', 'demo_time']);
-            $uploads = [];
-
-            // if($request->hasFile('certifications')){
-            //     foreach($request->file('certifications') AS $file){
-            //         $certificatesFilename = uniqid().'.'.$file->getClientOriginalExtension();
-            //         $uploads['certifications'][] = $certificatesFilename;
-            //         $file->move("public/img/{$user->id}/certifications", $certificatesFilename);
-            //     }
-            //     $data['certificates_filename'] = json_encode($uploads['certifications']);
-            // }
-
-            if($request->hasFile('display_photo')){
-                $dp = $request->file('display_photo');
-                $dpFilename = uniqid().'.'.$dp->getClientOriginalExtension();
-                $uploads['display_photo'][] = $dpFilename;
-                $dp->move("uploads/{$user->id}/display", $dpFilename);
-                $data['display_photo_filename'] = $dpFilename;
-            }
-
-            if($request->hasFile('internet_speed_screenshot')){
-                $speedtest = $request->file('internet_speed_screenshot');
-                $speedtestFilename = uniqid().'.'.$speedtest->getClientOriginalExtension();
-                $uploads['internet_speed_screenshot'][] = $speedtestFilename;
-                $speedtest->move("uploads/{$user->id}/speedtest", $speedtestFilename);
-                $data['internet_speed_screenshot_filename'] = $speedtestFilename;
-            }
-
-            if($user->preference()->exists()){
-                $user->preference()->update($data);
-            }else{
-                $user->preference()->save(new Preference($data));
-            }
-
-             return response()->json([
-                'result' => TRUE,
-                'data' => $data
-            ]);
-
         }
+
+
+        $data = $request->only(['work_schedule', 'demo_day', 'demo_time', 'major', 'remarks']);
+
+        if($data['major'] === 'OTHERS'){
+            $data['other_major'] = $request->input('other_major');
+        }
+
+        $uploads = [];
+
+        $fileInputs = [
+            'display_photo' => 'display', 
+            'internet_speed_screenshot' => 'speedtest', 
+            'tesol_certificate' => 'certificates', 
+            'tefl_certificate' => 'certificates'
+        ];
+
+        foreach($fileInputs AS $name => $dir){
+            if(!$request->hasFile($name)) continue;
+            $file = $request->file($name);
+            $fileName = uniqid().'.'.$file->getClientOriginalExtension();
+            $uploads[$name][] = $fileName;
+            $file->move("uploads/{$user->id}/{$dir}", $fileName);
+            $data["{$name}_filename"] = $fileName;
+        }
+
+        if($user->preference()->exists()){
+            $user->preference()->update($data);
+        }else{
+            $user->preference()->save(new Preference($data));
+        }
+
+        return response()->json([
+            'result' => TRUE,
+            'data' => $data
+        ]);
 
     }
 
@@ -336,11 +337,13 @@ class RegistrationController extends Controller
          $exam = $this->user->latestReadingExamResult();
          $items = $request->input('item') ?: [];
          $answers = [];
+
          foreach($items AS $questionId => $choices){
              $answers[$questionId] = $choices['answers'];
          }
          $exam->answers = $answers;
          $exam->save();
+
          if($request->input('finish')){
              $exam->calculateScore()->save();
              return response()->json(['result' => TRUE, 'next_url' => route('profile')]);
@@ -369,6 +372,7 @@ class RegistrationController extends Controller
         }else{
 
             $essay = WrittenExam::inRandomOrder()->first();
+            $essay->limit *= 60;
             $exam = new WrittenExamResult([
                 'written_exam_id' => $essay->id,
                 'datetime_started' => NULL

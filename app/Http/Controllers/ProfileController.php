@@ -120,6 +120,8 @@ class ProfileController extends Controller
         $exam->checked_by = Auth::user()->id;
         if($input['mark'] === 'PASSED'){
             $exam->user->prepareForDemoClass($input['content']);
+        }else{
+            $exam->user->setAsFailed();
         }
         $exam->save();
 
@@ -128,6 +130,12 @@ class ProfileController extends Controller
             'redirect_url' => route('written.exam.list')
         ]);
         
+    }
+
+    function view($id)
+    {
+        $user = User::find($id);
+        return view('blocks.view-profile', compact('user'));
     }
 
     

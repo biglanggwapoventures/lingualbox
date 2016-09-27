@@ -10,6 +10,10 @@ Route::get('/logout', function(){
     return redirect()->route('home');
 })->name('auth.logout');
 
+Route::get('/forgot-password', 'ForgotPasswordController@index')->name('password.forgot.page');
+Route::post('/forgot-password', 'ForgotPasswordController@sendRecoveryEmail')->name('password.recover.email');
+Route::get('/reset-password/{token}', 'ForgotPasswordController@showRecoveryPage')->name('password.recover.page');
+
 Route::group(['prefix' => 'registration'], function(){
 
     Route::get('first-step', 'RegistrationController@partOne')->name('register.first');
@@ -58,28 +62,38 @@ Route::group(['prefix' => 'exams', 'middleware' => ['auth', 'admin-only']], func
             Route::get('questions', 'WrittenExamController@createQuestion')->name('written.questions.create');
             Route::post('questions', 'WrittenExamController@storeQuestion')->name('written.questions.store');
             Route::get('questions/{id}', 'WrittenExamController@editQuestion')->name('written.questions.edit');
+            Route::delete('questions/{id}', 'WrittenExamController@deleteQuestion')->name('written.questions.delete');
             Route::post('questions/{id}', 'WrittenExamController@updateQuestion')->name('written.questions.update');
         });
     });
 });
 
-Route::group(['prefix' => 'written-exam', 'middleware' => ['hr-only']], function(){
+Route::group(['prefix' => 'written-exam', 'middleware' => ['auth', 'hr-only']], function(){
     Route::get('list', 'ProfileController@checkWrittenExams')->name('written.exam.list');
     Route::get('view/{id}', 'ProfileController@reviewWrittenExam')->name('written.exam.view');
     Route::post('check/{id}', 'ProfileController@checkWrittenExam')->name('written.exam.check');
 });
 
-Route::group(['prefix' => 'applicants', 'middleware' => ['hr-only']], function(){
+Route::group(['prefix' => 'applicants', 'middleware' => ['auth','hr-only']], function(){
     Route::get('summary', 'ApplicantsController@summary')->name('applicants.summary');
     Route::patch('update/{id}', 'ApplicantsController@update')->name('applicants.update');
 });
 
+Route::group(['prefix' => 'hired', 'middleware' => ['auth','hr-only']], function(){
+    Route::get('summary', 'HiredController@summary')->name('hired.summary');
+    Route::post('update', 'HiredController@update')->name('hired.update');
+});
+
 Route::get('/profile', 'ProfileController@showProfile')->middleware('auth')->name('profile');
+Route::get('/profile/{id}', 'ProfileController@view')->name('profile.view');
 
 Route::get('/about-us', 'AboutUsController@index')->name('about-us');
 Route::get('/help', 'HelpController@index')->name('help');
 
+Route::get('/report', 'ReportController@show')->name('report.show');
+
+
 Route::get('/demo', function(){
-    return view('blocks.email-templates.demo-class-details');
+    return view('blocks.email-templates.password-recovery');
 });
 

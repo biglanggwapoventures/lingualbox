@@ -81,6 +81,19 @@ class WrittenExamController extends Controller
         ]);
     }
 
+    function deleteQuestion($id)
+    {
+        // Question::destroy($id);
+        // $next = Question::where('id', '<', $id)->first();
+        // if(){
+            
+        // }
+        // return response()->json([
+        //     'result' => true,
+        //     'next_url' => 
+        // ]);
+    }
+
     
 
     function checkExam($id, Request $request)

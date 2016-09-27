@@ -103,123 +103,14 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\UserRequirement')->select(['id', 'user_id', 'status'])->orderBy('id', 'DESC');
     }
+
+    function hireStatus()
+    {
+        return $this->hasOne('App\HireStatus')->select(['id', 'user_id', 'status'])->orderBy('id', 'DESC');
+    }
     
 
-    function phaseStatus($phase = 'OVERALL')
-    {
-        $summary = [
-            'READING' => '-',
-            'WRITTEN' => '-',
-            'DEMO' => '-',
-            'ORIENTATION' => '-',
-            'REQUIREMENTS' => '-',
-            'OVERALL' => 'HIRED'
-        ];
-
-        $keys = array_keys($summary);
-
-        if($this->latestReadingExam()->exists()){
-            $summary['READING'] = $this->latestReadingExam->didPassed() ? 'PASSED' : 'FAILED';
-            if($summary['READING'] === 'FAILED'){
-                if((array_search($phase, $keys) > array_search('READING', $keys))){
-                    if($phase === 'OVERALL'){
-                        return 'FAILED';
-                    }
-                    return '-';
-                }
-            }
-            if($phase === 'READING'){
-                return $summary['READING'];
-            }
-        }else{
-            return '-';
-        }
-
-        if($this->latestWrittenExam()->exists()){
-            $summary['WRITTEN'] = $this->latestWrittenExam->didPassed() ? 'PASSED' : 'FAILED';
-            if($summary['WRITTEN'] == 'FAILED'){
-                if((array_search($phase, $keys) > array_search('WRITTEN', $keys))){
-                    if($phase === 'OVERALL'){
-                        return 'FAILED';
-                    }
-                    return '-';
-                }
-            }
-            if($phase === 'WRITTEN'){
-                return $summary['WRITTEN'];
-            }
-        }else{
-            return '-';
-        }
-
-        if($this->demoClass()->exists()){
-            $summary['DEMO'] = $this->demoClass->status;
-            if($summary['DEMO'] === 'FAILED'){
-                if((array_search($phase, $keys) > array_search('DEMO', $keys))){
-                    if($phase === 'OVERALL'){
-                        return 'FAILED';
-                    }
-                    return '-';
-                }
-            }else if($summary['DEMO'] === 'PENDING'){
-                 $summary['OVERALL'] = 'INC';
-            }
-            if($phase === 'DEMO'){
-                return $summary['DEMO'];
-            }
-        }else{
-            if($phase !== 'OVERALL'){
-                return 'PENDING';
-            }
-        }
-
-        if($this->orientation()->exists()){
-            $summary['ORIENTATION'] = $this->orientation->status;
-            if($summary['ORIENTATION'] === 'FAILED'){
-                if((array_search($phase, $keys) > array_search('ORIENTATION', $keys))){
-                    if($phase === 'OVERALL'){
-                        return 'FAILED';
-                    }
-                    return '-';
-                }
-            }else if($summary['ORIENTATION'] === 'PENDING'){
-                 $summary['OVERALL'] = 'INC';
-            }
-            if($phase === 'ORIENTATION'){
-                return $summary['ORIENTATION'];
-            }
-        }else{
-            if($phase !== 'OVERALL'){
-                return 'PENDING';
-            }
-        }
-
-        if($this->requirement()->exists()){
-            $summary['REQUIREMENTS'] = $this->requirement->status;
-            if($summary['REQUIREMENTS'] === 'FAILED'){
-                if((array_search($phase, $keys) > array_search('REQUIREMENTS', $keys))){
-                    if($phase === 'OVERALL'){
-                        return 'FAILED';
-                    }
-                    return '-';
-                }
-            }else if($summary['REQUIREMENTS'] === 'PENDING'){
-                 $summary['OVERALL'] = 'INC';
-            }
-            if($phase === 'REQUIREMENTS'){
-                return $summary['REQUIREMENTS'];
-            }
-        }else{
-            if($phase !== 'OVERALL'){
-                return 'PENDING';
-            }
-           
-        }
-
-        return $summary[$phase];
-
-    }
-
+    
     function writtenExamResult()
     {
         return $this->hasMany('App\WrittenExamResult');
@@ -461,5 +352,193 @@ class User extends Authenticatable
         }
         return $displayPhoto;
     }
+
+    function readingExamStatus()
+    {
+        if($this->latestReadingExam()->exists()){
+            return $this->latestReadingExam->didPassed() ? 'P' : 'F';
+        }
+        return 'NA';
+    }
+
+    function writtenExamStatus()
+    {
+        if($this->latestWrittenExam()->exists()){
+            $result = $this->latestWrittenExam->result;
+            switch($result){
+                case 'PASSED': return 'P';
+                case 'FAILED': return 'F';
+                default: return 'R';
+            }
+        }
+        return 'NA';
+    }
+
+    function demoClassStatus()
+    {
+        if($this->demoClass()->exists()){
+            $result = $this->demoClass->status;
+            switch($result){
+                case 'PASSED': return 'P';
+                case 'FAILED': return 'F';
+                default: return 'R';
+            }
+        }
+        return 'R';
+    }
+
+    function orientationStatus()
+    {
+        if($this->orientation()->exists()){
+            $result = $this->orientation->status;
+            switch($result){
+                case 'PASSED': return 'P';
+                case 'FAILED': return 'F';
+                default: return 'R';
+            }
+        }
+        return 'R';
+    }
+
+    function requirementsStatus()
+    {
+        if($this->requirement()->exists()){
+            $result = $this->requirement->status;
+            switch($result){
+                case 'PASSED': return 'P';
+                case 'FAILED': return 'F';
+                default: return 'R';
+            }
+        }
+        return 'R';
+    }
+
+    function phaseStatus()
+    {
+        $status = [];
+
+        $readingExamStatus = $this->readingExamStatus();
+        if(in_array($readingExamStatus, ['F', 'NA'])){
+            $status += array_fill_keys(['WRITTEN', 'DEMO', 'ORIENTATION', 'REQUIREMENTS'], '-');
+            switch($readingExamStatus){
+                case 'F': 
+                    $status['READING'] = 'FAILED';
+                    $status['OVERALL'] = 'FAILED';
+                    break;
+                case 'NA':
+                    $status['READING'] = '-';
+                    $status['OVERALL'] = 'INC';
+                    break;
+            }
+            return $status;
+        }
+        $status['READING'] = 'PASSED';
+
+        $writtenExamStatus = $this->writtenExamStatus();
+        if(in_array($writtenExamStatus, ['F', 'R', 'NA'])){
+            $status += array_fill_keys(['DEMO', 'ORIENTATION', 'REQUIREMENTS'], '-');
+            switch($writtenExamStatus){
+                case 'F': 
+                    $status['WRITTEN'] = 'FAILED';
+                    $status['OVERALL'] = 'FAILED';
+                    break;
+                case 'R': 
+                    $status['WRITTEN'] = 'PENDING';
+                    $status['OVERALL'] = 'INC';
+                    break;
+                case 'NA':
+                    $status['WRITTEN'] = '-';
+                    $status['OVERALL'] = 'INC';
+                    break;
+            }
+            return $status;
+        }
+        $status['WRITTEN'] = 'PASSED';
+
+        $demoClassStatus = $this->demoClassStatus();
+        if(in_array($demoClassStatus, ['F', 'R'])){
+            $status += array_fill_keys(['ORIENTATION', 'REQUIREMENTS'], '-');
+            switch($demoClassStatus){
+                case 'F': 
+                    $status['DEMO'] = 'FAILED';
+                    $status['OVERALL'] = 'FAILED';
+                    break;
+                case 'R': 
+                    $status['DEMO'] = 'PENDING';
+                    $status['OVERALL'] = 'INC';
+                    break;
+            }
+            return $status;
+        }
+        $status['DEMO'] = 'PASSED';
+
+        $orientationStatus = $this->orientationStatus();
+        if(in_array($orientationStatus, ['F', 'R'])){
+            $status += array_fill_keys(['REQUIREMENTS'], '-');
+            switch($orientationStatus){
+                case 'F': 
+                    $status['ORIENTATION'] = 'FAILED';
+                    $status['OVERALL'] = 'FAILED';
+                    break;
+                case 'R': 
+                    $status['ORIENTATION'] = 'PENDING';
+                    $status['OVERALL'] = 'INC';
+                    break;
+            }
+            return $status;
+        }
+        $status['ORIENTATION'] = 'PASSED';
+
+        $requirementsStatus = $this->requirementsStatus();
+        if(in_array($requirementsStatus, ['F', 'R'])){
+            switch($requirementsStatus){
+                case 'F': 
+                    $status['REQUIREMENTS'] = 'FAILED';
+                    $status['OVERALL'] = 'FAILED';
+                    break;
+                case 'R': 
+                    $status['REQUIREMENTS'] = 'PENDING';
+                    $status['OVERALL'] = 'INC';
+                    break;
+            }
+            return $status;
+        }
+        $status['REQUIREMENTS'] = 'PASSED';
+
+        $status['OVERALL'] = 'HIRED';
+        return $status;
+
+    }
+
+    function setAsHired()
+    {
+       $data = [
+            'status' => 'ACTIVE',
+            'hired_at' => NULL
+        ];
+
+        if($this->hireStatus()->exists()){
+            $this->hireStatus->fill($data);
+            $this->hireStatus->save();
+        }else{
+            $this->hireStatus()->save(new Hire($data));
+        }
+    }
+
+    function setAsFailed()
+    {
+        $data = [
+            'status' => 'FAILED',
+            'failed_at' => NULL
+        ];
+
+        if($this->hireStatus()->exists()){
+            $this->hireStatus->fill($data);
+            $this->hireStatus->save();
+        }else{
+            $this->hireStatus()->save(new Hire($data));
+        }
+    }
+
 
 }
