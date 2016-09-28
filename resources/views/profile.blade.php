@@ -67,6 +67,13 @@
             </div>
         </div>
         <div class="col-sm-9">
+            @if(session()->has('password_reset'))
+                <div class="alert alert-success text-center">
+                    <p class="lead">
+                        {{ session()->get('password_reset') }}
+                    </p>
+                </div>
+            @endif
             @yield('profile-content')
         </div>
     </div>

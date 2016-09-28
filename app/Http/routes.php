@@ -13,6 +13,7 @@ Route::get('/logout', function(){
 Route::get('/forgot-password', 'ForgotPasswordController@index')->name('password.forgot.page');
 Route::post('/forgot-password', 'ForgotPasswordController@sendRecoveryEmail')->name('password.recover.email');
 Route::get('/reset-password/{token}', 'ForgotPasswordController@showRecoveryPage')->name('password.recover.page');
+Route::post('/reset-password/{token}', 'ForgotPasswordController@resetPassword')->name('password.reset');
 
 Route::group(['prefix' => 'registration'], function(){
 

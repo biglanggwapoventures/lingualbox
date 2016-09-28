@@ -14,20 +14,20 @@
                     <div class="page-header" style="margin-top:0px;">
                         <h3 class="text-center">Reset your password</h3>
                     </div>
-                    @if (count($errors) > 0)
+                     <p class="lead">Please provide us with your new password</p>
+                     @if (count($errors) > 0)
                         <div class="alert alert-danger">
-                            <ul>
+                            <ul class="list-unstyled">
                                 @foreach ($errors->all() as $error)
                                     <li>{{ $error }}</li>
                                 @endforeach
                             </ul>
                         </div>
                     @endif
-                     <p class="lead">Please provide us with your new password</p>
-                     {!! Form::open(['url' => '', 'method' => 'POST']) !!}
+                     {!! Form::open(['url' => route('password.reset', compact('token')), 'method' => 'POST']) !!}
                         {!! Form::bsPassword('password', 'New password') !!}
                         {!! Form::bsPassword('password_confirmation', 'Confirm new password') !!}
-                        <button type="submit" class="btn btn-success">Save</button>
+                    <button type="submit" class="btn btn-success">Save</button>
                     {!! Form::close() !!}
                 </div>
             </div>

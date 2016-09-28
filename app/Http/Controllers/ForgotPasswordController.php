@@ -10,6 +10,7 @@ use Mail;
 use App\PasswordReset;
 use Carbon\Carbon;
 use App\User;
+use Auth;
 
 class ForgotPasswordController extends Controller
 {
@@ -48,21 +49,35 @@ class ForgotPasswordController extends Controller
         $now = Carbon::now();
         $tokenDate = Carbon::createFromFormat('Y-m-d H:i:s', $reset->created_at, 'Asia/Manila');
         if($now->diffInHours($tokenDate) < 24){
-            return view('blocks.reset-password'); 
+            return view('blocks.reset-password', compact('token')); 
         }else{
-            
+            abort(404);
         }
         
     }
 
-    function resetPassword($token)
+    function resetPassword($token, Request $request)
     {
         $reset = PasswordReset::where('token', $token)->first();
         $now = Carbon::now();
         $tokenDate = Carbon::createFromFormat('Y-m-d H:i:s', $reset->created_at, 'Asia/Manila');
         if($now->diffInHours($tokenDate) < 24){
-            //
+
+            $this->validate($request, [
+                'password' => 'required|confirmed',
+            ]);
+
+            $token = PasswordReset::where('token', $token)->first();
+            $user = User::where('email_address', $token->email)->first();
+            $user->password = bcrypt($request->input('password'));
+            $user->save();
+
+            Auth::loginUsingId($user->id);
+            session()->flash('password_reset', 'Password has been successfuly reset!');
+            return redirect()->route('profile');
+
         }else{
+            abort(404);
         }
     }
 
