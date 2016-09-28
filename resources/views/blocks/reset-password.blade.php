@@ -27,7 +27,7 @@
                      {!! Form::open(['url' => '', 'method' => 'POST']) !!}
                         {!! Form::bsPassword('password', 'New password') !!}
                         {!! Form::bsPassword('password_confirmation', 'Confirm new password') !!}
-                        button
+                        <button type="submit" class="btn btn-success">Save</button>
                     {!! Form::close() !!}
                 </div>
             </div>

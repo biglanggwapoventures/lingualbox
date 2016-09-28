@@ -30,7 +30,7 @@
                         @foreach($users AS $row)
                             <tr data-pk="{{ $row->user_id }}">
                                 <td> <a href="{{ route('profile.view', ['id' => $row->user_id]) }}">{{ $row->user->fullname() }}</a></td>
-                                <td> {{ $row->user->preference->work_schedule }}</td>
+                                <td><a class="editable shift" data-value="{{ $row->shift  }}"></a></td>
                                 <td><a class="editable workdays" data-value="{{ implode(',', is_array($row->work_days) ? $row->work_days : []) }}"></a></td>
                                 <td><a class="editable time"  data-value="{{ $row->time_schedule  }}"></a></td>
                                 <td><a class="editable rate" data-value="{{ $row->rate  }}"></a></td>

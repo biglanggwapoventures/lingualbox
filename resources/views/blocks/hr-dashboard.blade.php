@@ -27,8 +27,20 @@
                         <div class="panel-body text-center">
                             <i class="fa fa-users fa-5x  fa-fw"></i>
                         </div>
-                        <div class="panel-footer text-center"> 
+                        <div class="panel-footer text-center"> s
                             Applicants Summary
+                        </div>
+                    </div>
+                </a>
+            </div>
+             <div class="col-sm-3 col-xs-6">
+                <a class="menu-icon" href="{{ route('hired.summary') }}">
+                    <div class="panel panel-default">
+                        <div class="panel-body text-center">
+                            <i class="fa fa-user fa-5x  fa-fw"></i>
+                        </div>
+                        <div class="panel-footer text-center"> 
+                            Hired Summary
                         </div>
                     </div>
                 </a>

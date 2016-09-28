@@ -45,7 +45,7 @@
                         <div class="col-sm-10 col-sm-offset-1 text-center">
                             <ul class="pagination">
                             @foreach($questions AS $i => $q)
-                                <li><a href="#" data-toggle="item" data-target="{{ $q->id }}">{{ $i + 1 }}</a></li>
+                                <li class="{{ $i === 0 ? 'active' : ''}}"><a href="#" data-toggle="item" data-target="{{ $q->id }}">{{ $i + 1 }}</a></li>
                             @endforeach
                             </ul>
                         </div>

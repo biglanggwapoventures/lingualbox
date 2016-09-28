@@ -106,7 +106,7 @@ class User extends Authenticatable
 
     function hireStatus()
     {
-        return $this->hasOne('App\HireStatus')->select(['id', 'user_id', 'status'])->orderBy('id', 'DESC');
+        return $this->hasOne('App\HireStatus')->orderBy('id', 'DESC');
     }
     
 
@@ -124,6 +124,28 @@ class User extends Authenticatable
     function latestWrittenExamResult()
     {
         return $this->writtenExamResult()->orderBy('datetime_started', 'DESC')->first();
+    }
+
+    function nextReadingExam()
+    {
+        $now = Carbon::now('Asia/Manila');
+        if($this->latestReadingExam()->exists()){
+            $lastReadingExam = Carbon::createFromFormat('Y-m-d H:i:s', $this->latestReadingExam->datetime_started, 'Asia/Manila');
+            $next = $lastReadingExam->addMonths(6);
+            return $next->format('F d, Y');
+        }
+        return $now->format('F d, Y');;
+    }
+
+    function nextWrittenExam()
+    {
+        $now = Carbon::now('Asia/Manila');
+        if($this->latestWrittenExam()->exists() && $this->latestWrittenExam->result === 'FAILED'){
+            $lastReadingExam = Carbon::createFromFormat('Y-m-d H:i:s', $this->latestWrittenExam->datetime_started, 'Asia/Manila');
+            $next = $lastReadingExam->addMonths(6);
+            return $next->format('F d, Y');
+        }
+        return $now->format('F d, Y');;
     }
 
     function canTakeReadingExam()
@@ -330,18 +352,20 @@ class User extends Authenticatable
 
     function prepareForDemoClass($instructions, $status = 'PENDING')
     {
-        $this->demoClass()->save(new DemoClass([
+        $demo = new DemoClass([
             'instructions' => $instructions,
             'instructions_sent_at' => NULL,
             'status' => $status
-        ]));
+        ]);
 
-        Mail::send('blocks.email-templates.demo-class-details', ['user' => $this->firstname, 'content' => $instructions], function ($m){
+        $this->demoClass()->save($demo);
+
+        Mail::send('blocks.email-templates.demo-class-details', ['user' => $this->firstname, 'content' => $demo->getFormattedInstructions()], function ($m){
             $m->from('support@lingualbox.com', 'LingualBox');
             $m->to($this->email_address, $this->firstname)->subject('Congratulations on passing your written exam!');
         });
 
-        return TRUE;
+        return $this;
     }
 
     function displayPhoto()

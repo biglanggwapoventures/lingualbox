@@ -9,7 +9,7 @@ use App\Http\Requests;
 use App\User;
 use Auth;
 use DB;
-
+use Carbon\Carbon;
 use App\WrittenExamResult;
 
 use Validator;
@@ -38,12 +38,23 @@ class ProfileController extends Controller
                 'done' => $user->preference()->exists(),
                 'percent' => 10
             ],
+            'demo' => [
+                'done' => $user->demoClass()->exists() && $user->demoClass->didPass(),
+                'percent' => 20
+            ],
         ];
 
         $readingExamStatus = 'W';
         $hasTakenReadingExam = $user->readingExamResult()->exists();
         if($hasTakenReadingExam){
-            $readingExamStatus = $user->latestReadingExamResult()->didPassed() ? 'P' : 'F';
+            if($user->latestReadingExamResult()->didPassed()){
+                $readingExamStatus = 'P';
+            }else{
+                $now = Carbon::now('Asia/Manila');
+                $nextReadingExam = Carbon::createFromFormat('F d, Y', $user->nextReadingExam(), 'Asia/Manila');
+                $readingExamStatus = $nextReadingExam > $now ? 'F' : 'W';
+            }
+            
         }
         $profile['reading']['done'] = $readingExamStatus !== 'W';
         $profile['reading']['status'] = $readingExamStatus;
@@ -55,7 +66,13 @@ class ProfileController extends Controller
             if($user->latestWrittenExamResult()->isPending()){
                 $writtenExamStatus = 'W';
             }else{
-                $writtenExamStatus = $user->latestWrittenExamResult()->didPassed() ? 'P' : 'F';
+                if($user->latestWrittenExamResult()->didPassed()){
+                    $writtenExamStatus= 'P';
+                }else{
+                     $now = Carbon::now('Asia/Manila');
+                    $nextWrittenExam = Carbon::createFromFormat('F d, Y', $user->nextWrittenExam(), 'Asia/Manila');
+                    $writtenExamStatus = $nextWrittenExam > $now ? 'F' : 'W';
+                }
             }
             
         }
@@ -68,7 +85,7 @@ class ProfileController extends Controller
                 $profileProgress += $row['percent'];
             }
         }
-
+        
         return view('blocks.application-progress', compact(['profileProgress', 'profile']));
     }
 

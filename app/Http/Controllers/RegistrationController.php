@@ -346,7 +346,10 @@ class RegistrationController extends Controller
 
          if($request->input('finish')){
              $exam->calculateScore()->save();
-             return response()->json(['result' => TRUE, 'next_url' => route('profile')]);
+             if($exam->didPassed()){
+                 session()->flash('reading_exam_result_passed', true);
+             }
+             return response()->json(['result' => true, 'next_url' => route('profile')]);
          }
     }
 

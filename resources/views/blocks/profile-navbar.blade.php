@@ -9,7 +9,7 @@
         <span class="icon-bar"></span>
       </button>
      
-          <a class="navbar-brand" href="{{ route('home') }}"><img alt="Brand" src="{{ asset('img/logo2.png') }}" style="height:22px;width:auto"></a>
+          <a class="navbar-brand"  href="{{ Auth::check() ? route('profile') : route('home') }}"><img alt="Brand" src="{{ asset('img/logo2.png') }}" style="height:22px;width:auto"></a>
         
           
         

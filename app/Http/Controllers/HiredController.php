@@ -21,7 +21,7 @@ class HiredController extends Controller
     function update(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|in:work_days,time_schedule,rate,status',
+            'name' => 'required|in:shift,work_days,time_schedule,rate,status',
             'pk' => 'required|exists:hired_status,user_id',
         ]);
 
@@ -33,7 +33,7 @@ class HiredController extends Controller
         }
 
         $attr = $request->input('name');
-        $user = Hired::find($request->input('pk'));
+        $user = Hired::where('user_id', $request->input('pk'))->firstOrFail();
         $user->$attr = $request->input('value');
         $user->save();
 

@@ -23,4 +23,9 @@ class UserDemoClass extends Model
     {
         return $this->status == self::STATUS_PASSED;
     }
+
+    function getFormattedInstructions()
+    {
+        return preg_replace('/\r\n|\r|\n/', '<br />', $this->instructions);
+    }
 }

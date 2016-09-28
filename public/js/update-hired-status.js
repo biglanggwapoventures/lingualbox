@@ -1,6 +1,28 @@
 $(document).ready(function () {
 
     var url = $('table#hired').data('url');
+    $('.shift').editable({
+        name: 'shift',
+        url: url,
+        pk: function () {
+            return $(this).closest('tr').data('pk')
+        },
+        source: [{
+            value: 'MORNING',
+            text: 'Morning Shift'
+        }, {
+            value: 'AFTERNOON',
+            text: 'Afternoon Shift'
+        }, {
+            value: 'EVENING',
+            text: 'Evening Shift'
+        }, {
+            value: 'MIDNIGHT',
+            text: 'Midnight Shift'
+        }],
+        type: 'select'
+    });
+
     $('.workdays').editable({
         name: 'work_days',
         url: url,
