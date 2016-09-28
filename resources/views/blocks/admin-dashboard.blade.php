@@ -70,6 +70,18 @@
                     </div>
                 </a>
             </div>
+            <div class="col-sm-3 col-xs-6">
+                <a class="menu-icon" href="{{ route('needed.teachers') }}">
+                    <div class="panel panel-default">
+                        <div class="panel-body text-center">
+                            <i class="fa fa-users fa-5x  fa-fw"></i>
+                        </div>
+                        <div class="panel-footer text-center"> 
+                            Needed Teachers
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
 
     </div>

@@ -67,12 +67,12 @@ class ForgotPasswordController extends Controller
                 'password' => 'required|confirmed',
             ]);
 
-            $token = PasswordReset::where('token', $token)->first();
-            $user = User::where('email_address', $token->email)->first();
+            $user = User::where('email_address', $reset->email)->first();
             $user->password = bcrypt($request->input('password'));
             $user->save();
 
             Auth::loginUsingId($user->id);
+            
             session()->flash('password_reset', 'Password has been successfuly reset!');
             return redirect()->route('profile');
 

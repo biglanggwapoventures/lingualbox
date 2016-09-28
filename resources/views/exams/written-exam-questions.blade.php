@@ -45,7 +45,7 @@
                         <hr>
                         <button class="btn btn-success" type="submit">Submit</button>
                         @if(isset($question->id))
-                            <a data-pk="{{ $question->id }}" data-url="{{ route('written.questions.delete', ['id' => $question->id]) }}" class="btn btn-danger pull-right">Delete</a>
+                            <button data-toggle="modal" data-target="#myModal" class="btn btn-danger pull-right" type="button">Delete</button>
                         @endif
                     </div>
                     
@@ -54,4 +54,26 @@
         </div>
     </div>
 </div>
+ @if(isset($question->id))
+ <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            {!! Form::open(['url' => route('written.questions.delete'), 'method' => 'DELETE', 'class' => 'common' ]) !!}
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    {!! Form::hidden('id', $question->id) !!}
+                    <h4 class="modal-title">Confirm deletion</h4>
+                </div>
+                <div class="modal-body">
+                    <p class="lead text-center text-danger">Are you sure you want to delete this?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            {!! Form::close() !!}
+        </div>
+    </div>
+</div>
+ @endif
 @endsection

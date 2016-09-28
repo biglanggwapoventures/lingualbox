@@ -40,6 +40,9 @@
                     <a href="{{ route('hired.summary') }}" class="list-group-item {{ Route::currentRouteNamed('hired.summary') ? 'active' : '' }}">
                         <i class="fa fa-users fa-fw"></i> Hired Summary
                     </a>
+                    <a href="{{ route('needed.teachers') }}" class="list-group-item {{ Route::currentRouteNamed('needed.teachers') ? 'active' : '' }}">
+                        <i class="fa fa-users fa-fw"></i> Needed Teachers
+                    </a>
                     <a href="{{ route('report.show') }}" class="list-group-item {{ Route::currentRouteNamed('report.show') ? 'active' : '' }}">
                         <i class="fa fa-pie-chart fa-fw"></i> Report
                     </a>
@@ -52,6 +55,9 @@
                     </a>
                     <a href="{{ route('hired.summary') }}" class="list-group-item {{ Route::currentRouteNamed('hired.summary') ? 'active' : '' }}">
                         <i class="fa fa-users fa-fw"></i> Hired Summary
+                    </a>
+                    <a href="{{ route('needed.teachers') }}" class="list-group-item {{ Route::currentRouteNamed('needed.teachers') ? 'active' : '' }}">
+                        <i class="fa fa-users fa-fw"></i> Needed Teachers
                     </a>
                     @else
                         <a href="https://hackpad.com/LingualBox-Rules-for-Teachers-MC38Cn28dRU" target="_blank" class="list-group-item">

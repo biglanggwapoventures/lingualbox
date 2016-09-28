@@ -55,6 +55,7 @@ Route::group(['prefix' => 'exams', 'middleware' => ['auth', 'admin-only']], func
             Route::post('questions', 'ReadingExamController@storeQuestion')->name('reading.questions.store');
             Route::get('questions/{id}', 'ReadingExamController@editQuestion')->name('reading.questions.edit');
             Route::post('questions/{id}', 'ReadingExamController@updateQuestion')->name('reading.questions.update');
+            Route::delete('questions', 'ReadingExamController@deleteQuestion')->name('reading.questions.delete');
         });
     });
 
@@ -63,7 +64,7 @@ Route::group(['prefix' => 'exams', 'middleware' => ['auth', 'admin-only']], func
             Route::get('questions', 'WrittenExamController@createQuestion')->name('written.questions.create');
             Route::post('questions', 'WrittenExamController@storeQuestion')->name('written.questions.store');
             Route::get('questions/{id}', 'WrittenExamController@editQuestion')->name('written.questions.edit');
-            Route::delete('questions/{id}', 'WrittenExamController@deleteQuestion')->name('written.questions.delete');
+            Route::delete('questions', 'WrittenExamController@deleteQuestion')->name('written.questions.delete');
             Route::post('questions/{id}', 'WrittenExamController@updateQuestion')->name('written.questions.update');
         });
     });
@@ -91,7 +92,9 @@ Route::get('/profile/{id}', 'ProfileController@view')->name('profile.view');
 Route::get('/about-us', 'AboutUsController@index')->name('about-us');
 Route::get('/help', 'HelpController@index')->name('help');
 
-Route::get('/report', 'ReportController@show')->name('report.show');
+Route::get('/report', 'ReportController@show')->middleware('admin-only')->name('report.show');
+Route::get('/needed-teachers', 'NeededTeachersController@show')->middleware('hr-only')->name('needed.teachers');
+Route::post('/needed-teachers', 'NeededTeachersController@save')->middleware('admin-only')->name('needed.teachers.save');
 
 
 Route::get('/demo', function(){

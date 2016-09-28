@@ -4,8 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+
+use Illuminate\Database\Eloquent\SoftDeletes; 
+
+
 class ReadingQuestion extends Model
 {
+
+    use SoftDeletes;
     //
 
     protected $fillable = ['body', 'correct_answers', 'wrong_answers'];

@@ -120,4 +120,13 @@ class ReadingExamController extends Controller
             'result' => TRUE
         ]);
     }
+
+    function deleteQuestion(Request $request)
+    {
+        Question::destroy($request->input('id'));
+        return response()->json([
+            'result' => true,
+            'next_url' => route('reading.questions.create')
+        ]);
+    }
 }
