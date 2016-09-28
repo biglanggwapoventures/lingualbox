@@ -156,7 +156,7 @@
                                     </tr>
                                     <tr>
                                         <td>Demonstration</td>
-                                        @if(!$profile['requirements']['done'])
+                                        @if(!$profile['demo']['done'])
                                             <td colspan="2" class="text-warning text-center">Please finish &quot;Written Exam&quot;</td> 
                                         @else
                                             <td colspan="2"><a class="btn btn-info btn-xs btn-block" data-toggle="modal" data-target="#ins">View instructions</a></td>
@@ -238,7 +238,7 @@
                         <tbody>
                             <tr>
                                 <td>{{ Auth::user()->hireStatus->shift }}</td>
-                                <td>{{ implode(', ', Auth::user()->hireStatus->work_days) }}</td>
+                                <td>{{ implode(', ', Auth::user()->hireStatus->work_days ?: []) }}</td>
                                 <td>{{ Auth::user()->hireStatus->time_schedule }}</td>
                                 <td>{{ number_format(Auth::user()->hireStatus->rate, 2) }}</td>
                             </tr>
