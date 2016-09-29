@@ -153,7 +153,7 @@
                                     </tr>
                                     <tr>
                                         <td>Demonstration</td>
-                                        @if(in_array($profile['written']['status'], ['F', 'W']))
+                                        @if($profile['written']['status'] !== 'P')
                                             <td colspan="2" class="text-warning text-center">Please finish &quot;Written Exam&quot;</td> 
                                         @else
                                             <td colspan="2"><a class="btn btn-info btn-xs btn-block" data-toggle="modal" data-target="#ins">View instructions</a></td>
