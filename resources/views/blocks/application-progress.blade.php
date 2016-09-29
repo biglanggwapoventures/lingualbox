@@ -153,7 +153,7 @@
                                     </tr>
                                     <tr>
                                         <td>Demonstration</td>
-                                        @if(!$profile['demo']['done'])
+                                        @if(in_array($profile['written']['status'], ['F', 'W']))
                                             <td colspan="2" class="text-warning text-center">Please finish &quot;Written Exam&quot;</td> 
                                         @else
                                             <td colspan="2"><a class="btn btn-info btn-xs btn-block" data-toggle="modal" data-target="#ins">View instructions</a></td>
@@ -165,7 +165,7 @@
                                                             <h4 class="modal-title">Demo Class Instructions</h4>
                                                         </div>
                                                         <div class="modal-body">
-                                                            {!! Auth::user()->demoClass->getFormattedInstructions() !!}
+                                                            {!! Auth::user()->demoClass()->exists() ? Auth::user()->demoClass->getFormattedInstructions() : '' !!}
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
