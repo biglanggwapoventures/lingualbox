@@ -56,7 +56,7 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-4">
-                        {{ Form::bsText('mobile_number', $user->mobile_number, 'Mobile number', []) }}
+                        {{ Form::bsText('mobile_number', $user->mobile_number, 'Mobile number', ['placeholder' => 'e.g. 09191234567']) }}
                     </div>
                     <div class="col-sm-4">
                         {{ Form::bsText('email_address', $user->email_address, 'Email address', []) }}

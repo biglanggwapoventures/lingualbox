@@ -53,11 +53,11 @@
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    {{ Form::bsText('demo_time', $preference->demo_time, 'Time', []) }}
+                                    {{ Form::bsText('demo_time', $preference->demo_time, 'Time', ['placeholder' => 'e.g. 9am-11am']) }}
                                 </div>
                             </div>
                         </div>
-                         {{ Form::bsTextarea('remarks', $preference->remarks, 'Remarks', ['rows' => 3]) }}
+                         {{ Form::bsTextarea('remarks', $preference->remarks, 'Remarks', ['rows' => 3, 'placeholder' => 'Please put the details of your availability . . .']) }}
                     </div>
                 </div>
                 <hr>
@@ -73,7 +73,7 @@
                                 <div class="alert alert-info">
                                     <p>
                                         <b><i class="glyphicon glyphicon-info-sign"></i></b> 
-                                        Use <a href="http://www.usen.com/speedtest02/adsl/speedtest.html" target="_blank">this link</a>  for testing your internet speed
+                                        Use <a class="usenColor" href="http://www.usen.com/speedtest02/adsl/speedtest.html" target="_blank">this link USEN</a>  for testing your internet speed. Don't click anything in the page, please wait for the result and take the screenshot.
                                     </p>
                                 </div>
                             </div>
@@ -87,13 +87,13 @@
                         <div class="row">
                             <div class="col-sm-6">
                                  <div class="form-group">
-                                    {{ Form::label('tesol_certificate', 'TESOL Certificate')}}
+                                    {{ Form::label('tesol_certificate', 'TESOL Certificate(if any)')}}
                                     {{ Form::file('tesol_certificate', ['accept'=>'image/*']) }}
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                  <div class="form-group">
-                                    {{ Form::label('tefl_certificate', 'TEFL Certificate')}}
+                                    {{ Form::label('tefl_certificate', 'TEFL Certificate(if any)')}}
                                     {{ Form::file('tefl_certificate', ['accept'=>'image/*']) }}
                                 </div>
                             </div>

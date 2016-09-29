@@ -1,0 +1,41 @@
+.titleAbout{
+	font-family: "Futura-PT",sans-serif;
+	font-size: 35px;
+	color: #5b656d;
+	font-weight: 300;
+}
+
+.title-divider{
+	margin: 1.3em auto 1.5em;
+	display: block;
+	width: 80px;
+}
+
+.title-divider--green{
+	border-bottom: 4px solid #009933;
+}
+
+.headerAbout{
+	font-family: "Futura-PT",sans-serif;
+	font-size: 30px;
+	color: #5b656d;
+	font-weight: 300;
+	margin-top: 40px;
+}
+
+.paraAbout{
+	font-family: "Futura-PT",sans-serif;
+	font-size: 16px;
+	color: #5b656d;
+	font-weight: 200;
+}
+
+.teacherAbout{
+	margin-top: 90px;
+
+}
+
+.lineHelp{
+	border-bottom: 2px solid #508357;
+}
+

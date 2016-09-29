@@ -27,7 +27,7 @@
                         <div class="panel-body text-center">
                             <i class="fa fa-users fa-5x  fa-fw"></i>
                         </div>
-                        <div class="panel-footer text-center"> s
+                        <div class="panel-footer text-center"> 
                             Applicants Summary
                         </div>
                     </div>

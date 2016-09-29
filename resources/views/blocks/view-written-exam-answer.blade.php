@@ -56,7 +56,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Notify applicant of demo class details</h4>
+        <h4 class="modal-title" id="myModalLabel">Input the demo class schedule, lesson material to be used and the skype account</h4>
       </div>
       <div class="modal-body">
         {!! Form::textarea('content', null, ['class' => 'form-control', 'rows' => 3]) !!}

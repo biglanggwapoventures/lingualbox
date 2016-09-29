@@ -15,12 +15,12 @@
                     </div>
                     @if(!Auth::user()->isAccountVerified())
                         <div class="alert alert-danger">
-                            <p>Your account is not yet verified. Please check you email inbox to verify your account. If you haven't received any email, you can click <a href="{{ route('email.verification.resend') }}">here</a> to resend the verification link.</p>
+                            <p>Your account is not yet verified. Please check Your email inbox to verify your account. If you haven't received any email, you can click <a href="{{ route('email.verification.resend') }}">here</a> to resend the verification link.</p>
                         </div>
                     @endif
                     @if(session()->has('email_verification_ok'))
                         <div class="alert alert-success text-center">
-                            <i class="fa fa-check"></i> Your account has been verified!
+                            <i class="fa fa-check"></i> Your account has been verified! You can take the reading test now!
                         </div>
                     @endif
                     @if(session()->has('email_verification_notice'))
