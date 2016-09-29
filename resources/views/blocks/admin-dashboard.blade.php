@@ -65,7 +65,19 @@
                             <i class="fa fa-pie-chart fa-5x  fa-fw"></i>
                         </div>
                         <div class="panel-footer text-center"> 
-                            Report
+                            Reports
+                        </div>
+                    </div>
+                </a>
+            </div>
+             <div class="col-sm-3 col-xs-6">
+                <a class="menu-icon" href="{{ route('written.exam.list') }}">
+                    <div class="panel panel-default">
+                        <div class="panel-body text-center">
+                            <i class="fa fa-check fa-5x  fa-fw"></i>
+                        </div>
+                        <div class="panel-footer text-center"> 
+                            Check Written Exams
                         </div>
                     </div>
                 </a>

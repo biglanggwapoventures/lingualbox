@@ -44,4 +44,15 @@ class NeededTeachersController extends Controller
             'result' => true
         ]);
     }
+
+    function fulfill()
+    {
+        $demand = new Demand;
+        $demand->fulfilled = TRUE;
+        $demand->save();
+        
+        return response()->json([
+            'result' => true
+        ]);
+    }
 }

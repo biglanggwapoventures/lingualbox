@@ -95,6 +95,7 @@ Route::get('/help', 'HelpController@index')->name('help');
 Route::get('/report', 'ReportController@show')->middleware('admin-only')->name('report.show');
 Route::get('/needed-teachers', 'NeededTeachersController@show')->middleware('hr-only')->name('needed.teachers');
 Route::post('/needed-teachers', 'NeededTeachersController@save')->middleware('admin-only')->name('needed.teachers.save');
+Route::patch('/needed-teachers', 'NeededTeachersController@fulfill')->middleware('hr-only')->name('needed.teachers.fulfill');
 
 
 Route::get('/demo', function(){

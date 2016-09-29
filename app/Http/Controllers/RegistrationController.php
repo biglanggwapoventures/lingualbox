@@ -81,7 +81,7 @@ class RegistrationController extends Controller
             'gender' => 'required|in:MALE,FEMALE',
             'birthdate' => 'required|date_format:Y-n-j',
             'marital_status' => 'required|in:SINGLE,SEPARATED,MARRIED,DIVORCED,SEPARATED',
-            'mobile_number' => 'required|numeric|digits:10',
+            'mobile_number' => 'required|numeric|digits:11',
             'email_address' => "required|email|unique:users,email_address",
             'skype_account' => 'required',
             'street_address' => 'required',
@@ -290,14 +290,16 @@ class RegistrationController extends Controller
 
     function readingExamConfirmation()
     {
+        $story = Story::orderBy('id', 'DESC')->first();
         if(!$this->user->canTakeReadingExam()){
             abort(404);   
         }
-
         if($this->user->hasOngoingReadingExam()){
             return redirect()->route('reading.exam');
         }else{
-            return view('blocks.registration.reading-exam-confirmation'); 
+            return view('blocks.registration.reading-exam-confirmation', [
+                'timeLimit' => $story->limit
+            ]); 
         }
     }
 

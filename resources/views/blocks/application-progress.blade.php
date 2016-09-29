@@ -13,9 +13,6 @@
                             {{ $profileProgress }}%
                         </div>
                     </div>
-                    <div class="alert alert-danger">
-                        <p>Seems like you are not yet done with your whole application process. You can review your progress below</p>
-                    </div>
                     @if(!Auth::user()->isAccountVerified())
                         <div class="alert alert-danger">
                             <p>Your account is not yet verified. Please check you email inbox to verify your account. If you haven't received any email, you can click <a href="{{ route('email.verification.resend') }}">here</a> to resend the verification link.</p>
@@ -85,7 +82,7 @@
                                             <td class="text-center"><span class="label label-success"><i class="glyphicon glyphicon-check"></i> Done</span></td>
                                             <td class="text-center"><a class="btn btn-info btn-xs" href="{{ route('register.second') }}">Review</a></td>
                                         @else
-                                            <td colspan="2"><a class="btn btn-info btn-xs btn-block" href="{{ route('register.second') }}">Take</a></td>
+                                            <td colspan="2"><a class="btn btn-warning btn-xs btn-block" href="{{ route('register.second') }}">Take</a></td>
                                         @endif
                                         <td><span class="label label-primary">{{ $profile['experiences']['percent'] }}%</span></td>
                                     <tr>
@@ -122,7 +119,7 @@
                                             @if($profileProgress < 50)
                                             <td colspan="2" class="text-warning text-center">Please finish &quot;Requirements&quot;</td> 
                                             @else
-                                                <td colspan="2"><a class="btn btn-info btn-xs btn-block" href="{{ route('pre.reading.exam') }}">Take</a></td>
+                                                <td colspan="2"><a class="btn btn-warning btn-xs btn-block" href="{{ route('pre.reading.exam') }}">Take</a></td>
                                             @endif
                                         @endif
                                         <td><span class="label label-primary">20%</span></td>

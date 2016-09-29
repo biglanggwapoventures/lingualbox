@@ -42,4 +42,6 @@ class HiredController extends Controller
         ]);
 
     }
+
+    
 }

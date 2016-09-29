@@ -17,22 +17,26 @@
                     <div class="row">
                         <div class="col-sm-10 col-sm-offset-1">
                             <div class="panel-body text-center">
-                                <img src="{{ Auth::user()->displayPhoto() }}" alt="" class="img-responsive img-circle">
+                                <img src="{{ Auth::user()->displayPhoto() }}" alt="" class="img-responsive img-thumbnail">
                             </div>
                         </div>
                     </div>
                     <p class="text-center lead" style="border-top:1px solid #eee">{{ Auth::user()->fullname() }}</p>
                 </div>
                 <div class="list-group">
+                    
+                    @if(Auth::user()->isAdmin())
                     <a href="{{ route('profile') }}" class="list-group-item {{ Route::currentRouteNamed('profile') ? 'active' : '' }}">
                         <i class="fa fa-home fa-fw"></i> Dashboard
                     </a>
-                    @if(Auth::user()->isAdmin())
                     <a href="{{ route('written.questions.create') }}" class="list-group-item">
                         <i class="fa fa-pencil fa-fw"></i> Manage Written Exam
                     </a>
                     <a href="{{ route('reading.storyboard.edit') }}" class="list-group-item">
                         <i class="fa fa-book fa-fw"></i> Manage Reading Exam
+                    </a>
+                    <a href="{{ route('written.exam.list') }}" class="list-group-item {{ in_array(Route::currentRouteName(), ['written.exam.list', 'written.exam.view']) ? 'active' : '' }}">
+                        <i class="fa fa-check fa-fw"></i> Check Written Exams
                     </a>
                     <a href="{{ route('applicants.summary') }}" class="list-group-item {{ Route::currentRouteNamed('applicants.summary') ? 'active' : '' }}">
                         <i class="fa fa-users fa-fw"></i> Applicants Summary
@@ -47,6 +51,9 @@
                         <i class="fa fa-pie-chart fa-fw"></i> Report
                     </a>
                     @elseif(Auth::user()->isHR())
+                    <a href="{{ route('profile') }}" class="list-group-item {{ Route::currentRouteNamed('profile') ? 'active' : '' }}">
+                        <i class="fa fa-home fa-fw"></i> Dashboard
+                    </a>
                     <a href="{{ route('written.exam.list') }}" class="list-group-item {{ in_array(Route::currentRouteName(), ['written.exam.list', 'written.exam.view']) ? 'active' : '' }}">
                         <i class="fa fa-check fa-fw"></i> Check Written Exams
                     </a>
@@ -59,13 +66,6 @@
                     <a href="{{ route('needed.teachers') }}" class="list-group-item {{ Route::currentRouteNamed('needed.teachers') ? 'active' : '' }}">
                         <i class="fa fa-users fa-fw"></i> Needed Teachers
                     </a>
-                    @else
-                        <a href="https://hackpad.com/LingualBox-Rules-for-Teachers-MC38Cn28dRU" target="_blank" class="list-group-item">
-                            <i class="fa fa-list-alt fa-fw"></i> Rules and Regulations
-                        </a>
-                        <a href="https://hackpad.com/Instruction-for-receiving-salary-BCDdSYtQhBu" target="_blank" class="list-group-item">
-                            <i class="fa fa-dollar fa-fw"></i> Payment System
-                        </a>
                     @endif
 
                     

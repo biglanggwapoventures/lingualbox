@@ -9,6 +9,11 @@
             <h2>Needed Teachers</h2>
         </div>
         {!! Form::open(['url' => route('needed.teachers.save'), 'method' => 'POST', 'class' => 'common form-horizontal']) !!}
+            @if($demand->fulfilled)
+                <div class="alert alert-success">
+                    <i class="fa fa-check"></i> The HR has hired the needed teachers!
+                </div>
+            @endif
             <div class="form-group">
                 <label class="col-sm-4 control-label">Morning</label>
                 <div class="col-sm-6">

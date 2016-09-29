@@ -8,7 +8,7 @@
         <div class="page-header text-center" style="margin-top:0">
             <h2>Needed Teachers</h2>
         </div>
-        <div class="form-horizontal">
+        {{ Form::open(['url' => route('needed.teachers.fulfill'), 'method' => 'PATCH', 'class' => 'form-horizontal common', 'data-next' => route('needed.teachers')]) }}
             <div class="form-group">
                 <label class="col-sm-4 control-label">Morning</label>
                 <div class="col-sm-6">
@@ -41,7 +41,12 @@
                     </p>
                 </div>
             </div>
-        </div>
+            <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-10">
+                <button type="submit" class="btn btn-success">Done Hiring</button>
+                </div>
+            </div>
+        {!! Form::close() !!}
     </div>
 </div>
 @endsection

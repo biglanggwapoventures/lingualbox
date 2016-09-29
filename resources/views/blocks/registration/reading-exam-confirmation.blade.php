@@ -9,10 +9,7 @@
                     <fieldset>
                         <p class="lead text-center">
                             <strong>INSTRUCTIONS</strong><br>
-                            Please choose the correct answer for the corresponding number. This exam has time limit. Please finish the exam before the time ends.
-                            <br>
-                        
-                            
+                            Please choose the correct answer for the corresponding number. This exam has a time limit of <strong>{{ $timeLimit }} minutes</strong>. Please finish the exam before the time ends.
                         </p>
                         <p class="lead text-center">
                             You are about to take the reading exam. Click on the button below to proceed.

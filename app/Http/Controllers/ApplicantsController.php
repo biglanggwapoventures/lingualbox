@@ -19,7 +19,7 @@ class ApplicantsController extends Controller
 {
     function summary()
     {
-        $applicants = User::teacher()->get();
+        $applicants = User::teacher()->orderBy('id', 'DESC')->get();
         return view('blocks.applicants.summary', compact('applicants'));
     }
 

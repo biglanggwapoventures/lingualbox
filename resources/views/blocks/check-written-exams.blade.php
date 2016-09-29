@@ -16,6 +16,9 @@
          <!-- Table -->
         <div class="text-center">
             <ul class="nav nav-pills text-center" style="margin-bottom:10px">
+                <li role="presentation" class="{{ Route::currentRouteNamed('written.exam.list') && !$session ? 'active' : '' }}">
+                    <a href="{{ route('written.exam.list', ['schedule' => 'all']) }}">All</a>
+                </li>
                 <li role="presentation" class="{{ Route::currentRouteNamed('written.exam.list') && $session == 'MORNING' ? 'active' : '' }}">
                     <a href="{{ route('written.exam.list', ['schedule' => 'MORNING']) }}">Morning</a>
                 </li>
@@ -33,7 +36,14 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Applicant Name</th><th>Date</th><th>Gender</th><th>Demo Sched</th><th></th>
+                    <th>Name</th>
+                    @if(!$session)
+                        <th>Shift</th>
+                    @endif
+                    <th>Date</th>
+                    <th>Gender</th>
+                    <th>Demo Sched</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -41,6 +51,9 @@
                     @foreach($items AS $row)
                         <tr>
                             <td>{{ $row->applicant }}</td>
+                            @if(!$session)
+                                <td>{{ $row->work_schedule }}</td>
+                            @endif
                             <td>{{ date_create_immutable($row->date)->format('m/d/Y h:i A') }}</td>
                             <td>{{ $row->gender }}</td>
                             <td>{{ "{$row->demo_day} {$row->demo_time}" }}</td>

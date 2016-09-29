@@ -93,16 +93,18 @@ class ProfileController extends Controller
     {
         $input = $request->input('schedule');
         $schedules = ['MORNING', 'AFTERNOON', 'EVENING', 'MIDNIGHT'];
-        $session = in_array($input, $schedules) ? $input : $schedules[0];
+        $session =  in_array($input, $schedules) ? $input : FALSE;
 
-        $items = DB::table('written_exam_results AS w')
-            ->select(DB::raw('w.id, CONCAT(u.firstname, " ", u.lastname) AS applicant, MAX(w.datetime_started) AS date, u.gender, up.demo_day, up.demo_time'))
+        $query = DB::table('written_exam_results AS w')
+            ->select(DB::raw('w.id, CONCAT(u.firstname, " ", u.lastname) AS applicant, MAX(w.datetime_started) AS date, u.gender, up.demo_day, up.demo_time, up.work_schedule'))
             ->join('users AS u', 'u.id', '=', 'w.user_id')
-            ->join('user_preferences AS up', 'up.user_id', '=', 'u.id')
-            ->where([
-                ['up.work_schedule', '=', $session],
-            ])
-            ->whereNull('w.result')
+            ->join('user_preferences AS up', 'up.user_id', '=', 'u.id');
+
+        if($session){
+            $query->where('up.work_schedule', $session);
+        }
+            
+       $items = $query->whereNull('w.result')
             ->groupBy('w.user_id')
             ->get();
 
