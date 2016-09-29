@@ -9,6 +9,7 @@ use App\UserPreference AS Preference;
 use App\ReadingExamResult AS ReadingResult;
 use App\ReadingStoryboard AS Story;
 use App\UserDemoClass AS DemoClass;
+use App\HireStatus AS Hire;
 use Carbon\Carbon;
 use Auth;
 use Mail;
