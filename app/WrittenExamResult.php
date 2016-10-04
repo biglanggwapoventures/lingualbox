@@ -8,9 +8,13 @@ use Carbon\Carbon;
 
 class WrittenExamResult extends Model
 {
-    protected $fillable = ['datetime_started', 'user_id', 'written_exam_id'];
+    protected $fillable = ['datetime_started', 'user_id', 'written_exam_id', 'result', 'fail_reason'];
 
     public $timestamps = FALSE;
+
+    protected $casts = [
+        'fail_reason' => 'array'
+    ];
 
     function getDatetimeEndedAttribute($val)
     {

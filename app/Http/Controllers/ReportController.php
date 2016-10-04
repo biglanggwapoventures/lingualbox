@@ -26,13 +26,20 @@ class ReportController extends Controller
             ->groupBy(DB::raw('MONTH(failed_at)'))
             ->pluck('x', 'y');
 
+        $registered = DB::table('users')->select(DB::raw('COUNT(id) AS x, DATE_FORMAT(created_at, "%b") AS y'))
+            ->where('account_type', '=', 'TEACHER')
+            // ->where(DB::raw('YEAR(failed_at) = YEAR(CURDATE())'))
+            ->groupBy(DB::raw('MONTH(created_at)'))
+            ->pluck('x', 'y');
+
         $report = ['hired' => [], 'failed' => []];
         foreach($months AS $m){
             $report['hired'][] = isset($hired[$m]) ? $hired[$m] : 0;
             $report['failed'][] = isset($failed[$m]) ? $failed[$m] : 0;
+            $report['registered'][] = isset($registered[$m]) ? $registered[$m] : 0;
         }
         
 
-        return view('blocks.reports.summary', compact('failed', 'hired', 'report'));
+        return view('blocks.reports.summary', compact('report'));
     }
 }

@@ -8,7 +8,7 @@
         <div class="page-header text-center" style="margin-top:0">
             <h2>Report</h2>
         </div>
-        <canvas id="myChart" data-hired="{{ json_encode($report['hired']) }}" data-failed="{{ json_encode($report['failed']) }}"></canvas>
+        <canvas id="myChart" data-hired="{{ json_encode($report['hired']) }}" data-registered="{{ json_encode($report['registered']) }}" data-failed="{{ json_encode($report['failed']) }}"></canvas>
     </div>
 </div>
 @endsection

@@ -74,6 +74,9 @@ Route::group(['prefix' => 'written-exam', 'middleware' => ['auth', 'hr-only']], 
     Route::get('list', 'ProfileController@checkWrittenExams')->name('written.exam.list');
     Route::get('view/{id}', 'ProfileController@reviewWrittenExam')->name('written.exam.view');
     Route::post('check/{id}', 'ProfileController@checkWrittenExam')->name('written.exam.check');
+
+    // Route::post('check/{id}', 'ProfileController@checkWrittenExam')->name('written.exam.pass');
+    // Route::post('check/{id}', 'ProfileController@checkWrittenExam')->name('written.exam.fail');
 });
 
 Route::group(['prefix' => 'applicants', 'middleware' => ['auth','hr-only']], function(){

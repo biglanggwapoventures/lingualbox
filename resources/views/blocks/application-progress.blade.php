@@ -54,17 +54,21 @@
                         </div>
                     @endif
 
-                    @if(Auth::user()->latestWrittenExam()->exists())
-                        @if(Auth::user()->latestWrittenExam->result === 'FAILED')
+                    @php
+                        $writtenExam = Auth::user()->latestWrittenExam;
+                    @endphp
+                    @if($writtenExam->exists())
+                        @if($writtenExam->result === 'FAILED')
                             <div class="alert alert-danger">
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                                 <p class="lead">
-                                    <i class="fa fa-exclamation-circle"></i> You failed the written exam! You can reapply for the reading exam in {{ Auth::user()->nextWrittenExam() }}
+                                    <i class="fa fa-exclamation-circle"></i> You failed the written exam! You can reapply for the reading exam on {{ Auth::user()->nextWrittenExam() }}
+                                    Reason for failure: <strong>{{ implode(', ', $writtenExam->fail_reason) }}</strong>
                                 </p>
                             </div>
-                        @elseif(!Auth::user()->latestWrittenExam->result)
+                        @elseif(!$writtenExam->result)
                             <div class="alert alert-warning text-center">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 <p class="lead">

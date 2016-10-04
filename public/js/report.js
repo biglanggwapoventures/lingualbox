@@ -12,6 +12,11 @@ $(document).ready(function () {
             backgroundColor: 'rgba(255, 99, 132, 0.2)',
             borderColor: 'rgba(255,99,132,1)',
             data: ctx.data('failed')
+        }, {
+            label: 'REGISTERED',
+            backgroundColor: 'rgba(255,255,0, 0.2)',
+            borderColor: 'rgba(255,255,0, 1)',
+            data: ctx.data('registered')
         }]
     }
     var myChart = new Chart(ctx, {

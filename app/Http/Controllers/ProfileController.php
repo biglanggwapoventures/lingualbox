@@ -121,8 +121,9 @@ class ProfileController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
-            'mark' => 'required|in:PASSED,FAILED',
-            'content' => 'required_if:mark,PASSED'
+            'result' => 'required|in:PASSED,FAILED',
+            'content' => 'required_if:mark,PASSED',
+            'reason' => 'sometimes|array|required_if:mark,FAILED',
         ]);
 
         if ($validator->fails()) {
@@ -132,21 +133,27 @@ class ProfileController extends Controller
             ]);
         }
 
-        $input =  $request->only(['mark', 'content']);
+        $input = $request->only(['result', 'content', 'reason']);
         
         $exam = WrittenExamResult::findOrFail($id);
-        $exam->result = $input['mark'];
-        $exam->checked_by = Auth::user()->id;
-        if($input['mark'] === 'PASSED'){
+
+        $exam->fill([
+            'result' => $input['result'],
+            'checked_by' => Auth::user()->id
+        ]);
+
+        if($input['result'] === 'PASSED'){
             $exam->user->prepareForDemoClass($input['content']);
         }else{
             $exam->user->setAsFailed();
+            $exam->fail_reason = $input['reason'] ? array_diff($input['reason'], ['OTHERS']) : NULL;
         }
+
         $exam->save();
 
         return response()->json([
             'result' => TRUE,
-            'redirect_url' => route('written.exam.list')
+            'next_url' => route('written.exam.list')
         ]);
         
     }

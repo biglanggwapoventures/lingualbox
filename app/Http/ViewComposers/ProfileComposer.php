@@ -3,14 +3,16 @@
 namespace App\Http\ViewComposers;
 
 use Illuminate\View\View;
-
 use Auth;
+use App\WrittenExamResult AS WrittenExam;
+use App\NeededTeacher;
+use DB;
 
 class ProfileComposer
 {
     public function __construct()
     {
-       
+       $this->user = Auth::user();
     }
 
     /**
@@ -21,10 +23,15 @@ class ProfileComposer
      */
     public function compose(View $view)
     {
-        $displayPhoto = asset('images/display-photo-placeholder.png');
-        if(!empty($user->preference)){
-            $displayPhoto = asset("uploads/{$user->id}/display/{$user->preference->display_photo_filename}");
+        if($this->user->isAdmin() || $this->user->isHR()){
+
+            $uncheckedWrittenExams = WrittenExam::whereNull('result')->count();
+            
+            $hiring = NeededTeacher::select(['morning', 'midnight', 'evening', 'afternoon'])->orderBy('id', 'DESC')->first()->toArray();
+            $isHiring = array_sum(array_values($hiring)) > 0;
+
+            $view->with(compact('uncheckedWrittenExams', 'isHiring'));
+
         }
-        $view->with('displayPhoto', $displayPhoto);
     }
 }

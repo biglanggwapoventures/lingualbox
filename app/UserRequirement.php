@@ -8,7 +8,7 @@ class UserRequirement extends Model
 {
     const STATUS_PASSED = 'PASSED';
     const STATUS_FAILED = 'FAILED';
-    public $timestamps = FALSE;
+    // public $timestamps = FALSE;
     protected $fillable = ['user_id', 'status'];
     function user()
     {

@@ -36,7 +36,7 @@
                         <i class="fa fa-book fa-fw"></i> Manage Reading Exam
                     </a>
                     <a href="{{ route('written.exam.list') }}" class="list-group-item {{ in_array(Route::currentRouteName(), ['written.exam.list', 'written.exam.view']) ? 'active' : '' }}">
-                        <i class="fa fa-check fa-fw"></i> Check Written Exams
+                        <i class="fa fa-check fa-fw"></i> Check Written Exams <span class="badge">{{ $uncheckedWrittenExams }}</span>
                     </a>
                     <a href="{{ route('applicants.summary') }}" class="list-group-item {{ Route::currentRouteNamed('applicants.summary') ? 'active' : '' }}">
                         <i class="fa fa-users fa-fw"></i> Applicants Summary
@@ -46,6 +46,9 @@
                     </a>
                     <a href="{{ route('needed.teachers') }}" class="list-group-item {{ Route::currentRouteNamed('needed.teachers') ? 'active' : '' }}">
                         <i class="fa fa-users fa-fw"></i> Needed Teachers
+                        @if($isHiring)
+                            <span class="badge"><i class="fa fa-exclamation-circle fa-fw"></i></span>
+                        @endif 
                     </a>
                     <a href="{{ route('report.show') }}" class="list-group-item {{ Route::currentRouteNamed('report.show') ? 'active' : '' }}">
                         <i class="fa fa-pie-chart fa-fw"></i> Report
@@ -55,7 +58,7 @@
                         <i class="fa fa-home fa-fw"></i> Dashboard
                     </a>
                     <a href="{{ route('written.exam.list') }}" class="list-group-item {{ in_array(Route::currentRouteName(), ['written.exam.list', 'written.exam.view']) ? 'active' : '' }}">
-                        <i class="fa fa-check fa-fw"></i> Check Written Exams
+                        <i class="fa fa-check fa-fw"></i> Check Written Exams <span class="badge">{{ $uncheckedWrittenExams }}</span>
                     </a>
                     <a href="{{ route('applicants.summary') }}" class="list-group-item {{ Route::currentRouteNamed('applicants.summary') ? 'active' : '' }}">
                         <i class="fa fa-users fa-fw"></i> Applicants Summary
@@ -64,7 +67,10 @@
                         <i class="fa fa-users fa-fw"></i> Hired Summary
                     </a>
                     <a href="{{ route('needed.teachers') }}" class="list-group-item {{ Route::currentRouteNamed('needed.teachers') ? 'active' : '' }}">
-                        <i class="fa fa-users fa-fw"></i> Needed Teachers
+                        <i class="fa fa-users fa-fw"></i> Needed Teachers 
+                        @if($isHiring)
+                            <span class="badge"><i class="fa fa-exclamation-circle fa-fw"></i></span>
+                        @endif 
                     </a>
                     @endif
 
