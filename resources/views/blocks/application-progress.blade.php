@@ -13,6 +13,13 @@
                             {{ $profileProgress }}%
                         </div>
                     </div>
+
+                    <div class="alert alert-info text-center">
+                        <p>
+                            <i class="fa fa-check"></i> 
+                            Please click the <strong>Take Button</strong> to finish your application.
+                        </p>
+                    </div>
                     @if(!Auth::user()->isAccountVerified())
                         <div class="alert alert-danger">
                             <p>Your account is not yet verified. Please check Your email inbox to verify your account. If you haven't received any email, you can click <a href="{{ route('email.verification.resend') }}">here</a> to resend the verification link.</p>
@@ -32,7 +39,8 @@
                         <div class="alert alert-success text-center">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <p class="lead">
-                                <i class="fa fa-check"></i>  Congratulations! You passed the reading exam! You can now proceed to the written exam.
+                                <i class="fa fa-check"></i>  
+                                Congratulations! You passed the reading exam! You got {{ Auth::user()->latestReadingExam->scorePercentage() }} % correct answers in the exam! You can now proceed to the written exam.
                             </p>
                         </div>
                     @endif
@@ -146,7 +154,10 @@
                                             @if($profileProgress < 70 || $profile['reading']['status'] !== 'P')
                                             <td colspan="2" class="text-warning text-center">Please finish &quot;Reading Exam&quot;</td> 
                                             @else
-                                                <td colspan="2"><a href="{{ route('pre.written.exam') }}" class="btn btn-info btn-xs btn-block">Take</a></td>
+                                                <td colspan="2">
+                                                    <a href="{{ route('pre.written.exam') }}" class="btn btn-warning btn-xs btn-block">Take</a>
+                                                    
+                                                </td>
                                             @endif
                                         @endif
                                         <td><span class="label label-primary">10%</span></td>

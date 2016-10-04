@@ -31,7 +31,7 @@ class User extends Authenticatable
      
      */
     protected $fillable = [
-        'firstname', 'lastname', 'email_address', 'birthdate', 'gender', 'marital_status', 'mobile_number', 'skype_account', 'street_address', 'city', 'province', 'country', 'password', 'confirmation_code'
+        'firstname', 'lastname', 'middleinitial', 'email_address', 'birthdate', 'gender', 'marital_status', 'mobile_number', 'skype_account', 'street_address', 'city', 'province', 'country', 'password', 'confirmation_code'
     ];
     
 
@@ -92,17 +92,17 @@ class User extends Authenticatable
 
     function demoClass()
     {
-        return $this->hasOne('App\UserDemoClass')->select(['id', 'user_id', 'instructions', 'instructions_sent_at', 'status'])->orderBy('id', 'DESC');
+        return $this->hasOne('App\UserDemoClass')->orderBy('id', 'DESC');
     }
 
     function orientation()
     {
-        return $this->hasOne('App\UserOrientation')->select(['id', 'user_id', 'status'])->orderBy('id', 'DESC');
+        return $this->hasOne('App\UserOrientation')->orderBy('id', 'DESC');
     }
 
     function requirement()
     {
-        return $this->hasOne('App\UserRequirement')->select(['id', 'user_id', 'status'])->orderBy('id', 'DESC');
+        return $this->hasOne('App\UserRequirement')->orderBy('id', 'DESC');
     }
 
     function hireStatus()
@@ -303,7 +303,7 @@ class User extends Authenticatable
 
     function fullname()
     {
-        return "{$this->firstname} {$this->lastname}";
+        return "{$this->firstname} {$this->middleinitial} {$this->lastname}";
     }
 
     function getProfileProgress()

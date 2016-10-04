@@ -42,7 +42,7 @@
 		
      				<div>
      					<h5 class="switch questionHelp" id="q-4">+ Can I apply even though I am in another country?</h5>
-     					<p class="content answerHelp" id="a-4" style="display:none">- Yes, as long as you have a good internet connection and can qualify in our application assessment.</p>
+     					<p class="content answerHelp" id="a-4" style="display:none">- No, our teachers must be staying here in the Philippines.</p>
      				</div>
      				<hr class="helpLine" />
 		
@@ -137,11 +137,36 @@
 
      	</div>
 
-     	<div class="footerHelp">
-     		
-     	</div>
-
-     	
+          <div class="row"> 
+                <footer class="ourfooterAbout">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5 class="text-center headerFooter">Our site</h5>
+                            <p class="text-center sites"><a href="{{ route('register.first') }}">Apply now!</a></p>
+                            <p class="text-center"><a href="{{ route('about-us') }}">About us</a></p>
+                        </div>
+                
+                        <div class="col-md-4">
+                            <h5 class="text-center headerFooter">Support</h5>
+                            <p class="text-center"><a href="{{ route('help') }}">Help</a></p>
+                            <p class="text-center">hr@lingualbox.com</p>
+                        </div>
+                
+                        <div class="col-md-4">
+                            <h5 class="text-center headerFooter">Legal</h5>
+                            <p class="text-center">Privacy Policy</p>
+                        </div>
+                    </div>
+            
+                    <div class="footer-divider title-divider--gray"></div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h5 class="text-center logoFooter">© LingualBox, Inc.</h5>
+                        </div>
+                    </div>
+                </footer>
+            </div>    	
 
      </div>
 

@@ -82,6 +82,12 @@
                                     {{ Form::label('display_photo', 'Display photo' )}}
                                     {{ Form::file('display_photo', ['accept'=>'image/*']) }}
                                 </div>
+                                <div class="alert alert-info">
+                                    <p>
+                                        <b><i class="glyphicon glyphicon-info-sign"></i></b> 
+                                        Please choose your best picture wearing your formal clothes.
+                                    </p>
+                                </div>
                             </div>
                         </div>
                         <div class="row">

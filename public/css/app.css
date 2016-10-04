@@ -5830,7 +5830,6 @@ button.close {
 -------------------------------------------------- */
 /* Padding below the footer and lighter body text */
 body {
-  padding-bottom: 40px;
   color: #5a5a5a; }
 
 /* CUSTOMIZE THE NAVBAR
@@ -5990,9 +5989,29 @@ _________________________________________________ */
 
 /* Footer
 -------------------------------------------------- */
-.footer {
-  height: 100px;
-  background-color: #2e2d2d; }
+.ourfooter {
+  height: 200px; }
+
+.headerFooter {
+  padding-top: 30px; }
+
+.sites {
+  color: #5b656d; }
+
+.a {
+  color: #000;
+  color: inherit; }
+
+.footer-divider {
+  margin: 1.3em auto 1.5em;
+  display: block;
+  width: 1000px; }
+
+.title-divider--black {
+  border-bottom: 2px solid #f0f0f0; }
+
+.logoFooter {
+  margin-bottom: 10px; }
 
 /* RESPONSIVE CSS
 -------------------------------------------------- */

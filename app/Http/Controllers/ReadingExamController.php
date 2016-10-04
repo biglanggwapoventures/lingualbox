@@ -82,7 +82,7 @@ class ReadingExamController extends Controller
 
         return response()->json([
             'result' => TRUE,
-             'next_url' => route('reading.questions.update', ['id' => $question->id]),
+            'next_url' => route('reading.questions.update', ['id' => $question->id]),
         ]);
     }
 

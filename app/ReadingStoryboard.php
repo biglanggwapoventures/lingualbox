@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class ReadingStoryboard extends Model
 {
     protected $fillable = ['title', 'body', 'limit', 'passing_score'];
@@ -18,4 +19,5 @@ class ReadingStoryboard extends Model
     {
         return $this->orderBy('created_at', 'DESC')->first();
     }
+
 }

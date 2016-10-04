@@ -64,4 +64,5 @@ class WrittenExamResult extends Model
     {
         return preg_replace('/\r\n|\r|\n/', '<br />', $this->demo_instructions);
     }
+
 }

@@ -108,7 +108,7 @@
             </div>
 
             <h2 class="text-center lowerDirectionHeading">Just follow these simple steps and be a part of our Team!</h2>
-            <p class="text-center"><a href="#">Read More</a></p>
+            <!-- <p class="text-center"><a href="#">Read More</a></p> -->
         </div>
 
         <!-- Additional Apply now -->
@@ -125,10 +125,49 @@
 
 
         <!-- FOOTER -->
-        <footer>
-            <p class="pull-right"><a href="#">Back to top</a></p>
-            <p>&copy; 2016 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+        <footer class="ourfooter">
+            <div class="row">
+                <div class="col-md-4 col-s-4 col-xs-4">
+                    <h5 class="text-center headerFooter">Our site</h5>
+                    <p class="text-center sites"><a href="{{ route('register.first') }}">Apply now!</a></p>
+                    <p class="text-center"><a href="{{ route('about-us') }}">About us</a></p>
+                </div>
+    
+                <div class="col-md-4 col-s-4 col-xs-4">
+                    <h5 class="text-center headerFooter">Support</h5>
+                    <p class="text-center"><a href="{{ route('help') }}">Help</a></p>
+                    <p class="text-center">hr@lingualbox.com</p>
+                </div>
+    
+                <div class="col-md-4 col-s-4 col-xs-4">
+                    <h5 class="text-center headerFooter">Legal</h5>
+                    <p class="text-center">Privacy Policy</p>
+                </div>
+            </div>
+
+            <div class="footer-divider title-divider--black"></div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <h5 class="text-center logoFooter">© LingualBox, Inc.</h5>
+                </div>
+            </div>
+           <!-- <p class="pull-right"><a href="#">Back to top</a></p>
+            <p>&copy; 2016 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p> !-->
         </footer>
 
     </div><!-- /.container -->
 @endsection
+
+@push("js")
+<script>
+    $(document).ready(function(){
+        $(".switch").click(function() {
+            var qID = $(this).attr('id');
+            var num = qID.split('-')[1];
+            $("#a-" + num).slideToggle();
+        });
+    });
+
+</script>
+@endpush

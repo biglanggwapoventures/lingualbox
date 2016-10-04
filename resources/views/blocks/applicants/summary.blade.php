@@ -11,7 +11,7 @@
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <table class="table table-condensed table-striped" >
+                <table class="table  table-striped" >
                     <thead>
                         <tr>
                             <th>Applicant</th>
@@ -30,8 +30,14 @@
                                     $status = $row->phaseStatus();
                                 @endphp
                                  <td> <a href="{{ route('profile.view', ['id' => $row->id]) }}">{{ $row->fullname() }}</a></td>
-                                <td>{{ $status['READING'] }}</td>
-                                <td>{{ $status['WRITTEN'] }}</td>
+                                <td>
+                                    {{ $status['READING'] }}
+                                    <span class="label label-default" style="display:block">{{ $row->latestReadingExam()->exists() ? $row->latestReadingExam->datetime_started : 'N/A' }}</span>
+                                </td>
+                                <td>
+                                    {{ $status['WRITTEN'] }}
+                                    <span class="label label-default" style="display:block">{{ $row->latestWrittenExam()->exists() ? $row->latestWrittenExam->datetime_started : 'N/A' }}</span>
+                                </td>
                                 <td>
                                     @if($status['DEMO'] !== '-')
                                         {!! 
@@ -42,6 +48,7 @@
                                                 ['class' => 'form-control input-sm', 'data-update' => 'DEMO']
                                             ) 
                                         !!}
+                                        <span class="label label-default">{{ $row->demoClass()->exists() ? $row->demoClass->updated_at : '' }}</span>
                                     @else
                                         -
                                     @endif
@@ -56,6 +63,7 @@
                                                 ['class' => 'form-control input-sm', 'data-update' => 'ORIENTATION']
                                             ) 
                                         !!}
+                                        <span class="label label-default">{{ $row->orientation()->exists() ? $row->orientation->updated_at : '' }}</span>
                                     @else
                                         -
                                     @endif
@@ -70,6 +78,7 @@
                                                 ['class' => 'form-control input-sm', 'data-update' => 'REQUIREMENTS']
                                             ) 
                                         !!}
+                                        <span class="label label-default">{{ $row->requirement()->exists() ? $row->requirement->updated_at : '' }}</span>
                                     @else
                                         -
                                     @endif

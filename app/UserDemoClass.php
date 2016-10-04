@@ -12,7 +12,7 @@ class UserDemoClass extends Model
 
     protected $fillable = ['user_id', 'instructions', 'instructions_sent_at', 'status'];
 
-    public $timestamps = FALSE;
+    // public $timestamps = FALSE;
 
     function user()
     {

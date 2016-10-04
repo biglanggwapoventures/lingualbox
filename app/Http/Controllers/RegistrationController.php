@@ -78,16 +78,16 @@ class RegistrationController extends Controller
         $rules = [
             'firstname' => 'required',
             'lastname' => 'required',
+            'middleinitial' => 'required',
             'gender' => 'required|in:MALE,FEMALE',
             'birthdate' => 'required|date_format:Y-n-j',
             'marital_status' => 'required|in:SINGLE,SEPARATED,MARRIED,DIVORCED,SEPARATED',
             'mobile_number' => 'required|numeric|digits:11',
             'email_address' => "required|email|unique:users,email_address",
-            'skype_account' => 'required',
+            'skype_account' => 'required|string|unique:users,skype_account',
             'street_address' => 'required',
             'city' => 'required',
-            'province' => 'required',
-            'country' => 'required', 
+            'province' => 'required', 
         ];
 
         if($isGuest){
@@ -106,7 +106,7 @@ class RegistrationController extends Controller
            ]);
         }
 
-        $input = $request->only(['firstname', 'lastname', 'gender', 'marital_status', 'mobile_number', 'email_address', 'skype_account', 'street_address', 'city', 'province', 'country']);
+        $input = $request->only(['firstname', 'middleinitial', 'lastname', 'gender', 'marital_status', 'mobile_number', 'email_address', 'skype_account', 'street_address', 'city', 'province', 'country']);
         $input['birthdate'] = date_create_immutable_from_format('Y-n-j', $request->input('birthdate'))->format('Y-m-d');
 
         if($request->input('password')){

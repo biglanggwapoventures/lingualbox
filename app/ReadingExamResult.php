@@ -8,6 +8,8 @@ use ReadingStoryboard AS Story;
 
 use App\HireStatus As Hire;
 
+
+
 class ReadingExamResult extends Model
 {
     protected $fillable = ['datetime_started', 'user_id', 'reading_storyboard_id'];
@@ -71,6 +73,7 @@ class ReadingExamResult extends Model
              if($itemPoints > 0){
                  $totalPoints += $itemPoints;
              }
+
          }
 
          $this->score = $totalPoints;
@@ -87,4 +90,21 @@ class ReadingExamResult extends Model
     {
         return $this->score >= $this->story->passing_score;
     }
+
+    function scorePercentage()
+    {
+        $questionsIds = array_keys($this->answers);
+
+        $questions = ReadingQuestion::find($questionsIds);
+
+        $perfectScore = 0;
+        foreach($questions AS $row){
+            $perfectScore += count($row->correct_answers);
+        }
+
+        $score = $this->score;
+
+        return round(($score / $perfectScore ) * 100);
+    }
+
 }

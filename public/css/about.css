@@ -12,7 +12,7 @@
 }
 
 .title-divider--green{
-	border-bottom: 4px solid #009933;
+	border-bottom: 4px solid #59A663;
 }
 
 .headerAbout{
@@ -36,6 +36,15 @@
 }
 
 .lineHelp{
-	border-bottom: 2px solid #508357;
+	border-bottom: 2px solid #59A663;
+}
+
+.ourfooterAbout{
+	height: 200px;
+	background-color: #f5f5f5;
+}
+
+.title-divider--gray{
+	border-bottom: 2px solid #DCDCDC;
 }
 
