@@ -237,7 +237,7 @@ class RegistrationController extends Controller
         if(!$hasPreference){
             $rules += [
                 'display_photo' => 'required|image|max:2048',
-                'internet_speed_screenshot' => 'required|image|max:2048'
+                'internet_speed_screengt' => 'required|image|max:2048'
             ];
         }
 
@@ -398,9 +398,6 @@ class RegistrationController extends Controller
          $exam->save();
          return response()->json(['result' => TRUE, 'next_url' => route('profile')]);
     }
-
-    
-
 
 
 }

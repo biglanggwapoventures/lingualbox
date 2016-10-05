@@ -105,3 +105,4 @@ Route::get('/demo', function(){
     return view('blocks.email-templates.password-recovery');
 });
 
+Route::get('/fetch-cities', 'RegistrationController@fetch_cities');

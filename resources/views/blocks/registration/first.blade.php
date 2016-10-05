@@ -20,7 +20,7 @@
                         {{ Form::bsText('lastname',  $user->lastname, 'Last name', []) }}
                     </div>
                     <div class="col-sm-2 col-xs-2">
-                        {{ Form::bsText('suffix',  $user->middleinitial, 'Suffix (if any)', []) }}
+                        {{ Form::bsText('suffix',  $user->suffix, 'Suffix (if any)', []) }}
                     </div>
                 </div>
                 <div class="row">
@@ -75,19 +75,87 @@
                 {{ Form::bsText('street_address', $user->street_address, 'Home address', ['placeholder' => 'e.g. #01 Apple St. Brgy Talamban']) }}
                 <div class="row">
                     <div class="col-sm-4">
-                        {{ Form::bsText('city', $user->city, 'City', ['placeholder' => 'e.g. Cebu City']) }}
+                        {!! Form::label('province', 'Province', ['class' => 'control-label']) !!}
+                            {{ Form::select(
+                                    'province', 
+                                    [   
+                                        '' => '',
+                                        "Aurora" => 'Aurora',
+                                        "Basilan" => 'Basilan',
+                                        "Bataan" => 'Bataan',
+                                        "Batanes" => 'Batanes',
+                                        "Batangas" => 'Batangas',
+                                        "Benguet" => 'Benguet',
+                                        "Biliran" => 'Biliran',
+                                        "Bohol" => 'Bohol',
+                                        "Bukidnon" => 'Bukidnon',
+                                        "Bulacan" => 'Bulacan',
+                                        "Cagayan" => 'Cagayan',
+                                        "Camarines Norte" => 'Camarines Norte',
+                                        "Camiguin" => 'Camiguin',
+                                        "Capiz" => 'Capiz',
+                                        "Catanduanes" => 'Catanduanes',
+                                        "Cavite" => 'Cavite',
+                                        "Cebu" => 'Cebu'
+                                    ], 
+                                    $user->province, 
+                                    ['class' => 'form-control']
+                                ) 
+                            }}
+                        <!--{{ Form::bsText('city', $user->city, 'City', ['placeholder' => 'e.g. Cebu City']) }} -->
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            {!! Form::label('province', 'Province', ['class' => 'control-label']) !!}
-                            
+
+                             {!! Form::label('city', 'City', ['class' => 'control-label']) !!}
+                        {{ Form::select(
+                                    'city', 
+                                    [   
+                                        '' => '',
+                                        "Alcantra" => 'Alcantra',
+                                        "Alcoy" => 'Alcoy',
+                                        "Aloguinsan" => 'Aloguinsan',
+                                        "Argao" => 'Argao',
+                                        "Badian" => 'Badian',
+                                        "Balamban" => 'Balamban',
+                                        "Biliran" => 'Biliran',
+                                        "Barili" => 'Barili',
+                                        "Bogo" => 'Bogo',
+                                        "Borbon" => 'Borbon',
+                                        "Boljoon" => 'Boljoon',
+                                        "Carcar" => 'Carcar',
+                                        "Carmen" => 'Carmen',
+                                        "Caatmon" => 'Catmon',
+                                        "Cebu City" => 'Cebu City',
+                                        "Compostela" => 'Compostela',
+                                        "Consolacion" => 'Consolacion'
+                                    ], 
+                                    $user->city, 
+                                    ['class' => 'form-control']
+                                ) 
+                            }}
+
+
                         </div>
                         <!--{{ Form::bsText('province', $user->province, 'Province', ['placeholder' => 'e.g. Cebu']) }} -->
                     </div>
+
                     <div class="col-sm-4">
                         <div class="form-group">
                             {!! Form::label('country', 'Country', ['class' => 'control-label']) !!}
                                 <p>Philippines</p>
+                                <!-- {!! 
+                                    Form::select(
+                                        'country', 
+                                        [   
+                                            '' => '', 
+                                            'PH' => 'Philippines', 
+                                            'OTHERS' => 'Others (Please specify)',  
+                                        ], 
+                                        $user->country, 
+                                        ['class' => 'form-control']
+                                    ) 
+                                !!} -->
                            <!-- {{ Form::select('country', 
                                 ['' => '', 
                                     'AF' => 'Afghanistan', 
@@ -349,10 +417,23 @@
                         {{ Form::bsPassword('password_confirmation', 'Password confirmation') }}
                     </div>
                 </div>
-                <button type="submit" class="btn btn-success pull-right">Save</button>
+                <button type="submit" class="btn btn-success pull-right" id="submitFirst">Save</button>
             {!! Form::close() !!}
         </fieldset>
     </div>
   </div>
 </div>
 @endsection
+
+@push("js")
+    <script>
+        $('#submitFirst').on('click', function() {
+            var $this = $(this);
+            $this.button('loading');
+             setTimeout(function() {
+                $this.button('reset');
+            }, 8000);
+        });
+    
+    </script>
+@endpush
