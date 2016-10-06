@@ -15,11 +15,12 @@ class NeededTeachersController extends Controller
 {
     function show()
     {
-        $demand = Demand::orderBy('id', 'DESC')->first() ?: new Demand;
-        if(Auth::user()->isAdmin()){
-            return view('blocks.reports.needed-teachers', compact('demand'));
-        }
-        return view('blocks.reports.needed-teachers-view-only', compact('demand'));
+        // $demand = Demand::orderBy('id', 'DESC')->first() ?: new Demand;
+        // if(Auth::user()->isAdmin()){
+        //     return view('blocks.reports.needed-teachers', compact('demand'));
+        // }
+        // return view('blocks.reports.needed-teachers-view-only', compact('demand'));
+        return view('blocks.hiring.add');
     }
 
     function save(Request $request)

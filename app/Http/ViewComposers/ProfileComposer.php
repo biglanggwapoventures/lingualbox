@@ -27,8 +27,10 @@ class ProfileComposer
 
             $uncheckedWrittenExams = WrittenExam::whereNull('result')->count();
             
-            $hiring = NeededTeacher::select(['morning', 'midnight', 'evening', 'afternoon'])->orderBy('id', 'DESC')->first()->toArray();
-            $isHiring = array_sum(array_values($hiring)) > 0;
+            // $hiring = NeededTeacher::select(['morning', 'midnight', 'evening', 'afternoon'])->orderBy('id', 'DESC')->first()->toArray();
+            // $isHiring = array_sum(array_values($hiring)) > 0;
+
+            $isHiring = false;
 
             $view->with(compact('uncheckedWrittenExams', 'isHiring'));
 

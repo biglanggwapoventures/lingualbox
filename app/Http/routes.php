@@ -96,13 +96,14 @@ Route::get('/about-us', 'AboutUsController@index')->name('about-us');
 Route::get('/help', 'HelpController@index')->name('help');
 
 Route::get('/report', 'ReportController@show')->middleware('admin-only')->name('report.show');
-Route::get('/needed-teachers', 'NeededTeachersController@show')->middleware('hr-only')->name('needed.teachers');
-Route::post('/needed-teachers', 'NeededTeachersController@save')->middleware('admin-only')->name('needed.teachers.save');
-Route::patch('/needed-teachers', 'NeededTeachersController@fulfill')->middleware('hr-only')->name('needed.teachers.fulfill');
+// Route::get('/needed-teachers', 'NeededTeachersController@show')->middleware('hr-only')->name('needed.teachers');
+// Route::post('/needed-teachers', 'NeededTeachersController@save')->middleware('admin-only')->name('needed.teachers.save');
+// Route::patch('/needed-teachers', 'NeededTeachersController@fulfill')->middleware('hr-only')->name('needed.teachers.fulfill');
 
 
-Route::get('/demo', function(){
-    return view('blocks.email-templates.password-recovery');
-});
+Route::get('needed-teachers/view', 'AdminNeededTeachersController@view')->name('needed-teachers.view');
+Route::resource('needed-teachers', 'AdminNeededTeachersController');
+Route::resource('fulfill-teachers', 'HRNeededTeacherFulfillmentsController');
+
 
 Route::get('/fetch-cities', 'RegistrationController@fetch_cities');

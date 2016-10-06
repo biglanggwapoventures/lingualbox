@@ -44,11 +44,8 @@
                     <a href="{{ route('hired.summary') }}" class="list-group-item {{ Route::currentRouteNamed('hired.summary') ? 'active' : '' }}">
                         <i class="fa fa-users fa-fw"></i> Hired Summary
                     </a>
-                    <a href="{{ route('needed.teachers') }}" class="list-group-item {{ Route::currentRouteNamed('needed.teachers') ? 'active' : '' }}">
+                    <a href="{{ route('needed-teachers.index') }}" class="list-group-item {{ Route::currentRouteNamed('needed-teachers.index') ? 'active' : '' }}">
                         <i class="fa fa-users fa-fw"></i> Needed Teachers
-                        @if($isHiring)
-                            <span class="badge"><i class="fa fa-exclamation-circle fa-fw"></i></span>
-                        @endif 
                     </a>
                     <a href="{{ route('report.show') }}" class="list-group-item {{ Route::currentRouteNamed('report.show') ? 'active' : '' }}">
                         <i class="fa fa-pie-chart fa-fw"></i> Report
@@ -63,14 +60,14 @@
                     <a href="{{ route('applicants.summary') }}" class="list-group-item {{ Route::currentRouteNamed('applicants.summary') ? 'active' : '' }}">
                         <i class="fa fa-users fa-fw"></i> Applicants Summary
                     </a>
+                    <a href="{{ route('needed-teachers.view') }}" class="list-group-item {{ Route::currentRouteNamed('needed-teachers.view') ? 'active' : '' }}">
+                        <i class="fa fa-users fa-fw"></i> View Needed Teachers
+                    </a>
+                    <a href="{{ route('fulfill-teachers.index') }}" class="list-group-item {{ Route::currentRouteNamed('fulfill-teachers.index') ? 'active' : '' }}">
+                        <i class="fa fa-users fa-fw"></i> Fulfill Needed Teachers
+                    </a>
                     <a href="{{ route('hired.summary') }}" class="list-group-item {{ Route::currentRouteNamed('hired.summary') ? 'active' : '' }}">
                         <i class="fa fa-users fa-fw"></i> Hired Summary
-                    </a>
-                    <a href="{{ route('needed.teachers') }}" class="list-group-item {{ Route::currentRouteNamed('needed.teachers') ? 'active' : '' }}">
-                        <i class="fa fa-users fa-fw"></i> Needed Teachers 
-                        @if($isHiring)
-                            <span class="badge"><i class="fa fa-exclamation-circle fa-fw"></i></span>
-                        @endif 
                     </a>
                     @endif
 

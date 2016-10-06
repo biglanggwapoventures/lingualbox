@@ -83,7 +83,7 @@
                 </a>
             </div>
             <div class="col-sm-3 col-xs-6">
-                <a class="menu-icon" href="{{ route('needed.teachers') }}">
+                <a class="menu-icon" href="{{ route('needed-teachers.index') }}">
                     <div class="panel panel-default">
                         <div class="panel-body text-center">
                             <i class="fa fa-users fa-5x  fa-fw"></i>
