@@ -1,4 +1,4 @@
-@extends('profile')
+    @extends('profile')
 
 @section('profile-content')
 
@@ -57,7 +57,7 @@
                     @php
                         $writtenExam = Auth::user()->latestWrittenExam;
                     @endphp
-                    @if($writtenExam->exists())
+                    @if($writtenExam && $writtenExam->exists())
                         @if($writtenExam->result === 'FAILED')
                             <div class="alert alert-danger">
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">

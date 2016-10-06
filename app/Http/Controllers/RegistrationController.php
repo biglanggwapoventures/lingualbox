@@ -106,7 +106,7 @@ class RegistrationController extends Controller
            ]);
         }
 
-        $input = $request->only(['firstname', 'middleinitial', 'lastname', 'gender', 'marital_status', 'mobile_number', 'email_address', 'skype_account', 'street_address', 'city', 'province', 'country']);
+        $input = $request->only(['firstname', 'middleinitial', 'lastname', 'suffix', 'gender', 'marital_status', 'mobile_number', 'email_address', 'skype_account', 'street_address', 'city', 'province', 'country']);
         $input['birthdate'] = date_create_immutable_from_format('Y-n-j', $request->input('birthdate'))->format('Y-m-d');
 
         if($request->input('password')){
@@ -237,7 +237,7 @@ class RegistrationController extends Controller
         if(!$hasPreference){
             $rules += [
                 'display_photo' => 'required|image|max:2048',
-                'internet_speed_screengt' => 'required|image|max:2048'
+                'internet_speed_screenshot' => 'required|image|max:2048'
             ];
         }
 
