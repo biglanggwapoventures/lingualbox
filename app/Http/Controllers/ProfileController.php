@@ -71,7 +71,7 @@ class ProfileController extends Controller
                 }else{
                      $now = Carbon::now('Asia/Manila');
                     $nextWrittenExam = Carbon::createFromFormat('F d, Y', $user->nextWrittenExam(), 'Asia/Manila');
-                    $writtenExamStatus = $nextWrittenExam > $now ? 'F' : 'W';
+                    $writtenExamStatus = $nextWrittenExam > $now ? 'F' : '';
                 }
             }
             
